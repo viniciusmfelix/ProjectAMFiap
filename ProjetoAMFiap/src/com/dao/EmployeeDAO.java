@@ -20,7 +20,7 @@ public class EmployeeDAO {
 	}
 	
 	public void employeeRegister(Employee employee) {
-		sql = "INSERT INTO employeeform VALUES (?,?,?,?,?)";
+		sql = "INSERT INTO employeeform VALUES (?,?,?,?,?,?)";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, employee.getEmployee_code());
