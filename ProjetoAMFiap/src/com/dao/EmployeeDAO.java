@@ -36,7 +36,7 @@ public class EmployeeDAO {
 	}
 	
 	public ResultSet employeeLogin(int employee_code, String password) {
-		sql = "SELECT employee_code, password FROM employeeform WHERE employee_code = ? AND password = ?";
+		sql = "SELECT employee_code, accesspassword FROM employeeform WHERE employee_code = ? AND accesspassword = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, employee_code);
@@ -49,7 +49,7 @@ public class EmployeeDAO {
 	}
 	
 	public ResultSet adminAuthentication(int adm_cod, String adm_password) {
-		sql = "SELECT employee_code, password FROM employeeform WHERE employee_code = ? AND password = ?";
+		sql = "SELECT employee_code, accesspassword FROM employeeform WHERE employee_code = ? AND accesspassword = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, adm_cod);
