@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1 style="color:#0000FF">Hello employee!</h1>
+<h1 style="color:#0000FF">Hello employee!</h1><br/><br/>
+<a href="Logout.jsp">LogOut</a>
 </body>
 </html>
