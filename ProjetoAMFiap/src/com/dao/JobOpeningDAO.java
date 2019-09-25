@@ -28,7 +28,7 @@ public class JobOpeningDAO {
 			ps.setString(3, jobopening.getDescription());
 			ps.execute();
 		}catch(SQLException e) {
-			System.out.println("Erro ao cadastrar vaga no banco\n" + e);
+			System.out.println("Error during insert Job Opening on Oracle\n" + e);
 		}
 	}
 	
@@ -39,7 +39,7 @@ public class JobOpeningDAO {
 			ps.setInt(1, jo_code);
 			ps.execute();
 		}catch(SQLException e) {
-			System.out.println("Erro ao excluir vaga no banco\n" + e);
+			System.out.println("Error during delete Job Opening on Oracle\n" + e);
 		}
 	}
 }

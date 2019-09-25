@@ -31,7 +31,7 @@ public class UserDAO {
 			ps.setInt(6, 0);
 			ps.execute();
 		}catch(SQLException e) {
-			System.out.println("Erro ao inserir no banco o form de USUARIO\n" + e);
+			System.out.println("Error during insert User on Oracle\n" + e);
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class UserDAO {
 			ps.setString(2, password);
 			rs = ps.executeQuery();
 		}catch(SQLException e) {
-			System.out.println("Erro ao consultar o banco o form de USUARIO\n" + e);
+			System.out.println("Error during retrievement User on Oracle\n" + e);
 		}
 		return rs;
 	}

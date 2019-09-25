@@ -31,7 +31,7 @@ public class EmployeeDAO {
 			ps.setInt(6, 1);
 			ps.execute();
 		}catch(SQLException e) {
-			System.out.println("Erro ao inserir o banco o form EMPREGADO\n" + e);
+			System.out.println("Error during insert Employee on Oracle\n" + e);
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class EmployeeDAO {
 			ps.setString(2, password);
 			rs = ps.executeQuery();
 		}catch(SQLException e) {
-			System.out.println("Erro ao consultar o banco o form EMPREGADO\n" + e);
+			System.out.println("Error during retrievement Employee on Oracle\n" + e);
 		}
 		return rs;
 	}
@@ -55,7 +55,7 @@ public class EmployeeDAO {
 			ps.setString(1, adm_password);
 			rs = ps.executeQuery();
 		}catch(SQLException e) {
-			System.out.println("Erro ao autenticar senha ADM\n" + e);
+			System.out.println("Error during ADM password authentication on Oracle\n" + e);
 		}
 		return rs;
 	}
