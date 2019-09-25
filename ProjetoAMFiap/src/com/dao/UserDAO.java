@@ -36,7 +36,7 @@ public class UserDAO {
 	}
 	
 	public ResultSet userLogin(String email, String password) {
-		sql = "SELECT email, password FROM userform WHERE email = ? AND accesspassword = ?";
+		sql = "SELECT email, accesspassword FROM userform WHERE email = ? AND accesspassword = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, email);

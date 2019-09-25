@@ -48,12 +48,11 @@ public class EmployeeDAO {
 		return rs;
 	}
 	
-	public ResultSet adminAuthentication(int adm_cod, String adm_password) {
-		sql = "SELECT employee_code, accesspassword FROM employeeform WHERE employee_code = ? AND accesspassword = ?";
+	public ResultSet adminAuthentication(String adm_password) {
+		sql = "SELECT employee_code, accesspassword FROM employeeform WHERE employee_code = 00001 AND accesspassword = ?";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setInt(1, adm_cod);
-			ps.setString(2, adm_password);
+			ps.setString(1, adm_password);
 			rs = ps.executeQuery();
 		}catch(SQLException e) {
 			System.out.println("Erro ao autenticar senha ADM\n" + e);

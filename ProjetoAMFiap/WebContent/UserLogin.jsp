@@ -8,11 +8,11 @@
 </head>
 <body>
 <form action="userlogin" method="POST">
-<input type="text" name="email" placeholder="Enter email here..."><br/><br/>S
+<input type="text" name="email" placeholder="Enter email here..."><br/><br/>
 <input type="password" name="password" placeholder="Enter password here..."><br/><br/>
 <input type="submit" value="SignIn"><br/><br/>
 </form>
-Ou faça seu cadastro<a href="UserRegister.jsp">aqui</a><br/><br/><br/>
+Ou faça seu cadastro<a href="UserRegister.jsp"> aqui</a><br/><br/><br/>
 <a href="EmployeeRegister.jsp">Cadastro de recrutadores</a>
 </body>
 </html>
