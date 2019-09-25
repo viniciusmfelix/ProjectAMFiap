@@ -33,17 +33,6 @@ public class JobOpeningDAO {
 		}
 	}
 	
-	public void deleteJobOpening(int jo_code) {
-		sql = "DELETE FROM jobopeningform WHERE jobopening_code = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setInt(1, jo_code);
-			ps.execute();
-		}catch(SQLException e) {
-			System.out.println("Error during delete Job Opening on Oracle\n" + e);
-		}
-	}
-	
 	public ArrayList<JobOpening> retrieveJobOpening(){
 		ArrayList<JobOpening> jobs = new ArrayList<>();
 		sql = "SELECT * FROM jobopeningform";
@@ -63,5 +52,28 @@ public class JobOpeningDAO {
 		}
 		return jobs;
 	}
-
+	
+	public void updateJobOpening(JobOpening jobopening) {
+		sql = "UPDATE jobopeningform SET jobopeningform.jobopening_code = ?, jobopeningform.name = ?, jobopeningform.description = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, jobopening.getJo_code());
+			ps.setString(2, jobopening.getName());
+			ps.setString(3, jobopening.getDescription());
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update of Job Openings on Oracle\n" + e);
+		}
+	}
+	
+	public void deleteJobOpening(int jo_code) {
+		sql = "DELETE FROM jobopeningform WHERE jobopening_code = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, jo_code);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during delete Job Opening on Oracle\n" + e);
+		}
+	}
 }
