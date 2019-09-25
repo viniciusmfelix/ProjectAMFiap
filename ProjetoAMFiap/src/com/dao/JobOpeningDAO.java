@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.dbconnection.ConnectToOracle;
 import com.model.JobOpening;
@@ -42,4 +43,25 @@ public class JobOpeningDAO {
 			System.out.println("Error during delete Job Opening on Oracle\n" + e);
 		}
 	}
+	
+	public ArrayList<JobOpening> retrieveJobOpening(){
+		ArrayList<JobOpening> jobs = new ArrayList<>();
+		sql = "SELECT * FROM jobopeningform";
+		try {
+			ps = connection.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				JobOpening jobopening = new JobOpening();
+				jobopening.setJo_code(rs.getInt("jobopening_code"));
+				jobopening.setName(rs.getString("name"));
+				jobopening.setDescription(rs.getString("description"));
+				jobs.add(jobopening);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error during retrievement of Job Openings on Oracle\n" + e);
+		}
+		return jobs;
+	}
+
 }
