@@ -49,7 +49,7 @@ public class EmployeeDAO {
 	}
 	
 	public ResultSet adminAuthentication(String adm_password) {
-		sql = "SELECT employee_code, accesspassword FROM employeeform WHERE employee_code = 00001 AND accesspassword = ?";
+		sql = "SELECT employee_code, accesspassword FROM employeeform WHERE employee_code = 1 AND accesspassword = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, adm_password);
