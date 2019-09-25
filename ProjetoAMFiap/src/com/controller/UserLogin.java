@@ -39,7 +39,6 @@ public class UserLogin extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		if(email != null && password != null & !email.isEmpty() && !password.isEmpty()) {
 			UserDAO userdao = new UserDAO();
 			rs = userdao.userLogin(email, password);
 			try {
@@ -49,15 +48,10 @@ public class UserLogin extends HttpServlet {
 					response.sendRedirect("UserPage.jsp");
 				} else {
 					response.sendRedirect("UserLogin.jsp");
-					out.print("Usuario ou senha inválidos.");
+					out.print("Email and/or password invalid.");
 				}
 			} catch (SQLException e) {
-				System.out.println("Erro ao consultar o banco pelo Servlet\n" + e);
+				System.out.println("Error during the retrievement of user in Oracle - Servlet Page Error\n" + e);
 			}
-		} else {
-			response.sendRedirect("UserLogin.jsp");
-			out.print("Usuario ou senha não podem ser nulos.");
-		}
 	}
-
 }

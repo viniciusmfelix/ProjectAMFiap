@@ -10,17 +10,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dao.EmployeeDAO;
-import com.model.Employee;
 
 import static java.lang.Integer.parseInt;
 
-@WebServlet("/employeeregister")
-public class EmployeeRegister extends HttpServlet {
+@WebServlet("/employeelogin")
+public class EmployeeLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public EmployeeRegister() {
+       
+    public EmployeeLogin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,37 +36,25 @@ public class EmployeeRegister extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		
-		ResultSet rs_adm;
-		
 		int employee_code = parseInt(request.getParameter("employee_code"));
-		String name = request.getParameter("name");
-		String lastname = request.getParameter("lastname");
-		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String password_confirm = request.getParameter("password_confirm");
-		String password_adm = request.getParameter("password_adm");
 		
-		if(password.equals(password_confirm)) {
 			
-			Employee employee = new Employee(employee_code,name,lastname,email,password);
+			ResultSet rs;
 			EmployeeDAO employeedao = new EmployeeDAO();
-			
-			rs_adm = employeedao.adminAuthentication(password_adm);
+			rs = employeedao.employeeLogin(employee_code, password);
 			
 			try {
-				if(rs_adm.next()) {
-					employeedao.employeeRegister(employee);
-					response.sendRedirect("EmployeeLogin.jsp");
+				if(rs.next()) {
+					HttpSession session = request.getSession();
+					session.setAttribute("employee_code", employee_code);
+					response.sendRedirect("EmployeePage.jsp");
 				} else {
-					response.sendRedirect("EmployeeRegister.jsp");
-					out.print("Failure on ADM authentication");
+					response.sendRedirect("EmployeeLogin.jsp");
+					out.print("Code and/or password invalid.");
 				}
 			} catch (SQLException e) {
-				System.out.println("Error during the retrievement of admin password in Oracle - Servlet Page Error\n"+e);
-			}
-		} else {
-			response.sendRedirect("EmployeeRegister.jsp");
-			out.print("Passwords don't match.");
+				System.out.println("Error during the retrievement of employee in Oracle - Servlet Page Error\n" + e);
 		}
 	}
 

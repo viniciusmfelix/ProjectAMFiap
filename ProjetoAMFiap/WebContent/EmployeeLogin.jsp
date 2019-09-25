@@ -7,12 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="userlogin" method="POST">
-<input type="text" name="email" placeholder="Enter email here..." required><br/><br/>
+<form action="employeelogin" method="POST">
+<input type="number" name="employee_code" placeholder="Enter code here..." required><br/><br/>
 <input type="password" name="password" placeholder="Enter password here..." required><br/><br/>
 <input type="submit" value="SignIn"><br/><br/>
 </form>
-Ou faça seu cadastro<a href="UserRegister.jsp"> aqui</a><br/><br/><br/>
 <a href="EmployeeRegister.jsp">Cadastro de recrutadores</a>
 </body>
 </html>
