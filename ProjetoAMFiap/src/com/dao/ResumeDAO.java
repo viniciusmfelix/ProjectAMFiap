@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.dbconnection.ConnectToOracle;
 import com.model.Resume;
 
 public class ResumeDAO {
@@ -14,11 +15,11 @@ public class ResumeDAO {
 	private String sql;
 	
 	public ResumeDAO() {
-		
+		this.connection = new ConnectToOracle().connect();
 	}
 	
-	public void createResume(Resume resume) {
-		sql = "INSERT INTO resumeform VALUES (?,?,?,?,?)";
+	public void createResume(Resume resume, String email) {
+		sql = "INSERT INTO resumeform VALUES (?,?,?,?,?,?)";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1,resume.getGoal());
@@ -26,6 +27,7 @@ public class ResumeDAO {
 			ps.setString(3, resume.getProfessional_experience());
 			ps.setString(4, resume.getLanguages());
 			ps.setString(5, resume.getExtracurricular_courses());
+			ps.setString(6, email);
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error creating new resume on Oracle\n" + e);

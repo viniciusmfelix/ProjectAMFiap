@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,7 +45,7 @@ public class UserLogin extends HttpServlet {
 			try {
 				if(rs.next()) {
 					HttpSession session = request.getSession();
-					session.setAttribute("email", email);
+					session.setAttribute("name", email);
 					response.sendRedirect("UserPage.jsp");
 				} else {
 					response.sendRedirect("UserLogin.jsp");
