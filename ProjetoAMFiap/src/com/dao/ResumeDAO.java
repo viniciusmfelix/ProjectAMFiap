@@ -31,4 +31,8 @@ public class ResumeDAO {
 			System.out.println("Error creating new resume on Oracle\n" + e);
 		}
 	}
+	
+	public void updateResume(Resume resume) {
+		
+	}
 }
