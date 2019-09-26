@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,21 +35,27 @@ public class EmployeeLogin extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
+		RequestDispatcher dispatcher;
+		
 		PrintWriter out = response.getWriter();
 		
 		int employee_code = parseInt(request.getParameter("employee_code"));
 		String password = request.getParameter("password");
+		String name;
 		
 			
 			ResultSet rs;
 			EmployeeDAO employeedao = new EmployeeDAO();
 			rs = employeedao.employeeLogin(employee_code, password);
+			name = employeedao.retrieveName(employee_code);
 			
 			try {
 				if(rs.next()) {
 					HttpSession session = request.getSession();
-					session.setAttribute("employee_code", employee_code);
-					response.sendRedirect("EmployeePage.jsp");
+					session.setAttribute("name", name);
+					dispatcher = request.getRequestDispatcher("EmployeePage.jsp");
+					dispatcher.forward(request, response);
+					
 				} else {
 					response.sendRedirect("EmployeeLogin.jsp");
 					out.print("Code and/or password invalid.");

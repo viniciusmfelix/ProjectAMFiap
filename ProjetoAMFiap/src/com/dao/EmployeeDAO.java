@@ -59,4 +59,22 @@ public class EmployeeDAO {
 		}
 		return rs;
 	}
+	
+	public String retrieveName(int employee_code) {
+		String aux = null;
+		sql = "SELECT employeeform.firstname FROM employeeform WHERE employeeform.employee_code = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, employee_code);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				aux = rs.getString("firstname");
+			} else {
+				System.out.println("Code not associate with any register.");
+			}
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement name User on Oracle\n" + e);
+		}
+		return aux;
+	}
 }
