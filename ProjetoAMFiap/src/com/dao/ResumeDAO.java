@@ -33,6 +33,17 @@ public class ResumeDAO {
 	}
 	
 	public void updateResume(Resume resume) {
-		
+		sql = "UPDATE resumeform SET resumeform.goal = ?, resumeform.academic_training = ?, resumeform.professional_experience = ?, resumeform.languages = ?, resumeform.extracurrilar_courses = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, resume.getGoal());
+			ps.setString(2, resume.getAcademic_training());
+			ps.setString(3, resume.getProfessional_experience());
+			ps.setString(4, resume.getLanguages());
+			ps.setString(5, resume.getExtracurricular_courses());
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error updating resume on Oracle\n" + e);
+		}
 	}
 }

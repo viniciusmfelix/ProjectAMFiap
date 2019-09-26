@@ -54,7 +54,7 @@ public class JobOpeningDAO {
 	}
 	
 	public void updateJobOpening(JobOpening jobopening) {
-		sql = "UPDATE jobopeningform SET jobopeningform.jobopening_code = ?, jobopeningform.name = ?, jobopeningform.description = ?";
+		sql = "UPDATE jobopeningform SET jobopeningform.jo_code = ?, jobopeningform.jobname = ?, jobopeningform.jobdescription = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, jobopening.getJo_code());
@@ -67,7 +67,7 @@ public class JobOpeningDAO {
 	}
 	
 	public void deleteJobOpening(int jo_code) {
-		sql = "DELETE FROM jobopeningform WHERE jobopening_code = ?";
+		sql = "DELETE FROM jobopeningform WHERE jo_code = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, jo_code);
