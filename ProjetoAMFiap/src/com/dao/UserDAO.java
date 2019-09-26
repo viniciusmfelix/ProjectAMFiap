@@ -47,4 +47,22 @@ public class UserDAO {
 		}
 		return rs;
 	}
+	
+	public String retrieveName(String email) {
+		String aux = null;
+		sql = "SELECT userform.firstname FROM userform WHERE email = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				aux = rs.getString("firstname");
+			} else {
+				System.out.println("Email not associate with any register.");
+			}
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement name User on Oracle\n" + e);
+		}
+		return aux;
+	}
 }

@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.servlet.DispatcherType;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,20 +33,26 @@ public class UserLogin extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
+		RequestDispatcher dispatcher;
+		
 		PrintWriter out = response.getWriter();
 		
 		ResultSet rs;
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String name;
 		
 			UserDAO userdao = new UserDAO();
 			rs = userdao.userLogin(email, password);
+			name = userdao.retrieveName(email);
+			
 			try {
 				if(rs.next()) {
 					HttpSession session = request.getSession();
-					session.setAttribute("name", email);
-					response.sendRedirect("UserPage.jsp");
+					session.setAttribute("name", name);
+					dispatcher = request.getRequestDispatcher("UserPage.jsp");
+					dispatcher.forward(request, response);
 				} else {
 					response.sendRedirect("UserLogin.jsp");
 					out.print("Email and/or password invalid.");
