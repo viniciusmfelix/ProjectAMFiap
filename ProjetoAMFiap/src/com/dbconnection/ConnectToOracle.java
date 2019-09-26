@@ -16,9 +16,9 @@ public class ConnectToOracle {
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, usuario, senha);
 		} catch (ClassNotFoundException e) {
-			System.out.println("Erro ao carregar o driver\n" + e);
+			System.out.println("Error during Oracle driver loading\n" + e);
 		} catch (SQLException e) {
-			System.out.println("Erro ao realizar conexão Oracle\n" + e);
+			System.out.println("Error during the Oracle network establishment\n" + e);
 		}
 		
 		return connection;
