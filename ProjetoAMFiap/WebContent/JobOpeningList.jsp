@@ -15,12 +15,12 @@
 <%List<JobOpening> jobs = (List<JobOpening>) request.getAttribute("jobs");%>
 <%String job_empty = "No available Job Openings right now. Try again later."; %>
 	<ul>
-	<%if(jobs==null){ %>
+		<%try{for(JobOpening jobopening : jobs){ %>
+		<%if(jobopening==null){ %>
 		<li><%=job_empty %></li>
-	<%}else{%>
-		<%for(JobOpening jobopening : jobs){ %>
+		<%}else{%>
 		<li><%=jobopening.getName()%></li>
-	<%}}%>
+		<%}}}catch(NullPointerException e){}%>
 	</ul>
 </body>
 </html>

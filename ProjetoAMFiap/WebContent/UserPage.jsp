@@ -9,7 +9,7 @@
 <body>
 <h1 style="color:#0000FF">Hello, ${name}!</h1><br/><br/>
 <a href="ResumeRegister.jsp">Register your resume here.</a><br/><br/>
-<a href="JobOpeningPortal.jsp">Job Openings Portal</a><br/><br/>
+<a href="JobOpeningPortalUser.jsp">Job Openings Portal</a><br/><br/>
 <a href="Logout.jsp">LogOut</a>
 </body>
 </html>

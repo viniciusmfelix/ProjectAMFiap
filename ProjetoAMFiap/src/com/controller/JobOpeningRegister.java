@@ -38,7 +38,7 @@ public class JobOpeningRegister extends HttpServlet {
 		JobOpeningDAO jobopeningdao = new JobOpeningDAO();
 		
 		jobopeningdao.createNewJobOpening(jobopening);
-		response.sendRedirect("JobOpeningPortal.jsp");
+		response.sendRedirect("JobOpeningPortalEmployee.jsp");
 	}
 
 }
