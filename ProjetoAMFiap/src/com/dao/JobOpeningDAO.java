@@ -73,4 +73,18 @@ public class JobOpeningDAO {
 			System.out.println("Error during delete Job Opening on Oracle\n" + e);
 		}
 	}
+	
+	public boolean jobOpeningExists(int jo_code) {
+		boolean exists = false;
+		sql = "SELECT * FROM jobopeningform WHERE jo_code = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, jo_code);
+			rs = ps.executeQuery();
+			if(rs.next()) exists = true;
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement of job opening exists on Oracle\n"+e);
+		}
+		return exists;
+	}
 }

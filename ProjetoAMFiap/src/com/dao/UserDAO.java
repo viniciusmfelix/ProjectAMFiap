@@ -65,4 +65,16 @@ public class UserDAO {
 		}
 		return aux;
 	}
+	
+	public void userApply(int jo_code, String email) {
+		sql = "INSERT INTO user_jobopening VALUES (?,?)";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, jo_code);
+			ps.setString(2, email);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during register user into a job opening on Oracle\n" + e);
+		}
+	}
 }
