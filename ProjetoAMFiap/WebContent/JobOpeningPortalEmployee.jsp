@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1 style="color:#0000FF">Hello, ${name}!</h1><br/><br/>
-<a href="JobOpeningPortalEmployee.jsp">Job Openings portal</a><br/><br/>
-<a href="Logout.jsp">LogOut</a>
+<h1>Job Openings Portal</h1>
+<a href="JobOpeningRegister.jsp">Register New Job Opening</a><br/><br/>
+<a href="JobOpeningList.jsp">See available Job Openings</a>
 </body>
 </html>

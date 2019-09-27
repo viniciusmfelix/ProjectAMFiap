@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Job Openings Portal</h1>
-<a href="JobOpeningRegister.jsp">Register New Job Opening</a><br/><br/>
+
 </body>
 </html>

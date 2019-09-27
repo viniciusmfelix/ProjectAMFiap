@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.dbconnection.ConnectToOracle;
 import com.model.JobOpening;
@@ -33,18 +34,14 @@ public class JobOpeningDAO {
 		}
 	}
 	
-	public ArrayList<JobOpening> retrieveJobOpening(){
-		ArrayList<JobOpening> jobs = new ArrayList<>();
+	public List<JobOpening> retrieveJobOpening(){
+		List<JobOpening> jobs = new ArrayList<>();
 		sql = "SELECT * FROM jobopeningform";
 		try {
 			ps = connection.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				JobOpening jobopening = new JobOpening();
-				jobopening.setJo_code(rs.getInt("jobopening_code"));
-				jobopening.setName(rs.getString("name"));
-				jobopening.setDescription(rs.getString("description"));
-				jobs.add(jobopening);
+				jobs.add(new JobOpening(rs.getInt("jo_code"),rs.getString("jobname"),rs.getString("jobdescription")));
 			}
 			
 		} catch (SQLException e) {
