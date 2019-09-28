@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dao.EmployeeDAO;
 import com.dao.JobOpeningDAO;
-import com.dao.UserDAO;
 import com.model.User;
 
 import static java.lang.Integer.parseInt;
@@ -37,12 +37,12 @@ public class JobOpeningSelect extends HttpServlet {
 		
 		RequestDispatcher dispatcher;
 		List<User> users_applied = new ArrayList<>();
-		UserDAO userdao = new UserDAO();
+		EmployeeDAO employeedao = new EmployeeDAO();
 		JobOpeningDAO jobopeningdao = new JobOpeningDAO();
 		int jo_code = parseInt(request.getParameter("jo_code"));
 		boolean job_exists = jobopeningdao.jobOpeningExists(jo_code);
 		String job_situation;
-		users_applied = userdao.retrieveUsersApplied(jo_code);
+		users_applied = employeedao.retrieveUsersApplied(jo_code);
 		
 		
 		if(job_exists == true) {
