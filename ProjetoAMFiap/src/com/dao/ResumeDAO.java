@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.dbconnection.ConnectToOracle;
 import com.model.Resume;
@@ -47,5 +49,21 @@ public class ResumeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error updating resume on Oracle\n" + e);
 		}
+	}
+	
+	public List<Resume> retrieveUserResume(String email){
+		List<Resume> resumes = new ArrayList<>();
+		sql = "SELECT * FROM resumeform WHERE email_user = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				resumes.add(new Resume(rs.getString("goal"),rs.getString("academic_training"),rs.getString("professional_experience"),rs.getString("languages"),rs.getString("extracurricular_courses")));
+			}
+		}catch(SQLException e) {
+			System.out.println("Error retrieving user resume on Oracle\n" + e);
+		}
+		return resumes;
 	}
 }

@@ -9,6 +9,7 @@
 <body>
 <h1>Job Openings Portal</h1>
 <a href="JobOpeningRegister.jsp">Register New Job Opening</a><br/><br/>
-<a href="JobOpeningList.jsp">See available Job Openings</a>
+<a href="JobOpeningList.jsp">See available Job Openings</a><br/><br/>
+<a href="JobOpeningSelect.jsp">Select Job Applies</a>
 </body>
 </html>
