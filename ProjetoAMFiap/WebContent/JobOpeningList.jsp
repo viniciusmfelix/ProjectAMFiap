@@ -22,5 +22,7 @@
 		<li><%=jobopening.getName()%></li>
 		<%}}}catch(NullPointerException e){}%>
 	</ul>
+<br/><br/>
+<a href="UserPage.jsp">Return to User Page</a>
 </body>
 </html>
