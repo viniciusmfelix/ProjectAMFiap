@@ -8,13 +8,21 @@
   <description>ProjetoAMFiap</description>
   <dependencies>
   	<dependency>
-    <groupId>org.tensorflow</groupId>
-    <artifactId>tensorflow</artifactId>
-    <version>1.14.0</version>
+    <groupId>nz.ac.waikato.cms.weka</groupId>
+    <artifactId>weka-stable</artifactId>
+    <version>3.8.0</version>
 	</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

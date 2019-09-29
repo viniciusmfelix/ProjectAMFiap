@@ -23,6 +23,7 @@
 		<li><%=user.getName()%></li>
 		<%}}}catch(NullPointerException e){}%>
 	</ul>
-See available Job Openings <a href="JobOpeningList.jsp">here</a>
+See available Job Openings <a href="JobOpeningList.jsp">here</a><br/><br/>
+Discover the best user for the Job Opening <a href="UserApplySelect.jsp">here</a>
 </body>
 </html>

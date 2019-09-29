@@ -1,0 +1,20 @@
+@relation data_reference
+
+@attribute goal {Analista,Gerente,Gestor,Estagiario,Diretor,Presidente,Consultor,Professor,Nenhum}
+@attribute academic_training {FIAP,Unip,Uninove,Nenhum}
+@attribute job_experience {Microsoft,Apple,FIAP,Go2neXt,Bayer,Google,Facebook,Nenhum}
+@attribute languages {Ingles,Espanhol,Frances,Alemao,Nenhum}
+@attribute extracurricular_courses {PHP,Java,JavaScript,Node,.NET,CSS,Nenhum}
+@attribute appropriate {Sim,Nao}
+
+@data
+Analista,FIAP,Go2neXt,Ingles,Java,Sim
+Gerente,Unip,Google,Ingles,Node,Sim
+Gerente,Nenhum,Nenhum,Nenhum,Nenhum,Nao
+Nenhum,Nenhum,Nenhum,Nenhum,Nenhum,Nao
+Analista,Uninove,Nenhum,Ingles,PHP,Sim
+Estagiario,Nenhum,Nenhum,Nenhum,Nenhum,Sim
+
+
+
+
