@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import weka.classifiers.bayes.NaiveBayes;
 import weka.core.DenseInstance;
@@ -25,8 +27,8 @@ public class WekaAnalysis {
 		this.connection = new ConnectToOracle().connect();
 	}
 	
-	public User selectAppropriateApply(int jo_code) {
-		User user = null;
+	public List<User> selectAppropriateApply(int jo_code) {
+		List<User> users = new ArrayList<>();
 		sql = "SELECT * FROM user_jobopening JOIN resumeform ON resumeform.email_user = user_jobopening.email JOIN userform ON userform.email = user_jobopening.email WHERE user_jobopening.jo_code = ?";
 		try {
 			ps = connection.prepareStatement(sql);
@@ -34,7 +36,7 @@ public class WekaAnalysis {
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				try {
-					DataSource ds = new DataSource("data_reference.arff");
+					DataSource ds = new DataSource("data_reference_ia.arff");
 					Instances ins = ds.getDataSet();
 					ins.setClassIndex(ins.numAttributes() - 1);
 					NaiveBayes nb = new NaiveBayes();
@@ -53,7 +55,7 @@ public class WekaAnalysis {
 					double prediction_2 = prediction_vector[1];
 					
 					if(prediction_1 > prediction_2) {
-						user = new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("email"),rs.getString("phone"));
+						users.add(new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("email"),rs.getString("phone"),prediction_1));
 					}
 				} catch (Exception e) {
 					System.out.println("Error during I.A. profile analysis.\n" + e);
@@ -62,6 +64,6 @@ public class WekaAnalysis {
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of applied users on Oracle\n"+e);
 		}
-		return user;
+		return users;
 	}
 }

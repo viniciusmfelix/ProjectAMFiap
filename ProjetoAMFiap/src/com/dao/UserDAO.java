@@ -77,4 +77,20 @@ public class UserDAO {
 			System.out.println("Error during register user into a job opening on Oracle\n" + e);
 		}
 	}
+	
+	public boolean userExists(String email) {
+		boolean exists = false;
+		sql = "SELECT * FROM userform WHERE userform.email = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				exists = true;
+			}
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement of user exists method on Oracle\n" + e);
+		}
+		return exists;
+	}
 }

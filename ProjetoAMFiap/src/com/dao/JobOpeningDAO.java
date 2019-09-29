@@ -102,4 +102,18 @@ public class JobOpeningDAO {
 		}
 		return exists;
 	}
+	
+	public String retrieveNameJobOpening(int jo_code) {
+		String jobname = null;
+		sql = "SELECT jobopeningform.jobname FROM jobopeningform WHERE jobopeningform.jo_code = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, jo_code);
+			rs = ps.executeQuery();
+			if(rs.next()) jobname = rs.getString("jobname");
+		}catch(SQLException e) {
+			System.out.println("Error during retrieving job name on Oracle\n" + e);
+		}
+		return jobname;
+	}
 }

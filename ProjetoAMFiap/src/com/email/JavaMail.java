@@ -12,14 +12,15 @@ import javax.mail.internet.MimeMessage;
 
 public class JavaMail {
 	
-	public boolean sendMailtoUser(String email,String feedback_message, int jo_code, String name_jobopening) {
+	public boolean sendMailtoUser(String email, String feedback_message, int jo_code, String name_jobopening) {
 		boolean send = false;
 	    Properties props = new Properties();
-	    props.put("mail.smtp.host", "smtp-mail.outlook.com");
-	    props.put("mail.smtp.socketFactory.port", "25");
-	    props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+	    props.put("mail.smtp.host", "smtp.office365.com");
+	    //props.put("mail.smtp.socketFactory.port", "587");
+	    //props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+	    props.put("mail.smtp.starttls.enable", "true");
 	    props.put("mail.smtp.auth", "true");
-	    props.put("mail.smtp.port", "25");
+	    props.put("mail.smtp.port", "587");
 	 
 	    String email_stmp, password;
 	    
@@ -35,7 +36,7 @@ public class JavaMail {
 	      });
 	    
 	    session.setDebug(true);
-	 
+	    
 	    try {
 	 
 	      Message message = new MimeMessage(session);

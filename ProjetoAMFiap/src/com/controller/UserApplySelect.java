@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static java.lang.Integer.parseInt;
 
+import com.dao.AnalysisDAO;
 import com.datareference.WekaAnalysis;
 import com.model.User;
 
@@ -35,9 +37,12 @@ public class UserApplySelect extends HttpServlet {
 		
 		int jo_code = parseInt(request.getParameter("jo_code"));
 		WekaAnalysis artificial_intelligence = new WekaAnalysis();
+		AnalysisDAO analysisdao = new AnalysisDAO();
 		String bad_situation;
+		User best_user;
 		
-		User best_user = artificial_intelligence.selectAppropriateApply(jo_code);
+		List<User> users_to_analysis = artificial_intelligence.selectAppropriateApply(jo_code);
+		best_user = analysisdao.getBestUser(users_to_analysis);
 		
 		if(best_user != null) {
 			request.setAttribute("best_user", best_user);

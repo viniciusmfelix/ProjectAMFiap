@@ -6,9 +6,19 @@ public class User {
 	private String email;
 	private String telephone;
 	private String password;
+	private double ia_score;
 	
 	public User() {
 		
+	}
+	
+	public User(String name, String lastname, String email, String telephone,double ia_score) {
+		super();
+		this.name = name;
+		this.lastname = lastname;
+		this.email = email;
+		this.telephone = telephone;
+		this.ia_score = ia_score;
 	}
 
 	public User(String name, String lastname, String email, String telephone, String password) {
@@ -66,6 +76,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public double getIa_score() {
+		return ia_score;
+	}
+
+	public void setIa_score(double ia_score) {
+		this.ia_score = ia_score;
 	}
 	
 }
