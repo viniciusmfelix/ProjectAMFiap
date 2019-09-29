@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,12 +35,17 @@ public class ResumeRegister extends HttpServlet {
 		String language = request.getParameter("language");
 		String extracurricular_courses = request.getParameter("extracurricular_courses");
 		String email = request.getParameter("email");
+		boolean resume_exists;
 		
 		Resume resume = new Resume(goals, academy_training,professional_experience,language,extracurricular_courses);
 		ResumeDAO resumedao = new ResumeDAO();
+		resume_exists = resumedao.resumeExists(email);
 		
-		resumedao.createResume(resume,email);
-		
+		if(resume_exists == false) {
+			resumedao.createResume(resume,email);
+		} else {
+			resumedao.updateResume(resume,email);
+		}
 		response.sendRedirect("UserPage.jsp");
 	}
 

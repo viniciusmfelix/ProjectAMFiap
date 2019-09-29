@@ -35,7 +35,9 @@ public class UserApply extends HttpServlet {
 		int jo_code = parseInt(request.getParameter("jo_code"));
 		String email = request.getParameter("email");
 		boolean job_exists;
+		boolean user_applied;
 		String job_apply;
+		String user_invalid;
 		
 		RequestDispatcher dispatcher;
 		
@@ -43,13 +45,21 @@ public class UserApply extends HttpServlet {
 		UserDAO userdao = new UserDAO();
 		
 		job_exists = jobopeningdao.jobOpeningExists(jo_code);
+		user_applied = jobopeningdao.userAlreadyApplied(jo_code, email);
 		
 		if(job_exists == true) {
-			userdao.userApply(jo_code, email);
-			job_apply = "Apply success!";
-			request.setAttribute("job_apply", job_apply);
-			dispatcher = request.getRequestDispatcher("UserApply.jsp");
-			dispatcher.forward(request, response);
+			if(user_applied == false) {
+				userdao.userApply(jo_code, email);
+				job_apply = "Apply success!";
+				request.setAttribute("job_apply", job_apply);
+				dispatcher = request.getRequestDispatcher("UserApply.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				user_invalid = "User already applied for this Job Opening.";
+				request.setAttribute("user_applied", user_invalid);
+				dispatcher = request.getRequestDispatcher("UserApply.jsp");
+				dispatcher.forward(request, response);
+			}
 		} else {
 			job_apply = "Job Opening not elegible or doesn't exists.";
 			request.setAttribute("job_apply", job_apply);

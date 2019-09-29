@@ -36,8 +36,8 @@ public class ResumeDAO {
 		}
 	}
 	
-	public void updateResume(Resume resume) {
-		sql = "UPDATE resumeform SET resumeform.goal = ?, resumeform.academic_training = ?, resumeform.professional_experience = ?, resumeform.languages = ?, resumeform.extracurrilar_courses = ?";
+	public void updateResume(Resume resume, String email) {
+		sql = "UPDATE resumeform SET resumeform.goal = ?, resumeform.academic_training = ?, resumeform.professional_experience = ?, resumeform.languages = ?, resumeform.extracurrilar_courses = ? WHERE resumeform.email_user = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, resume.getGoal());
@@ -45,6 +45,7 @@ public class ResumeDAO {
 			ps.setString(3, resume.getProfessional_experience());
 			ps.setString(4, resume.getLanguages());
 			ps.setString(5, resume.getExtracurricular_courses());
+			ps.setString(6, email);
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error updating resume on Oracle\n" + e);
@@ -65,5 +66,21 @@ public class ResumeDAO {
 			System.out.println("Error retrieving user resume on Oracle\n" + e);
 		}
 		return resumes;
+	}
+
+	public boolean resumeExists(String email) {
+		boolean exists = false;
+		sql = "SELECT * FROM resumeform WHERE resumeform.email_user = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				exists = true;
+			}
+		}catch(SQLException e) {
+			System.out.println("Error during check if resumeform exists on Oracle\n" + e);
+		}
+		return exists;
 	}
 }

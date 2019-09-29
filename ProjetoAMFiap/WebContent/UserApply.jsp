@@ -8,12 +8,14 @@
 </head>
 <body>
 <form action="userapply" method="POST">
-<input type="number" name="jo_code" placeholder="Insert Job Opening code here..."><br/><br/>
-<input type="text" name="email" placeholder="Confirm your email here..."><br/><br/>
+<input type="number" name="jo_code" placeholder="Insert Job Opening code here..." required><br/><br/>
+<input type="text" name="email" placeholder="Confirm your email here..." required><br/><br/>
 <input type="submit" value="Apply Myself">
 </form><br/><br/>
 <%String job_apply = (String) request.getAttribute("job_apply");%>
+<%String user_applied = (String) request.getAttribute("user_applied"); %>
 <%=job_apply%><br/><br/>
+<%=user_applied %><br/><br/>
 If you don't know your Job Opening code, check it out <a href="JobOpeningList.jsp">here</a>
 </body>
 </html>

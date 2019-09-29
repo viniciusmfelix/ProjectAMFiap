@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Resume Register</h1>
+<h1>Resume Register/Update</h1>
 <form action="resumeregister" method="POST">
 <textarea name="goals" rows="5" cols="30" placeholder="Type here your goals..." required></textarea><br/><br/>
 <textarea name="academy_training" rows="5" cols="30" placeholder="Type here your academy training..." required></textarea><br/><br/>

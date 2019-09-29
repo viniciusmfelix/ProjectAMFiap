@@ -87,4 +87,19 @@ public class JobOpeningDAO {
 		}
 		return exists;
 	}
+	
+	public boolean userAlreadyApplied(int jo_code, String email) {
+		boolean exists = false;
+		sql = "SELECT * from user_jobopening WHERE user_jobopening.jo_code = ? AND user_jobopening.email = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, jo_code);
+			ps.setString(2, email);
+			rs = ps.executeQuery();
+			if(rs.next()) exists = true;
+		}catch(SQLException e) {
+			System.out.println("Error retrieving user already applied to job opening on Oracle\n" + e);
+		}
+		return exists;
+	}
 }
