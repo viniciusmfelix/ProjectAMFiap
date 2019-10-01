@@ -45,7 +45,7 @@ public class UserRefusedSendEmail extends HttpServlet {
 		refused_users = artificial_inteligence.selectRefusedApply(jo_code);
 		jobopeningdao.setFeedbacktoRefusedUsers(jo_code, refused_users);
 		for (User user : refused_users) {
-			sendMail.sendMailtoUser(user.getEmail(), user.getName(), jo_code, name_jobopening);
+			//sendMail.sendMailtoUser(user.getEmail(), user.getName(), jo_code, name_jobopening);
 		}
 		response.sendRedirect("JobOpeningPortalEmployee.jsp");
 	}

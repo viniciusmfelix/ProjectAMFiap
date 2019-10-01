@@ -13,7 +13,7 @@ h1,a{
 	text-align: center;
 }
 .container{
-	height:1000px;
+	height:950px;
 }
 .inner-container{
 	padding-top:320px;
@@ -151,4 +151,42 @@ h1,a{
         -ms-transform: rotate(360deg);
         transform: rotate(360deg);
     }
+}
+.footer{
+	width:100%;
+}
+.inner-footer{
+	margin:auto;
+	background-color:#00060f;
+	color: white;
+	width:1200px;
+	height:40px;
+	line-height:40px;
+}
+.text{
+	margin-left: 350px;
+	margin-top:9px;
+	float:left;
+}
+.social-menu{
+	margin-right:400px;
+	float:right;
+	margin-top: 10px;
+}
+.social-menu ul li{
+	padding-left:10px;
+	padding-right:10px;
+	list-style:none;
+	display: inline-block;
+}
+.social-menu ul li .fa{
+	font-size: 30px;
+}
+.social-menu ul li a{
+	display:block;
+	transition: 0.4s;
+}
+.social-menu ul li a:hover{
+	transform: translate(0,-10px);
+	transition: 0.5s;
 }

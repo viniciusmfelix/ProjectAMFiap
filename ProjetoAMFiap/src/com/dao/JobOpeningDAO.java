@@ -12,7 +12,7 @@ import com.model.JobOpening;
 import com.model.User;
 
 public class JobOpeningDAO {
-	private static final String refuseFeedback = "Your resume at all was not able to select in this job :(. Try again later on other opportunities!";
+	private final String refuseFeedback = "Your resume at all was not able to select in this job :(. Try again later on other opportunities!";
 	private Connection connection;
 	private PreparedStatement ps;
 	private ResultSet rs;
@@ -32,6 +32,10 @@ public class JobOpeningDAO {
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during insert Job Opening on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 	}
 	
@@ -47,6 +51,10 @@ public class JobOpeningDAO {
 			
 		} catch (SQLException e) {
 			System.out.println("Error during retrievement of Job Openings on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return jobs;
 	}
@@ -61,6 +69,10 @@ public class JobOpeningDAO {
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during update of Job Openings on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 	}
 	
@@ -72,6 +84,10 @@ public class JobOpeningDAO {
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during delete Job Opening on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 	}
 	
@@ -85,6 +101,10 @@ public class JobOpeningDAO {
 			if(rs.next()) exists = true;
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of job opening exists on Oracle\n"+e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return exists;
 	}
@@ -100,6 +120,10 @@ public class JobOpeningDAO {
 			if(rs.next()) exists = true;
 		}catch(SQLException e) {
 			System.out.println("Error retrieving user already applied to job opening on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return exists;
 	}
@@ -114,6 +138,12 @@ public class JobOpeningDAO {
 			if(rs.next()) jobname = rs.getString("jobname");
 		}catch(SQLException e) {
 			System.out.println("Error during retrieving job name on Oracle\n" + e);
+		} finally {
+			try {
+				if(rs==null) {
+				ps.close();
+				}
+			}catch(SQLException e) {}
 		}
 		return jobname;
 	}
@@ -128,6 +158,10 @@ public class JobOpeningDAO {
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during insert feedback to user on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 	}
 	
@@ -142,20 +176,31 @@ public class JobOpeningDAO {
 			if(rs.next()) already_applied = true;
 		}catch(SQLException e) {
 			System.out.println("Erron during retrievement of feedback already applied on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return already_applied;
 	}
 	
 	public void setFeedbacktoRefusedUsers(int jo_code, List<User> users) {
+		sql = "INSERT INTO user_jobopening_feedback VALUES((SELECT user_jobopening.jo_code FROM user_jobopening WHERE user_jobopening.jo_code = ? AND user_jobopening.email = ?),(SELECT user_jobopening.email FROM user_jobopening WHERE user_jobopening.email = ? AND user_jobopening.jo_code = ?),?);";
 		for (User user : users) {
-			sql = "INSERT INTO user_jobopening_feedback VALUES((SELECT user_jobopening.jo_code FROM user_jobopening WHERE user_jobopening.jo_code = ?),(SELECT user_jobopening.email FROM user_jobopening WHERE user_jobopening.email = ?),?)";
 			try {
 				ps = connection.prepareStatement(sql);
 				ps.setInt(1, jo_code);
 				ps.setString(2, user.getEmail());
-				ps.setString(3, refuseFeedback);
+				ps.setString(3, user.getEmail());
+				ps.setInt(4, jo_code);
+				ps.setString(5, refuseFeedback);
+				connection.commit();
 			}catch(SQLException e) {
 				System.out.println("Error during insert feedback to refused users on Oracle\n");
+			}finally {
+				try {
+					ps.close();
+				}catch(SQLException e) {}
 			}
 		}
 	}

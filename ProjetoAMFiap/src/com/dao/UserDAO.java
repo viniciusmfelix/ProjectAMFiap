@@ -23,7 +23,7 @@ public class UserDAO {
 	}
 	
 	public void userRegister(User user) {
-		sql = "INSERT INTO userform VALUES (?,?,?,?,?,?)";
+		sql = "INSERT INTO userform VALUES (?,?,?,?,?)";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, user.getName());
@@ -34,6 +34,10 @@ public class UserDAO {
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during insert User on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 	}
 	
@@ -46,6 +50,12 @@ public class UserDAO {
 			rs = ps.executeQuery();
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement User on Oracle\n" + e);
+		} finally {
+			try {
+				if(rs == null) {
+					ps.close();	
+				}
+			}catch(SQLException e) {}
 		}
 		return rs;
 	}
@@ -64,6 +74,10 @@ public class UserDAO {
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement name User on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return aux;
 	}
@@ -77,6 +91,10 @@ public class UserDAO {
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during register user into a job opening on Oracle\n" + e);
+		}  finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 	}
 	
@@ -92,6 +110,10 @@ public class UserDAO {
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of user exists method on Oracle\n" + e);
+		}  finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return exists;
 	}
@@ -103,11 +125,15 @@ public class UserDAO {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
 				feedbacks.add(new Feedbacks(rs.getInt("jo_code"),rs.getString("feedback_message")));
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrieving feedbacks on Oracle\n" + e);
+		}  finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return feedbacks;
 	}

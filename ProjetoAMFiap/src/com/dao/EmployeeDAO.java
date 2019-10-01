@@ -23,7 +23,7 @@ public class EmployeeDAO {
 	}
 	
 	public void employeeRegister(Employee employee) {
-		sql = "INSERT INTO employeeform VALUES (?,?,?,?,?,?)";
+		sql = "INSERT INTO employeeform VALUES (?,?,?,?,?)";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, employee.getEmployee_code());
@@ -31,10 +31,13 @@ public class EmployeeDAO {
 			ps.setString(3, employee.getLastname());
 			ps.setString(4, employee.getEmail());
 			ps.setString(5, employee.getPassword());
-			ps.setInt(6, 1);
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during insert Employee on Oracle\n" + e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 	}
 	
@@ -47,6 +50,12 @@ public class EmployeeDAO {
 			rs = ps.executeQuery();
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement Employee on Oracle\n" + e);
+		} finally {
+			try {
+				if(rs==null) {
+					ps.close();
+				}
+			}catch(SQLException e) {}
 		}
 		return rs;
 	}
@@ -59,6 +68,12 @@ public class EmployeeDAO {
 			rs = ps.executeQuery();
 		}catch(SQLException e) {
 			System.out.println("Error during ADM password authentication on Oracle\n" + e);
+		} finally {
+			try {
+				if(rs==null) {
+					ps.close();
+				}
+			}catch(SQLException e) {}
 		}
 		return rs;
 	}
@@ -77,6 +92,10 @@ public class EmployeeDAO {
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement name User on Oracle\n" + e);
+		} finally {
+			try {
+					ps.close();
+			}catch(SQLException e) {}
 		}
 		return aux;
 	}
@@ -88,11 +107,15 @@ public class EmployeeDAO {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, jo_code);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
 				users_applied.add(new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("email"),rs.getString("phone")));
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of applied users on Oracle\n"+e);
+		} finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return users_applied;
 	}

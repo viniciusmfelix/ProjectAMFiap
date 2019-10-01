@@ -33,6 +33,10 @@ public class ResumeDAO {
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error creating new resume on Oracle\n" + e);
+		}finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 	}
 	
@@ -49,6 +53,10 @@ public class ResumeDAO {
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error updating resume on Oracle\n" + e);
+		}finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 	}
 	
@@ -59,11 +67,15 @@ public class ResumeDAO {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
 				resumes.add(new Resume(rs.getString("goal"),rs.getString("academic_training"),rs.getString("professional_experience"),rs.getString("languages"),rs.getString("extracurricular_courses")));
 			}
 		}catch(SQLException e) {
 			System.out.println("Error retrieving user resume on Oracle\n" + e);
+		}finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return resumes;
 	}
@@ -80,6 +92,10 @@ public class ResumeDAO {
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during check if resumeform exists on Oracle\n" + e);
+		}finally {
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
 		return exists;
 	}

@@ -34,7 +34,7 @@ public class WekaAnalysis {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, jo_code);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
 				try {
 					DataSource ds = new DataSource("data_reference_ia.arff");
 					Instances ins = ds.getDataSet();
@@ -55,7 +55,7 @@ public class WekaAnalysis {
 					double prediction_2 = prediction_vector[1];
 					
 					if(prediction_1 > prediction_2) {
-						users.add(new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("email"),rs.getString("phone"),prediction_1));
+						users.add(new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("email_user"),rs.getString("phone"),prediction_1));
 					}
 				} catch (Exception e) {
 					System.out.println("Error during I.A. profile analysis.\n" + e);
@@ -63,7 +63,12 @@ public class WekaAnalysis {
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of applied users on Oracle\n"+e);
+		} finally{
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
+		System.out.println(users.toString());
 		return users;
 	}
 	
@@ -74,7 +79,7 @@ public class WekaAnalysis {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, jo_code);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
 				try {
 					DataSource ds = new DataSource("data_reference_ia.arff");
 					Instances ins = ds.getDataSet();
@@ -94,8 +99,9 @@ public class WekaAnalysis {
 					double prediction_1 = prediction_vector[0];
 					double prediction_2 = prediction_vector[1];
 					
-					if(prediction_1 < prediction_2) {
+					if(prediction_2 > prediction_1) {
 						users.add(new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("email"),rs.getString("phone"),prediction_1));
+						
 					}
 				} catch (Exception e) {
 					System.out.println("Error during I.A. profile analysis.\n" + e);
@@ -103,7 +109,12 @@ public class WekaAnalysis {
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of applied users on Oracle\n"+e);
+		} finally{
+			try {
+				ps.close();
+			}catch(SQLException e) {}
 		}
+		System.out.println(users.toString());
 		return users;
 	}
 }
