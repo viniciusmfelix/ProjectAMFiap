@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class JavaMail {
 	
-	public boolean sendMailtoUser(String email, String feedback_message, int jo_code, String name_jobopening) {
+	public boolean sendMailtoUser(String email,String name, int jo_code, String name_jobopening) {
 		boolean send = false;
 	    Properties props = new Properties();
 	    props.put("mail.smtp.host", "smtp.office365.com");
@@ -45,8 +45,8 @@ public class JavaMail {
 	      Address[] toUser = InternetAddress.parse(email);  
 	 
 	      message.setRecipients(Message.RecipientType.TO, toUser);
-	      message.setSubject("Feeback da sua aplicação na Vaga nº " +jo_code+" - " + name_jobopening);
-	      message.setText(feedback_message);
+	      message.setSubject("Feedback of your application in the Job Opening nº " +jo_code+" - " + name_jobopening);
+	      message.setText("Dear " + name +", a Recruiter gave you a feedback about your application, check it out on our portal!\n\n\nCheers,\nSniper Contractor Inc.");
 	      Transport.send(message);
 	      send = true;
 	     } catch (MessagingException e) {

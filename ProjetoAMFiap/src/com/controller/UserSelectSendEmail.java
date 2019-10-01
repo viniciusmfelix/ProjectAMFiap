@@ -34,15 +34,19 @@ public class UserSelectSendEmail extends HttpServlet {
 		
 		RequestDispatcher dispatcher;
 		
+		
 		JobOpeningDAO jobopeningdao = new JobOpeningDAO();
 		int jo_code = parseInt(request.getParameter("jo_code"));
 		String name_jobopening = jobopeningdao.retrieveNameJobOpening(jo_code);
 		String feedback_message = request.getParameter("feedback_message");
 		String email = request.getParameter("email");
+		String situation;
+		String name;
 		boolean user_exists;
+		boolean feedback_applied;
 		boolean job_exists;
 		boolean user_applied;
-		String situation;
+		
 		
 		JavaMail sendEmail = new JavaMail();
 		UserDAO userdao = new UserDAO();
@@ -50,29 +54,38 @@ public class UserSelectSendEmail extends HttpServlet {
 		job_exists = jobopeningdao.jobOpeningExists(jo_code);
 		
 		user_applied = jobopeningdao.userAlreadyApplied(jo_code, email);
+		feedback_applied = jobopeningdao.feedbackAlreadyApplied(jo_code, email);
 		
 		if(user_applied == true) {
-			situation = "Email Sent!";
-			sendEmail.sendMailtoUser(email, feedback_message,jo_code, name_jobopening);
-			request.setAttribute("email_sent", situation);
-			dispatcher = request.getRequestDispatcher("UserApplySelect.jsp");
-			dispatcher.forward(request, response);
+			if(feedback_applied == false) {
+				jobopeningdao.applyFeedback(jo_code, email, feedback_message);
+				name = userdao.retrieveName(email);
+				sendEmail.sendMailtoUser(email,name, jo_code, name_jobopening);
+				situation = "Feedback applied and email sent!";
+				request.setAttribute("email_sent", situation);
+				dispatcher = request.getRequestDispatcher("UserApplySelect.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				situation = "Feedback to user already applied.";
+				request.setAttribute("email_sent", situation);
+				dispatcher = request.getRequestDispatcher("UserApplySelect.jsp");
+				dispatcher.forward(request, response);
+			}
 		} else {
-			
 			if(user_exists == true) {
 				if(job_exists == true) {
-					situation = "User not applied to this job opening";
+					situation = "User not applied to this job opening.";
 					request.setAttribute("email_sent", situation);
 					dispatcher = request.getRequestDispatcher("UserApplySelect.jsp");
 					dispatcher.forward(request, response);
 				} else {
-					situation = "Job Opening not exists";
+					situation = "Job Opening not exists.";
 					request.setAttribute("job_notexists", situation);
 					dispatcher = request.getRequestDispatcher("UserApplySelect.jsp");
 					dispatcher.forward(request, response);
 				}
 			} else {
-				situation = "User not exists";
+				situation = "User not exists.";
 				request.setAttribute("user_notexists", situation);
 				dispatcher = request.getRequestDispatcher("UserApplySelect.jsp");
 				dispatcher.forward(request, response);

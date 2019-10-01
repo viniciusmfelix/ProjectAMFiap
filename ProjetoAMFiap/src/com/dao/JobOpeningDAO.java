@@ -9,9 +9,10 @@ import java.util.List;
 
 import com.dbconnection.ConnectToOracle;
 import com.model.JobOpening;
+import com.model.User;
 
 public class JobOpeningDAO {
-
+	private static final String refuseFeedback = "Your resume at all was not able to select in this job :(. Try again later on other opportunities!";
 	private Connection connection;
 	private PreparedStatement ps;
 	private ResultSet rs;
@@ -115,5 +116,47 @@ public class JobOpeningDAO {
 			System.out.println("Error during retrieving job name on Oracle\n" + e);
 		}
 		return jobname;
+	}
+	
+	public void applyFeedback(int jo_code, String email, String message_feedback) {
+		sql = "INSERT INTO user_jobopening_feedback VALUES((SELECT user_jobopening.jo_code FROM user_jobopening WHERE user_jobopening.jo_code = ?),(SELECT user_jobopening.email FROM user_jobopening WHERE user_jobopening.email = ?),?)";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, jo_code);
+			ps.setString(2, email);
+			ps.setString(3, message_feedback);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during insert feedback to user on Oracle\n" + e);
+		}
+	}
+	
+	public boolean feedbackAlreadyApplied(int jo_code, String email) {
+		boolean already_applied = false;
+		sql = "SELECT feedback_message FROM user_jobopening_feedback WHERE user_jobopening_feedback.jo_code = ? AND user_jobopening_feedback.email = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, jo_code);
+			ps.setString(2, email);
+			rs = ps.executeQuery();
+			if(rs.next()) already_applied = true;
+		}catch(SQLException e) {
+			System.out.println("Erron during retrievement of feedback already applied on Oracle\n" + e);
+		}
+		return already_applied;
+	}
+	
+	public void setFeedbacktoRefusedUsers(int jo_code, List<User> users) {
+		for (User user : users) {
+			sql = "INSERT INTO user_jobopening_feedback VALUES((SELECT user_jobopening.jo_code FROM user_jobopening WHERE user_jobopening.jo_code = ?),(SELECT user_jobopening.email FROM user_jobopening WHERE user_jobopening.email = ?),?)";
+			try {
+				ps = connection.prepareStatement(sql);
+				ps.setInt(1, jo_code);
+				ps.setString(2, user.getEmail());
+				ps.setString(3, refuseFeedback);
+			}catch(SQLException e) {
+				System.out.println("Error during insert feedback to refused users on Oracle\n");
+			}
+		}
 	}
 }

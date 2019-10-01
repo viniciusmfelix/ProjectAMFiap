@@ -9,6 +9,7 @@
 <body>
 <h1>Job Openings Portal</h1>
 <a href="JobOpeningList.jsp">See available Job Openings</a><br/><br/>
-Apply yourself to a Job Opening <a href="UserApply.jsp">here</a>
+Apply yourself to a Job Opening <a href="UserApply.jsp">here</a><br/><br/>
+View your feedbacks about applies <a href="UserFeedbacksPage.jsp">here</a>
 </body>
 </html>

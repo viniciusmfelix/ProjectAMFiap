@@ -1,10 +1,10 @@
 package com.dao;
 
-
 import java.util.List;
 import com.model.User;
 
 public class AnalysisDAO {
+
 	
 	public AnalysisDAO(){
 	}

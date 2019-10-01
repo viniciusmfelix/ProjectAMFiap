@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -41,7 +42,9 @@ public class UserApplySelect extends HttpServlet {
 		String bad_situation;
 		User best_user;
 		
-		List<User> users_to_analysis = artificial_intelligence.selectAppropriateApply(jo_code);
+		List<User> users_to_analysis = new ArrayList<>();
+				
+		users_to_analysis = artificial_intelligence.selectAppropriateApply(jo_code);
 		best_user = analysisdao.getBestUser(users_to_analysis);
 		
 		if(best_user != null) {

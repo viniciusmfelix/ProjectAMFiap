@@ -27,6 +27,8 @@
 <input type="text" name="email" placeholder="Type the email of the User here..."><br/><br/>
 <textarea name="feedback_message" rows="5" cols="30" placeholder="Specify email here"></textarea><br/><br/>
 <input type="submit" value="Send Email">
-</form>
+</form><br/><br/>
+<%String email_sent = (String) request.getAttribute("email_sent"); %>
+<%=email_sent %>
 </body>
 </html>

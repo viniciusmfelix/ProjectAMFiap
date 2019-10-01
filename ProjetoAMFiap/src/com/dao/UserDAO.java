@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.dbconnection.ConnectToOracle;
+import com.model.Feedbacks;
 import com.model.User;
 
 public class UserDAO {
@@ -28,7 +31,6 @@ public class UserDAO {
 			ps.setString(3, user.getEmail());
 			ps.setString(4, user.getTelephone());
 			ps.setString(5, user.getPassword());
-			ps.setInt(6, 0);
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during insert User on Oracle\n" + e);
@@ -92,5 +94,21 @@ public class UserDAO {
 			System.out.println("Error during retrievement of user exists method on Oracle\n" + e);
 		}
 		return exists;
+	}
+	
+	public List<Feedbacks> retrieveFeedbacks(String email){
+		List<Feedbacks> feedbacks = new ArrayList<>();
+		sql = "SELECT user_jobopening_feedback.jo_code, user_jobopening_feedback.feedback_message FROM user_jobopening_feedback WHERE user_jobopening_feedback.email = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				feedbacks.add(new Feedbacks(rs.getInt("jo_code"),rs.getString("feedback_message")));
+			}
+		}catch(SQLException e) {
+			System.out.println("Error during retrieving feedbacks on Oracle\n" + e);
+		}
+		return feedbacks;
 	}
 }
