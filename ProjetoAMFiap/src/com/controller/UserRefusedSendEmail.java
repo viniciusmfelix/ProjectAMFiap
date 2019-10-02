@@ -46,8 +46,10 @@ public class UserRefusedSendEmail extends HttpServlet {
 		System.out.println(refused_users.toString());
 		
 		for (User user : refused_users) {
+			
 			jobopeningdao.setFeedbacktoRefusedUsers(jo_code, user);
 			sendMail.sendMailtoUser(user.getEmail(), user.getName(), jo_code, name_jobopening);
+		
 		}
 		response.sendRedirect("JobOpeningPortalEmployee.jsp");
 	}
