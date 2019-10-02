@@ -1,10 +1,10 @@
 package com.model;
 
-public class Feedbacks {
+public class Feedback {
 	private int jo_code;
 	private String feedback_message;
 	
-	public Feedbacks(int jo_code, String feedback_message) {
+	public Feedback(int jo_code, String feedback_message) {
 		super();
 		this.jo_code = jo_code;
 		this.feedback_message = feedback_message;

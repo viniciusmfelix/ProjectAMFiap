@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dbconnection.ConnectToOracle;
-import com.model.Feedbacks;
+import com.model.Feedback;
 import com.model.User;
 
 public class UserDAO {
@@ -96,15 +96,15 @@ public class UserDAO {
 		return exists;
 	}
 	
-	public List<Feedbacks> retrieveFeedbacks(String email){
-		List<Feedbacks> feedbacks = new ArrayList<>();
+	public List<Feedback> retrieveFeedbacks(String email){
+		List<Feedback> feedbacks = new ArrayList<>();
 		sql = "SELECT user_jobopening_feedback.jo_code, user_jobopening_feedback.feedback_message FROM user_jobopening_feedback WHERE user_jobopening_feedback.email = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				feedbacks.add(new Feedbacks(rs.getInt("jo_code"),rs.getString("feedback_message")));
+				feedbacks.add(new Feedback(rs.getInt("jo_code"),rs.getString("feedback_message")));
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrieving feedbacks on Oracle\n" + e);

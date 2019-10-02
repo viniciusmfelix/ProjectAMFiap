@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dao.UserDAO;
-import com.model.Feedbacks;
+import com.model.Feedback;
 
 @WebServlet("/retrievefeedbacks")
 public class RetrieveFeedbacks extends HttpServlet {
@@ -37,7 +37,7 @@ public class RetrieveFeedbacks extends HttpServlet {
 		String email = request.getParameter("email");
 		UserDAO userdao = new UserDAO();
 		
-		List<Feedbacks> feedbacks = new ArrayList<>();
+		List<Feedback> feedbacks = new ArrayList<>();
 		
 		feedbacks = userdao.retrieveFeedbacks(email);
 		request.setAttribute("feedbacks", feedbacks);
