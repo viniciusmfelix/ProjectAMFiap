@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class ConnectToOracle {
 	private String driver = "oracle.jdbc.driver.OracleDriver";
 	private String url = "jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl";
-	private String usuario = "rm81247";
-	private String senha = "200499";
+	private String usuario = "";
+	private String senha = "";
 	private Connection connection;
 	
 	public Connection connect() {
