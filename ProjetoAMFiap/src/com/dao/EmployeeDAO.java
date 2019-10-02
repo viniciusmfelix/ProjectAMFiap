@@ -35,9 +35,21 @@ public class EmployeeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error during insert Employee on Oracle\n" + e);
 		} finally {
-			try {
-				ps.close();
-			}catch(SQLException e) {}
+		    if (rs != null) {
+		        try {
+		            rs.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (ps != null) {
+		        try {
+		            ps.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
 		}
 	}
 	
@@ -51,11 +63,21 @@ public class EmployeeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement Employee on Oracle\n" + e);
 		} finally {
-			try {
-				if(rs==null) {
-					ps.close();
-				}
-			}catch(SQLException e) {}
+		    if (rs != null) {
+		        try {
+		            rs.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (ps != null) {
+		        try {
+		            ps.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
 		}
 		return rs;
 	}
@@ -69,11 +91,21 @@ public class EmployeeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error during ADM password authentication on Oracle\n" + e);
 		} finally {
-			try {
-				if(rs==null) {
-					ps.close();
-				}
-			}catch(SQLException e) {}
+		    if (rs != null) {
+		        try {
+		            rs.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (ps != null) {
+		        try {
+		            ps.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
 		}
 		return rs;
 	}
@@ -93,9 +125,21 @@ public class EmployeeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement name User on Oracle\n" + e);
 		} finally {
-			try {
-					ps.close();
-			}catch(SQLException e) {}
+		    if (rs != null) {
+		        try {
+		            rs.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (ps != null) {
+		        try {
+		            ps.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
 		}
 		return aux;
 	}
@@ -113,9 +157,21 @@ public class EmployeeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of applied users on Oracle\n"+e);
 		} finally {
-			try {
-				ps.close();
-			}catch(SQLException e) {}
+		    if (rs != null) {
+		        try {
+		            rs.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (ps != null) {
+		        try {
+		            ps.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
 		}
 		return users_applied;
 	}

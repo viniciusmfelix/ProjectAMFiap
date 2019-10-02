@@ -63,11 +63,7 @@ public class WekaAnalysis {
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of applied users on Oracle\n"+e);
-		} finally{
-			try {
-				ps.close();
-			}catch(SQLException e) {}
-		}
+		} 
 		System.out.println(users.toString());
 		return users;
 	}
@@ -109,11 +105,7 @@ public class WekaAnalysis {
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of applied users on Oracle\n"+e);
-		} finally{
-			try {
-				ps.close();
-			}catch(SQLException e) {}
-		}
+		} 
 		System.out.println(users.toString());
 		return users;
 	}

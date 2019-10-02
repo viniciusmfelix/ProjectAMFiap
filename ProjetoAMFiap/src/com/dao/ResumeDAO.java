@@ -34,9 +34,21 @@ public class ResumeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error creating new resume on Oracle\n" + e);
 		}finally {
-			try {
-				ps.close();
-			}catch(SQLException e) {}
+		    if (rs != null) {
+		        try {
+		            rs.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (ps != null) {
+		        try {
+		            ps.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
 		}
 	}
 	
@@ -54,9 +66,21 @@ public class ResumeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error updating resume on Oracle\n" + e);
 		}finally {
-			try {
-				ps.close();
-			}catch(SQLException e) {}
+		    if (rs != null) {
+		        try {
+		            rs.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (ps != null) {
+		        try {
+		            ps.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
 		}
 	}
 	
@@ -73,9 +97,21 @@ public class ResumeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error retrieving user resume on Oracle\n" + e);
 		}finally {
-			try {
-				ps.close();
-			}catch(SQLException e) {}
+		    if (rs != null) {
+		        try {
+		            rs.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (ps != null) {
+		        try {
+		            ps.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
 		}
 		return resumes;
 	}
@@ -93,9 +129,21 @@ public class ResumeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error during check if resumeform exists on Oracle\n" + e);
 		}finally {
-			try {
-				ps.close();
-			}catch(SQLException e) {}
+		    if (rs != null) {
+		        try {
+		            rs.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (ps != null) {
+		        try {
+		            ps.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { /* ignored */}
+		    }
 		}
 		return exists;
 	}

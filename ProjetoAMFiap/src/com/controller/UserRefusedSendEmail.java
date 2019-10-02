@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -38,14 +37,17 @@ public class UserRefusedSendEmail extends HttpServlet {
 		int jo_code = parseInt(request.getParameter("jo_code"));
 		WekaAnalysis artificial_inteligence = new WekaAnalysis();
 		JobOpeningDAO jobopeningdao = new JobOpeningDAO();
-		List<User> refused_users = new ArrayList<>();
+		List<User> refused_users;
 		JavaMail sendMail = new JavaMail();
 		String name_jobopening = jobopeningdao.retrieveNameJobOpening(jo_code);
 		
+		
 		refused_users = artificial_inteligence.selectRefusedApply(jo_code);
-		jobopeningdao.setFeedbacktoRefusedUsers(jo_code, refused_users);
+		System.out.println(refused_users.toString());
+		
 		for (User user : refused_users) {
-			//sendMail.sendMailtoUser(user.getEmail(), user.getName(), jo_code, name_jobopening);
+			jobopeningdao.setFeedbacktoRefusedUsers(jo_code, user);
+			sendMail.sendMailtoUser(user.getEmail(), user.getName(), jo_code, name_jobopening);
 		}
 		response.sendRedirect("JobOpeningPortalEmployee.jsp");
 	}
