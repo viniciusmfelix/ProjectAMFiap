@@ -2,9 +2,39 @@
 	margin: 0;
 	padding: 0;
 	font-family: 'Source Sans Pro', sans-serif;
+	text_decoration:none;
 }
 body{
 	background-color: #00060f;
+}
+a{
+	text-decoration:none;
+}
+h1{
+	margin-top: -700px;
+	font-family: 'Fredericka the Great', cursive;
+	font-size: 45px;
+	color:white;
+}
+h2{
+	margin-top:180px;
+	font-family: 'Fredericka the Great', cursive;
+	font-size: 30px;
+	color:white;
+}
+h3{
+	font-family: 'Fredericka the Great', cursive;
+	font-size: 16px;
+	color:white;
+	position:absolute;
+	margin-top:50px;
+	margin-left:130px;
+}
+h4{
+	text-align:center;
+	margin-top:40px;
+	font-size: 22px;
+	color:white;
 }
 .video{
 	position: relative;
@@ -29,6 +59,69 @@ body{
 	background-color:#00060f;
 	position:absolute;
 
+}
+.text{
+	float:right;
+}
+.inner-menu{
+	margin-top:50px;
+	width:300px;
+	overflow:hidden;
+}
+.item{
+	border-top: #163e4a 1px solid;
+	overflow:hidden;
+}
+.btn{
+	display:block;
+	padding: 16px 20px;
+	background-color:#1f1f1f;
+	color:#FFF;
+	position:relative;
+}
+.btn::before{
+	content:'';
+	position:absolute;
+	background-color:#1f1f1f;
+	width:14px;
+	height:14px;
+	left:20px;
+	bottom:-7px;
+	transform:rotate(45deg);
+}
+.btn i{
+	margin-right: 14px;
+}
+.submenu{
+	background-color:#163e4a;
+	overflow:hidden;
+	transition: .3s;
+	max-height:0;
+}
+.submenu a{
+	display: block;
+	color:#FFF;
+	padding: 16px 26px;
+	font-size:14px;
+	margin:4px 0;
+	position:relative;
+}
+.submenu a::before{
+	content: '';
+	position:absolute;
+	background-color: #adbfff;
+	height:100%;
+	width:6px;
+	left:0;
+	top:0;
+	transition: 0.3s;
+	opacity: 0;
+}
+.submenu a:hover::before{
+	opacity: 1;
+}
+.item:target .submenu{
+	max-height:50em;
 }
 .footer{
 	width:100%;
