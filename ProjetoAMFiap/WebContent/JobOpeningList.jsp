@@ -1,3 +1,4 @@
+<%@page import="java.util.Iterator"%>
 <%@page import="com.model.JobOpening"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -28,6 +29,26 @@
 				<form action="jobopeningretriever" method="POST">
 					<input type="submit" value="See all current jobs open">	
 				</form>
+				<%List<JobOpening> jobs = (List<JobOpening>) request.getAttribute("jobs");%>
+				<%String job_empty = "No available Job Openings right now. Try again later."; %>
+					<table class="tabela" border=1>
+						<tr>
+							<td width="150">Código da Vaga</td>
+							<td width="150">Nome</td>
+							<td width="300">Descrição</td>
+						</tr>
+						
+						<tr>
+							<%try{for(JobOpening jobopening : jobs){ %>
+							<%if(jobopening==null){ %>
+							<td colspan="3"><%=job_empty %></td>
+							<%}else{%>
+							<td><%=jobopening.getJo_code()%></td>
+							<td><%=jobopening.getName() %></td>
+							<td style="text-align:left"><%=jobopening.getDescription() %></td>
+							<%}}}catch(NullPointerException e){}%>
+						</tr>
+					</table>
 				<br />
 				<br />
 				<br />
@@ -39,8 +60,6 @@
 			</div>
 		</div>
 	</div>
-<%List<JobOpening> jobs = (List<JobOpening>) request.getAttribute("jobs");%>
-<%String job_empty = "No available Job Openings right now. Try again later."; %>
 
 	<footer>
 		<div class="footer">

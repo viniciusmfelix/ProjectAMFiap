@@ -1,0 +1,73 @@
+// Styling for the navbar
+#mainNav {
+  background-color: $gray-800;
+  .navbar-toggler {
+    font-size: 12px;
+    right: 0;
+    padding: 13px;
+    text-transform: uppercase;
+    color: $white;
+    border: 0;
+    background-color: $primary;
+    @include heading-font;
+  }
+  .navbar-brand {
+    color: $white;
+    @include script-font;
+    &.active,
+    &:active,
+    &:focus,
+    &:hover {
+      color: darken($white, 10%);
+    }
+  }
+  .navbar-nav {
+    .nav-item {
+      .nav-link {
+        font-size: 90%;
+        color: $white;
+        @include heading-font;
+        &.active,
+        &:hover {
+          color: $white;
+        }
+      }
+      .nav-button {
+        font-size: 90%;
+        padding: 5px;
+        margin: 10px 0;
+        &.active,
+        &:hover {
+          background-color: antiquewhite;
+        }
+      }
+      
+    }
+  }
+}
+@media(min-width:992px) {
+  #mainNav {
+    border: none;
+    background-color: $gray-800;
+    .navbar-brand {
+      font-size: 1.25em;
+      padding: 1px 0;
+    }
+    .navbar-nav {
+      .nav-item {
+        .nav-link {
+          padding: 0.75em 1em !important;
+        }
+        .nav-button {
+          font-size: 90%;
+          padding: 5px;
+          margin: 5px 8px;
+          &.active,
+          &:hover {
+            background-color: antiquewhite;
+          }
+        }
+      }
+    }
+  }
+}
