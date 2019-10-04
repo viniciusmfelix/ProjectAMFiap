@@ -23,14 +23,15 @@ public class UserDAO {
 	}
 	
 	public void userRegister(User user) {
-		sql = "INSERT INTO userform VALUES (?,?,?,?,?)";
+		sql = "INSERT INTO userform VALUES (user_id.nextval,?,?,?,?,?,?)";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setString(1, user.getName());
+			ps.setString(1, user.getFirstname());
 			ps.setString(2, user.getLastname());
 			ps.setString(3, user.getEmail());
-			ps.setString(4, user.getTelephone());
-			ps.setString(5, user.getPassword());
+			ps.setDate(4, user.getBorn_date());
+			ps.setString(5, user.getTelephone());
+			ps.setString(6, user.getPassword());
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during insert User on Oracle\n" + e);
@@ -38,7 +39,7 @@ public class UserDAO {
 	}
 	
 	public ResultSet userLogin(String email, String password) {
-		sql = "SELECT email, accesspassword FROM userform WHERE email = ? AND accesspassword = ?";
+		sql = "SELECT userform.email, userform.accesspassword FROM userform WHERE userform.email = ? AND userform.accesspassword = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
@@ -52,7 +53,7 @@ public class UserDAO {
 	
 	public String retrieveName(String email) {
 		String aux = null;
-		sql = "SELECT userform.firstname FROM userform WHERE email = ?";
+		sql = "SELECT userform.firstname FROM userform WHERE userform.email = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
@@ -68,12 +69,12 @@ public class UserDAO {
 		return aux;
 	}
 	
-	public void userApply(int jo_code, String email) {
+	public void userApply(int jo_code, int user_id) {
 		sql = "INSERT INTO user_jobopening VALUES (?,?)";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, jo_code);
-			ps.setString(2, email);
+			ps.setInt(2, user_id);
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during register user into a job opening on Oracle\n" + e);

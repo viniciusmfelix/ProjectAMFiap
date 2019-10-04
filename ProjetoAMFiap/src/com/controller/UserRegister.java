@@ -2,6 +2,7 @@ package com.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,17 +33,21 @@ public class UserRegister extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		
-		String name = request.getParameter("name");
+		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		String email = request.getParameter("email");
-		String phone = request.getParameter("phone");
+		System.out.println("Chegou aq");
+		Date date = Date.valueOf(request.getParameter("born_date"));
+		System.out.println("Chegou aq tb");
+		String phone = request.getParameter("telephone");
 		String password = request.getParameter("password");
 		String password_confirm = request.getParameter("password_confirm");
 		
 		if(password.equals(password_confirm)) {
-			User user = new User(name,lastname,email,phone,password);
+			User user = new User(firstname,lastname,email,date,phone,password);
 			UserDAO userdao = new UserDAO();
 			userdao.userRegister(user);
+			System.out.println("Chegou aqui");
 			response.sendRedirect("UserLogin.jsp");
 		} else {
 			response.sendRedirect("UserRegister.jsp");

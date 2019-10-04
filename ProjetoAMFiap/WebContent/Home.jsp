@@ -34,7 +34,7 @@
     <!-- Navbar fixa -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="index.html">Sniper Contractor</a>
+        <a class="navbar-brand js-scroll-trigger" href="Home.jsp">Sniper Contractor</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
           data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
           aria-label="Toggle navigation">
@@ -44,22 +44,22 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav text-uppercase ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">Serviços</a>
+              <a class="nav-link js-scroll-trigger" href="#services">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#jobs">Vagas</a>
+              <a class="nav-link js-scroll-trigger" href="#jobs">Job Openings</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">Sobre</a>
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contato</a>
+              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
             </li>
             <li class="nav-item">
-              <a name="" id="" class="nav-button btn btn-primary" href="login.html" role="button">Logar</a>
+              <a name="" id="" class="nav-button btn btn-primary" href="UserLogin.jsp" role="button">Login</a>
             </li>
             <li class="nav-item">
-              <a name="" id="" class="nav-button btn btn-primary" href="register.html" role="button">cadastrar</a>
+              <a name="" id="" class="nav-button btn btn-primary" href="UserRegister.jsp" role="button">Sign Up</a>
             </li>
           </ul>
         </div>
@@ -72,8 +72,8 @@
     <div class="container">
       <div class="intro-text">
         <div class="background-text">
-          <div class="intro-lead-in">Receba Alertas de vagas que se encaixam no seu perfil!</div>
-          <a class="btn btn-primary btn-lg text-uppercase" href="register.html">Cadastrar</a>
+          <div class="intro-lead-in">Get job alerts that fits your profile!</div>
+          <a class="btn btn-primary btn-lg text-uppercase" href="UserRegister.jsp">Sign Up Here</a>
         </div>
       </div>
     </div>
@@ -84,8 +84,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Serviços</h2>
-          <h3 class="section-subheading text-muted">Conheça as vantagens da nosso plataforma</h3>
+          <h2 class="section-heading text-uppercase">Services</h2>
+          <h3 class="section-subheading text-muted">Know the advantages of our platform</h3>
         </div>
       </div>
       <div class="row text-center">
@@ -94,24 +94,24 @@
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
             <i class="fas fa-briefcase fa-stack-1x fa-inverse"></i>
           </span>
-          <h4 class="service-heading">Novas Oportunidades</h4>
-          <p class="text-muted">Encontre e se candidate em novas vagas de emprego</p>
+          <h4 class="service-heading">New Opportunities</h4>
+          <p class="text-muted">Find and apply yourself to new job openings.</p>
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
             <i class="fas fa-user fa-stack-1x fa-inverse"></i>
           </span>
-          <h4 class="service-heading">Perfil Atualizado</h4>
-          <p class="text-muted">Tenha sempre um perfil atualizado para nossos recrutadores</p>
+          <h4 class="service-heading">Updated profile</h4>
+          <p class="text-muted">Keep your profile always updated to our recruiters.</p>
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
             <i class="fas fa-comments fa-stack-1x fa-inverse"></i>
           </span>
-          <h4 class="service-heading">Feedback Real</h4>
-          <p class="text-muted">Receba um feedback personalizado para cada vaga ou processo de seleção</p>
+          <h4 class="service-heading">Real Feedback</h4>
+          <p class="text-muted">Receive a personalized feedback for each apply.</p>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Vagas</h2>
+          <h2 class="section-heading text-uppercase">Job Openings</h2>
           <h3 class="section-subheading text-muted"></h3>
         </div>
       </div>
@@ -137,8 +137,8 @@
             <img class="img-fluid" src="img/jobs/01-thumbnail.jpg" alt="">
           </a>
           <div class="jobs-caption">
-            <h4>Promotor De Vendas</h4>
-            <p class="text-muted">Responsável por analisar e efetuar a reposição dos produtos faltantes na área de vendas</p>
+            <h4>Sales Promoter</h4>
+            <p class="text-muted">Responsible for analyzing and replacing missing products in the sales area.</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 jobs-item">
@@ -151,8 +151,8 @@
             <img class="img-fluid" src="img/jobs/02-thumbnail.jpg" alt="">
           </a>
           <div class="jobs-caption">
-            <h4>Analista de Banco de Dados</h4>
-            <p class="text-muted">Desenvolvimento de soluções baseadas em criação de rotinas</p>
+            <h4>Database Analyst</h4>
+            <p class="text-muted">Development of routines based solutions.</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 jobs-item">
@@ -165,8 +165,8 @@
             <img class="img-fluid" src="img/jobs/03-thumbnail.jpg" alt="">
           </a>
           <div class="jobs-caption">
-            <h4>Analista de Recursos Humanos</h4>
-            <p class="text-muted">Estamos em busca de um analista sênior para compor nosso time de seleção</p>
+            <h4>Human Resources Analyst</h4>
+            <p class="text-muted">We are looking for a senior analyst to compose our selection team.</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 jobs-item">
@@ -179,8 +179,8 @@
             <img class="img-fluid" src="img/jobs/04-thumbnail.jpg" alt="">
           </a>
           <div class="jobs-caption">
-            <h4>Designer gráfico</h4>
-            <p class="text-muted">Cuidar da marca e zelar pelas suas expressões gráficas</p>
+            <h4>Graphic Designer</h4>
+            <p class="text-muted">Take care of the brand and watch over its graphic expressions.</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 jobs-item">
@@ -193,8 +193,8 @@
             <img class="img-fluid" src="img/jobs/05-thumbnail.jpg" alt="">
           </a>
           <div class="jobs-caption">
-            <h4>Analista De BI</h4>
-            <p class="text-muted">Analisar o mercado global do agronegocio</p>
+            <h4>BI Analyst</h4>
+            <p class="text-muted">Analyze the global agribusiness market.</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 jobs-item">
@@ -207,8 +207,8 @@
             <img class="img-fluid"  src="img/jobs/06-thumbnail.jpg" alt="">
           </a>
           <div class="jobs-caption">
-            <h4>Desenvolvedor java</h4>
-            <p class="text-muted">Atuar junto a equipe do projeto em formato colaborativo, apoiando em questões técnicas</p>
+            <h4>Java Developer</h4>
+            <p class="text-muted">Work with the project team in a collaborative format, supporting technical issues.</p>
           </div>
         </div>
       </div>

@@ -41,11 +41,10 @@ public class UserLogin extends HttpServlet {
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String name;
 		
 			UserDAO userdao = new UserDAO();
 			rs = userdao.userLogin(email, password);
-			name = userdao.retrieveName(email);
+			String name = userdao.retrieveName(email);
 			
 			try {
 				if(rs.next()) {

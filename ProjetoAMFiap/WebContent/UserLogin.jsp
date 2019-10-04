@@ -34,7 +34,7 @@
     <!-- Navbar fixa -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="index.html">Sniper Contractor</a>
+        <a class="navbar-brand js-scroll-trigger" href="Home.jsp">Sniper Contractor</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
           data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
           aria-label="Toggle navigation">
@@ -56,10 +56,10 @@
               <a class="nav-link js-scroll-trigger" href="#contact">Contato</a>
             </li>
             <li class="nav-item">
-              <a name="" id="" class="nav-button btn btn-primary" href="login.html" role="button">Logar</a>
+              <a name="" id="" class="nav-button btn btn-primary" href="UserLogin.jsp" role="button">Login</a>
             </li>
             <li class="nav-item">
-              <a name="" id="" class="nav-button btn btn-primary" href="register.html" role="button">cadastrar</a>
+              <a name="" id="" class="nav-button btn btn-primary" href="UserRegister.jsp" role="button">Sign Up</a>
             </li>
           </ul>
         </div>
@@ -76,13 +76,13 @@
               <h1 class="text-center mt-0">Login</h1>
               <hr>
               <p class="text-success text-center">Digite suas informações de login</p>
-              <form>
+              <form action="userlogin" method="POST">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
-                    <input name="email" class="form-control form-control-lg" placeholder="Email" type="email">
+                    <input name="email" class="form-control form-control-lg" placeholder="Email" type="email" required>
                   </div> <!-- input-group.// -->
                 </div> <!-- form-group// -->
                 <div class="form-group">
@@ -90,7 +90,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input name="password" class="form-control form-control-lg" placeholder="******" type="password">
+                    <input name="password" class="form-control form-control-lg" placeholder="******" type="password" required>
                   </div> <!-- input-group.// -->
                 </div> <!-- form-group// -->
                 <p class="text-center"><a href="#" class="btn">Esqueceu sua senha?</a></p>

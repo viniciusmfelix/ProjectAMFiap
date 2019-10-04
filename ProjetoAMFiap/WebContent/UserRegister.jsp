@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +35,7 @@
     <!-- Navbar fixa -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="index.html">Sniper Contractor</a>
+        <a class="navbar-brand js-scroll-trigger" href="Home.jsp">Sniper Contractor</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
           data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
           aria-label="Toggle navigation">
@@ -44,22 +45,22 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav text-uppercase ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="../#services">Serviços</a>
+              <a class="nav-link js-scroll-trigger" href="../#services">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#jobs">Vagas</a>
+              <a class="nav-link js-scroll-trigger" href="#jobs">Job Openings</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">Sobre</a>
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contato</a>
+              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
             </li>
             <li class="nav-item">
-              <a name="" id="" class="nav-button btn btn-primary" href="login.html" role="button">Logar</a>
+              <a name="" id="" class="nav-button btn btn-primary" href="UserLogin.jsp" role="button">Login</a>
             </li>
             <li class="nav-item">
-              <a name="" id="" class="nav-button btn btn-primary" href="register.html" role="button">cadastrar</a>
+              <a name="" id="" class="nav-button btn btn-primary" href="UserRegister.jsp" role="button">Sign Up</a>
             </li>
           </ul>
         </div>
@@ -73,9 +74,9 @@
           <div class="col-12 col-sm-10 col-md-8 col-lg-8 col-xl-8">
                 <div class="card w-100 mx-auto">
                     <div class="col-10 card-body align-self-center">
-                        <form id="regForm">
+                        <form action="userregister" method="POST" id="regForm">
 
-                            <h1 class="text-center mt-0">Sign up</h1>
+                            <h1 class="text-center mt-0">Register</h1>
                             <!-- Circles which indicates the steps of the form: -->
                             <hr>
                             <div class="text-center">
@@ -90,7 +91,7 @@
                                 <div class="form-group">
                                     <div class="col-12 mb-3">
                                         <h5 class="pt-2 mb-0"><label for="validationServer01">First name</label></h5>
-                                        <input type="text" name="name" class="form-control form-control-lg" id="validationServer01"
+                                        <input type="text" name="firstname" class="form-control form-control-lg" id="validationServer01"
                                             placeholder="First name" oninput="validateInput(this)" required>
                                     </div>
                                     <div class="col-12 mb-3">
@@ -112,23 +113,21 @@
                                 </div>
                             </div>
 
-                            
-
                             <div class="tab mt-3">
                                 <div class="form-group">
                                     <div class="col-12 mb-3">
-                                        <h5 class="pt-2 mb-0"><label for="validationServer06"> </label></h5>
-                                        <input type="text" class="form-control form-control-lg" id="validationServer06" placeholder="  "
+                                        <h5 class="pt-2 mb-0"><label for="validationServer06">Email</label></h5>
+                                        <input  type="email" name="email" class="form-control form-control-lg" id="validationServer06" placeholder="example@example.com"
                                             oninput="validateInput(this)" required>
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <h5 class="pt-2 mb-0"><label for="validationServer07"> </label></h5>
-                                        <input type="text" class="form-control form-control-lg" id="validationServer07" placeholder="  "
+                                        <h5 class="pt-2 mb-0"><label for="validationServer06">Born Date</label></h5>
+                                        <input  type="date" name="born_date" class="form-control form-control-lg" id="validationServer06" placeholder="example@example.com"
                                             oninput="validateInput(this)" required>
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <h5 class="pt-2 mb-0"><label for="validationServer08"> </label></h5>
-                                        <input type="text" class="form-control form-control-lg" id="validationServer08" placeholder="  "
+                                        <h5 class="pt-2 mb-0"><label for="validationServer07">Phone</label></h5>
+                                        <input type="tel" name="telephone" class="form-control form-control-lg" id="validationServer07" placeholder="Only numbers"
                                             oninput="validateInput(this)" required>
                                     </div>
                                 </div>
@@ -137,18 +136,13 @@
                             <div class="tab mt-3">
                                 <div class="form-group">
                                     <div class="col-12 mb-3">
-                                        <h5 class="pt-2 mb-0"><label for="validationServer06"> </label></h5>
-                                        <input type="text" class="form-control form-control-lg" id="validationServer06" placeholder="  "
+                                        <h5 class="pt-2 mb-0"><label for="validationServer06">Password</label></h5>
+                                        <input type="password" name="password" class="form-control form-control-lg" id="validationServer06" placeholder="Password"
                                             oninput="validateInput(this)" required>
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <h5 class="pt-2 mb-0"><label for="validationServer07"> </label></h5>
-                                        <input type="text" class="form-control form-control-lg" id="validationServer07" placeholder="  "
-                                            oninput="validateInput(this)" required>
-                                    </div>
-                                    <div class="col-12 mb-3">
-                                        <h5 class="pt-2 mb-0"><label for="validationServer08"> </label></h5>
-                                        <input type="text" class="form-control form-control-lg" id="validationServer08" placeholder="  "
+                                        <h5 class="pt-2 mb-0"><label for="validationServer07">Confirm Password</label></h5>
+                                        <input type="password" name="password_confirm" class="form-control form-control-lg" id="validationServer07" placeholder="Confirm Password"
                                             oninput="validateInput(this)" required>
                                     </div>
                                 </div>
@@ -163,6 +157,7 @@
                                     <button type="button" class="btn btn-theme btn-lg float-right" id="nextBtn"
                                         onclick="nextPrev(1)">Next</button>
                                 </div>
+                                
                             </div>
 
 

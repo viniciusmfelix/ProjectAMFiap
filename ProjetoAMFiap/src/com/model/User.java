@@ -1,9 +1,13 @@
 package com.model;
 
+import java.sql.Date;
+
 public class User {
-	private String name;
+	private int user_id;
+	private String firstname;
 	private String lastname;
 	private String email;
+	private Date born_date;
 	private String telephone;
 	private String password;
 	private double ia_score;
@@ -12,38 +16,50 @@ public class User {
 		
 	}
 	
-	public User(String name, String lastname, String email, String telephone,double ia_score) {
+	public User(String firstname, String lastname, String email, String telephone,double ia_score) {
 		super();
-		this.name = name;
+		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
 		this.telephone = telephone;
 		this.ia_score = ia_score;
 	}
 
-	public User(String name, String lastname, String email, String telephone, String password) {
+	public User(int user_id, String firstname, String lastname, String email, Date born_date ,String telephone, String password) {
 		super();
-		this.name = name;
+		this.user_id = user_id;
+		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
+		this.born_date = born_date;
+		this.telephone = telephone;
+		this.password = password;
+	}
+	
+	public User(String firstname, String lastname, String email, Date born_date ,String telephone, String password) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.born_date = born_date;
 		this.telephone = telephone;
 		this.password = password;
 	}
 
-	public User(String name, String lastname, String email, String telephone) {
-		super();
-		this.name = name;
-		this.lastname = lastname;
-		this.email = email;
-		this.telephone = telephone;
+	public int getUser_id() {
+		return user_id;
 	}
 
-	public String getName() {
-		return name;
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	public String getLastname() {
@@ -60,6 +76,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Date getBorn_date() {
+		return born_date;
+	}
+
+	public void setBorn_date(Date born_date) {
+		this.born_date = born_date;
 	}
 
 	public String getTelephone() {
