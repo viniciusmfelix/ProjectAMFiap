@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dao.ResumeDAO;
 import com.model.AcademicTraining;
@@ -38,8 +39,9 @@ public class ResumeRegister extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-		String email = (String) request.getAttribute("email");
-		System.out.println(email);
+		HttpSession session = null;
+		
+		String email = (String) session.getAttribute("email");
 		
 		ResumeDAO resumedao = new ResumeDAO();
 		
