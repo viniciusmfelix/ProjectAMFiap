@@ -22,6 +22,20 @@ public class UserDAO {
 		this.connection = new ConnectToOracle().connect();
 	}
 	
+	public int returnUserId(String email) {
+		int user_id = 0;
+		sql = "SELECT userform.user_id FROM userform WHERE userform.email = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()) user_id = Integer.parseInt(rs.getString("user_id"));
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement of user ID on Oracle\n" + e);
+		}
+		return user_id;
+	}
+	
 	public void userRegister(User user) {
 		sql = "INSERT INTO userform VALUES (user_id.nextval,?,?,?,?,?,?)";
 		try {

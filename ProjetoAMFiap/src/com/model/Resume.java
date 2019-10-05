@@ -1,14 +1,20 @@
 package com.model;
 
-public class Resume {
-	private String goal;
-	private AcademicTraining academic_training;
-	private ProfessionalExperience professional_experience;
-	private Language languages;
-	private ExtracurricularCourse extracurricular_courses;
+import java.util.List;
 
-	public Resume(String goal, AcademicTraining academic_training, ProfessionalExperience professional_experience, Language languages,
-			ExtracurricularCourse extracurricular_courses) {
+public class Resume {
+	private Goal goal;
+	private List<AcademicTraining> academic_training;
+	private List<ProfessionalExperience> professional_experience;
+	private List<Language> languages;
+	private List<ExtracurricularCourse> extracurricular_courses;
+	
+	public Resume() {
+		
+	}
+
+	public Resume(Goal goal, List<AcademicTraining> academic_training, List<ProfessionalExperience> professional_experience, List<Language> languages,
+			List<ExtracurricularCourse> extracurricular_courses) {
 		super();
 		this.goal = goal;
 		this.academic_training = academic_training;
@@ -17,8 +23,8 @@ public class Resume {
 		this.extracurricular_courses = extracurricular_courses;
 	}
 
-	public Resume(String goal, AcademicTraining academic_training, ProfessionalExperience professional_experience,
-			Language languages) {
+	public Resume(Goal goal, List<AcademicTraining> academic_training, List<ProfessionalExperience> professional_experience,
+			List<Language> languages) {
 		super();
 		this.goal = goal;
 		this.academic_training = academic_training;
@@ -27,56 +33,56 @@ public class Resume {
 	}
 
 	
-	public Resume(String goal, AcademicTraining academic_training, ProfessionalExperience professional_experience) {
+	public Resume(Goal goal, List<AcademicTraining> academic_training, List<ProfessionalExperience> professional_experience) {
 		super();
 		this.goal = goal;
 		this.academic_training = academic_training;
 		this.professional_experience = professional_experience;
 	}
 
-	public Resume(String goal, AcademicTraining academic_training) {
+	public Resume(Goal goal, List<AcademicTraining> academic_training) {
 		super();
 		this.goal = goal;
 		this.academic_training = academic_training;
 	}
 
-	public String getGoal() {
+	public Goal getGoal() {
 		return goal;
 	}
 
-	public void setGoal(String goal) {
+	public void setGoal(Goal goal) {
 		this.goal = goal;
 	}
 
-	public AcademicTraining getAcademic_training() {
+	public List<AcademicTraining> getAcademic_training() {
 		return academic_training;
 	}
 
-	public void setAcademic_training(AcademicTraining academic_training) {
+	public void setAcademic_training(List<AcademicTraining> academic_training) {
 		this.academic_training = academic_training;
 	}
 
-	public ProfessionalExperience getProfessional_experience() {
+	public List<ProfessionalExperience> getProfessional_experience() {
 		return professional_experience;
 	}
 
-	public void setProfessional_experience(ProfessionalExperience professional_experience) {
+	public void setProfessional_experience(List<ProfessionalExperience> professional_experience) {
 		this.professional_experience = professional_experience;
 	}
 
-	public Language getLanguages() {
+	public List<Language> getLanguages() {
 		return languages;
 	}
 
-	public void setLanguages(Language languages) {
+	public void setLanguages(List<Language> languages) {
 		this.languages = languages;
 	}
 
-	public ExtracurricularCourse getExtracurricular_courses() {
+	public List<ExtracurricularCourse> getExtracurricular_courses() {
 		return extracurricular_courses;
 	}
 
-	public void setExtracurricular_courses(ExtracurricularCourse extracurricular_courses) {
+	public void setExtracurricular_courses(List<ExtracurricularCourse> extracurricular_courses) {
 		this.extracurricular_courses = extracurricular_courses;
 	}
 }

@@ -29,6 +29,11 @@ public class Goal {
 	public void setGoals(String goals) {
 		this.goals = goals;
 	}
+
+	@Override
+	public String toString() {
+		return "Goal [user_id=" + user_id + ", goals=" + goals + "]";
+	}
 	
 	
 }

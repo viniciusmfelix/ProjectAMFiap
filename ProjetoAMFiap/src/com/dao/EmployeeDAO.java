@@ -152,7 +152,7 @@ public class EmployeeDAO {
 			ps.setInt(1, jo_code);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				users_applied.add(new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("email"),rs.getString("phone")));
+				//users_applied.add(new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("email"),rs.getString("phone")));
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of applied users on Oracle\n"+e);

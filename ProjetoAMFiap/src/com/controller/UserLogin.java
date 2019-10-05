@@ -44,14 +44,14 @@ public class UserLogin extends HttpServlet {
 		
 			UserDAO userdao = new UserDAO();
 			rs = userdao.userLogin(email, password);
-			String name = userdao.retrieveName(email);
 			
 			try {
 				if(rs.next()) {
-					HttpSession session = request.getSession();
-					session.setAttribute("name", name);
+					HttpSession session = request.getSession(true);
+					session.setAttribute("email",email);
 					dispatcher = request.getRequestDispatcher("UserPage.jsp");
 					dispatcher.forward(request, response);
+					
 				} else {
 					response.sendRedirect("UserLogin.jsp");
 					out.print("Email and/or password invalid.");

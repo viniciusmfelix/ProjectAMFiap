@@ -6,16 +6,15 @@ public class ProfessionalExperience {
 	private int user_id;
 	private String jobtitle;
 	private String employer;
-	private String jobdescription;
 	private Date start_date;
 	private Date end_date;
+	private String jobdescription;
 	
 	public ProfessionalExperience() {
 		
 	}
 	
-	public ProfessionalExperience(int user_id, String jobtitle, String employer, String jobdescription, Date start_date,
-			Date end_date) {
+	public ProfessionalExperience(int user_id, String jobtitle, String employer, Date start_date,Date end_date, String jobdescription) {
 		super();
 		this.user_id = user_id;
 		this.jobtitle = jobtitle;
@@ -71,6 +70,12 @@ public class ProfessionalExperience {
 	
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
+	}
+
+	@Override
+	public String toString() {
+		return "ProfessionalExperience [user_id=" + user_id + ", jobtitle=" + jobtitle + ", employer=" + employer
+				+ ", start_date=" + start_date + ", end_date=" + end_date + ", jobdescription=" + jobdescription + "]";
 	}
 	
 }
