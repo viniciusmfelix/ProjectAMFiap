@@ -36,9 +36,7 @@ public class UserRegister extends HttpServlet {
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		String email = request.getParameter("email");
-		System.out.println("Chegou aq");
 		Date date = Date.valueOf(request.getParameter("born_date"));
-		System.out.println("Chegou aq tb");
 		String phone = request.getParameter("telephone");
 		String password = request.getParameter("password");
 		String password_confirm = request.getParameter("password_confirm");
@@ -47,7 +45,6 @@ public class UserRegister extends HttpServlet {
 			User user = new User(firstname,lastname,email,date,phone,password);
 			UserDAO userdao = new UserDAO();
 			userdao.userRegister(user);
-			System.out.println("Chegou aqui");
 			response.sendRedirect("UserLogin.jsp");
 		} else {
 			response.sendRedirect("UserRegister.jsp");

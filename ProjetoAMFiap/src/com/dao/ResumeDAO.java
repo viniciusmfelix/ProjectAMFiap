@@ -71,7 +71,7 @@ public class ResumeDAO {
 	}
 	
 	public void updateAcademicTraining(AcademicTraining acad_train,String old_course) {
-		sql = "UPDATE academictraining SET academictraining.start_date = ?, academictraining.end_date = ?, academictraining.institution = ?, academictraining.course = ? WHERE academictraining.at_id = ? AND academictraining.course = ?";
+		sql = "UPDATE academictraining SET start_date = ?, end_date = ?,institution = ?, course = ?, at_description = ? WHERE at_id = ? AND course = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setDate(1, acad_train.getStart_date());
@@ -80,6 +80,7 @@ public class ResumeDAO {
 			ps.setString(4, acad_train.getCourse());
 			ps.setInt(5, acad_train.getUser_id());
 			ps.setString(6, old_course);
+			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during update Academic Training on Oracle\n" + e);
 		}
@@ -105,6 +106,24 @@ public class ResumeDAO {
 		}
 	}
 	
+	public void updateProfessionalExperience(ProfessionalExperience prof_exp, String old_job, String old_employer) {
+		sql = "UPDATE academictraining SET jobtitle = ?, employer = ?, start_date = ?, end_date = ?,job_description = ? WHERE pe_id = ? AND jobtitle = ? AND employer = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, prof_exp.getJobtitle());
+			ps.setString(2, prof_exp.getEmployer());
+			ps.setDate(3, prof_exp.getStart_date());
+			ps.setDate(4, prof_exp.getEnd_date());
+			ps.setString(5, prof_exp.getJobdescription());
+			ps.setInt(6, prof_exp.getUser_id());
+			ps.setString(7, old_job);
+			ps.setString(8, old_employer);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update Professional Experience on Oracle\n" + e);
+		}
+	}
+	
 	public void setLanguages(List<Language> lang) {
 		Iterator<Language> iterator = lang.iterator();
 		while(iterator.hasNext()) {
@@ -116,8 +135,21 @@ public class ResumeDAO {
 				ps.setString(2, at.getLanguage());
 				ps.execute();
 			}catch(SQLException e) {
-				System.out.println("Error during inserting professionalexperience on Oracle\n" + e + "\nOn loop: " + at.toString());
+				System.out.println("Error during inserting languages on Oracle\n" + e + "\nOn loop: " + at.toString());
 			}
+		}
+	}
+	
+	public void updateLanguage(Language language, String old_lang) {
+		sql = "UPDATE languages SET lang = ? WHERE lang_id = ? AND lang = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, language.getLanguage());
+			ps.setInt(2, language.getUser_id());
+			ps.setString(3, old_lang);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update Languages on Oracle\n" + e);
 		}
 	}
 	
@@ -132,8 +164,21 @@ public class ResumeDAO {
 				ps.setString(2, at.getCourse());
 				ps.execute();
 			}catch(SQLException e) {
-				System.out.println("Error during inserting professionalexperience on Oracle\n" + e + "\nOn loop: " + at.toString());
+				System.out.println("Error during inserting extracurricular courses on Oracle\n" + e + "\nOn loop: " + at.toString());
 			}
+		}
+	}
+	
+	public void updateExtracurricularCourse(ExtracurricularCourse course, String old_course) {
+		sql = "UPDATE extracurricularcourses SET extc_course = ? WHERE ec_id = ? AND extc_course = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, course.getCourse());
+			ps.setInt(2, course.getUser_id());
+			ps.setString(3, old_course);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update extracurricular courses on Oracle\n" + e);
 		}
 	}
 	
