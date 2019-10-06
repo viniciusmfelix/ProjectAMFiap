@@ -128,6 +128,9 @@ public class ResumeDAO {
 	}
 	
 	public void setLanguages(List<Language> lang) {
+		for (Language language : lang) {
+			System.out.println(language.toString());
+		}
 		Iterator<Language> iterator = lang.iterator();
 		while(iterator.hasNext()) {
 			Language at = iterator.next();

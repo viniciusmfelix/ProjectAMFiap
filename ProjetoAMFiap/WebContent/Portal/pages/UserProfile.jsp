@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.model.Language"%>
+<%@page import="java.util.List"%>
 <%@page import="com.dao.UserDAO"%>
 <%@page import="com.model.Bio"%>
 <%@page import="com.model.Location"%>
@@ -9,6 +12,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+List<Language> lang_list = new ArrayList<>();
 session = request.getSession(true);
 String email = (String) session.getAttribute("email");
 String name,lastname,born_date,phone;
@@ -25,6 +29,7 @@ location = resumedao.retrieveLocation(user_id);
 born_date = userdao.retrieveBornDate(user_id);
 Bio bio;
 bio = resumedao.retrieveBio(user_id);
+lang_list = resumedao.retrieveLanguage(user_id);
 %>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -240,11 +245,9 @@ bio = resumedao.retrieveBio(user_id);
 
                                     <h5 class="text-muted d-block pt-5 mt-3 text-center">Languages</h5>
                                     <hr class="pb-0">
-                                    <h6 class="mb-1">English<span class="badge badge-secondary ml-2">Intermediary</span>
-                                    </h6>
-                                    <h6 class="mb-1">Espanhol<span class="badge badge-secondary ml-2">Advanced</span>
-                                    </h6>
-                                    <h6 class="mb-1">Francês<span class="badge badge-secondary ml-2">Basic</span></h6>
+                                    <%for(Language lang : lang_list){ %>
+                                    <h6 class="mb-1"><%=lang.getLanguage() %><span class="badge badge-secondary ml-2"><%=lang.getLevel() %></span></h6>
+	                                 <%} %>   
 
                                     <h6 class="seemore languages" style="display:none"><a href="#!"><small
                                                 class="text-primary d-block pt-10"><i class="fas fa-bars mr-10"></i> See

@@ -9,6 +9,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
+int lang_repeat = 0;
 session = request.getSession(true);
 String email = (String) session.getAttribute("email");
 String name,lastname,born_date,phone;
@@ -242,21 +243,21 @@ bio = resumedao.retrieveBio(user_id);
                                     <h5 class="text-muted d-block pt-5 mt-3 text-center">Languages</h5>
                                     <hr class="pb-0">
 
-                                    <form class="repeater" action="" method="post">
+                                    <form class="repeater" action="../../languages" method="post">
                                         <div data-repeater-list="group-languages">
                                             <div class="form-row" data-repeater-item>
                                                 <div class="form-group col-6">
                                                     <input type="text" name="language" class="form-control" id="skill"
-                                                        placeholder="Language">
+                                                        placeholder="Language" required>
                                                 </div>
                                                 <div class="form-group col-5">
                                                     <select class="form-control select2-single" name="level_language"
-                                                        id="selectLevel">
+                                                        id="selectLevel" required>
                                                         <option></option>
-                                                        <option value="beginner">beginner</option>
+                                                        <option value="beginner">Beginner</option>
                                                         <option value="intermediate">Intermediate</option>
                                                         <option value="advanced">Advanced</option>
-                                                        <option value="expert">Expert</option>
+                                                        <option value="fluent">Fluent</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-1 d-flex justify-content-center">
@@ -267,8 +268,9 @@ bio = resumedao.retrieveBio(user_id);
                                         </div>
 
                                         <button data-repeater-create type="button"
-                                            class="btn btn-outline-secondary btn-block"><i class="fas fa-plus"></i>
-                                            Add</button>
+                                            class="btn btn-outline-secondary btn-block" ><i class="fas fa-plus"></i>
+                                            Add </button>
+                                            
                                         <br>
                                         <button type="submit" class="btn btn-success float-right">Save</button>
                                     </form>

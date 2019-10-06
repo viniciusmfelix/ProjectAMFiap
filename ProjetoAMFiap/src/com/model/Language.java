@@ -42,7 +42,7 @@ public class Language {
 
 	@Override
 	public String toString() {
-		return "Language [user_id=" + user_id + ", language=" + language + "]";
+		return "Language [user_id=" + user_id + ", language=" + language + ", level=" + level +"]";
 	}
 	
 	
