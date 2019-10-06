@@ -1,13 +1,30 @@
+<%@page import="com.model.Bio"%>
+<%@page import="com.model.Location"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.model.Profession"%>
+<%@page import="com.dao.ResumeDAO"%>
 <%@page import="com.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
 session = request.getSession(true);
 String email = (String) session.getAttribute("email");
-String name,lastname;
+String name,lastname,born_date,phone;
+Profession profession;
 UserDAO userdao = new UserDAO(); 
+int user_id = userdao.returnUserId(email);
 name = userdao.retrieveName(email);
 lastname = userdao.retrieveLastName(email);
+ResumeDAO resumedao = new ResumeDAO();
+phone = userdao.retrievePhone(email);
+profession = resumedao.retrieveProfession(user_id);
+Location location;
+location = resumedao.retrieveLocation(user_id);
+born_date = userdao.retrieveBornDate(user_id);
+Bio bio;
+bio = resumedao.retrieveBio(user_id);
 %>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -174,10 +191,10 @@ lastname = userdao.retrieveLastName(email);
                                         <div class="col-lg-6 col-md-8 col-sm-6 text-center">
                                             <div class="row text-center">
                                                 <div class="col-12">
-                                                    <h4 class="card-title mt-10"><%=name %><%=lastname %></h4>
+                                                    <h4 class="card-title mt-10"><%=name %> <%=lastname %></h4>
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="card-subtitle">Front End Developer</p>
+                                                    <p class="card-subtitle"><%=profession.getProfession() %></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -332,58 +349,54 @@ lastname = userdao.retrieveLastName(email);
                                                     <hr class="mt-0 pt-0">
                                                 </div>
                                                 <div class="col-12">
-                                                    <form name="personalInfo" action="personalinfo" method="post">
+                                                    <form name="personalInfo" action="../../personalinfo" method="post">
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
                                                                 <label for="firstName">First name</label>
                                                                 <input type="text" name="firstname" class="form-control"
-                                                                    id="firstName" required>
+                                                                    id="firstName" value="<%=name %>" required>
                                                             </div>
                                                             <div class="form-group col-md-6">
                                                                 <label for="lastName">Last name</label>
                                                                 <input type="text" name="lastname" class="form-control"
-                                                                    id="lastName" required>
+                                                                    id="lastName" value="<%=lastname %>" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="profession"
                                                                 class="control-label">Profession</label>
-                                                            <select name="profession"
-                                                                class="form-control select2-single" id="profession">
-                                                                <option></option>
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                            </select>
+                                                            <input type="text" class="form-control" id="profession" name="profession" value="<%=profession.getProfession() %>"
+                                                               required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="dateBirth">Date Of Birth</label>
-                                                            <input type="date" name="dateBirth" class="form-control"
-                                                                id="dateBirth" aria-describedby="emailHelp">
+                                                            <input type="date" name="borndate" class="form-control"
+                                                                id="dateBirth" aria-describedby="emailHelp" value="<%=born_date%>">
                                                             <small id="age" class="form-text text-muted">21 years
                                                                 old
                                                                 (example)</small>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="email">Email address</label>
-                                                            <input type="email" class="form-control" id="email"
-                                                                required>
+                                                            <input type="email" class="form-control" id="email"  value="<%=email %>"
+                                                                disabled required>
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
                                                                 <label for="phone">Phone</label>
-                                                                <input type="tel" name="phone" class="form-control"
-                                                                    id="Phone">
+                                                                <input type="tel" name="phone" class="form-control" value="<%=phone %>"
+                                                                    id="Phone" required>
                                                             </div>
                                                             <div class="form-group col-md-6">
                                                                 <label for="location">Location</label>
-                                                                <input type="local" name="location" class="form-control"
-                                                                    id="location">
+                                                                <input type="local" name="country" class="form-control" value="<%=location.getCountry() %>"
+                                                                    id="location" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="address">Address</label>
-                                                            <input type="local" name="address" class="form-control"
-                                                                id="address">
+                                                            <input type="local" name="address" class="form-control" value="<%=location.getAddress() %>"
+                                                                id="address" >
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-12">
@@ -396,8 +409,8 @@ lastname = userdao.retrieveLastName(email);
                                                                     a
                                                                     job opening</label>
                                                                 <textarea class="form-control"
-                                                                    name="professionalSummary" id="professionalSummary"
-                                                                    rows="5"></textarea>
+                                                                    name="bio" id="professionalSummary"
+                                                                    rows="5" ><%=bio.getDescription() %></textarea>
                                                             </div>
                                                         </div>
                                                         <button type="submit"

@@ -1,9 +1,11 @@
 package com.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +85,42 @@ public class UserDAO {
 		return aux;
 	}
 	
+	public void updateFirstName(String firstname, int user_id) {
+		sql = "UPDATE userform SET userform.firstname = ? WHERE userform.user_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, firstname);
+			ps.setInt(2, user_id);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update last name on Oracle\n" + e);
+		}
+	}
+	
+	public void updateLastName(String lastname, int user_id) {
+		sql = "UPDATE userform SET userform.lastname = ? WHERE userform.user_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, lastname);
+			ps.setInt(2, user_id);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update last name on Oracle\n" + e);
+		}
+	}
+	
+	public void updateBornDate(Date date, int user_id) {
+		sql = "UPDATE userform SET userform.born_date = ? WHERE userform.user_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setDate(1, date);
+			ps.setInt(2, user_id);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update born date on Oracle\n" + e);
+		}
+	}
+	
 	public String retrieveLastName(String email) {
 		String aux = null;
 		sql = "SELECT userform.lastname FROM userform WHERE userform.email = ?";
@@ -117,6 +155,20 @@ public class UserDAO {
 			System.out.println("Error during retrievement name User on Oracle\n" + e);
 		} 
 		return aux;
+	}
+	
+	public String retrieveBornDate(int user_id) {
+		String date = null;
+		sql = "SELECT userform.born_date FROM userform WHERE userform.user_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) date = new SimpleDateFormat("dd/MM/yyyy").format(rs.getDate("born_date")) ;
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement date born User on Oracle\n" + e);
+		} 
+		return date;
 	}
 	
 	public void userApply(int jo_code, int user_id) {

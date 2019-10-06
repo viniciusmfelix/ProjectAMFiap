@@ -4,6 +4,10 @@ public class Profession {
 	private int user_id;
 	private String profession;
 	
+	public Profession() {
+		
+	}
+	
 	public Profession(int user_id, String profession) {
 		super();
 		this.user_id = user_id;

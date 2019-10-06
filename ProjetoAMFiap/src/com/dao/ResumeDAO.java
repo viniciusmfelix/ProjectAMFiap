@@ -228,7 +228,7 @@ public class ResumeDAO {
 	}
 	
 	public void updateBio(Bio bio) {
-		sql = "UPDATE bio SET bio.bio_description = ? WHERE bio.bio_id = ?";
+		sql = "UPDATE bio SET bio_description = ? WHERE bio_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, bio.getDescription());
@@ -345,7 +345,7 @@ public class ResumeDAO {
 	
 	public Location retrieveLocation(int user_id) {
 		Location location = new Location();
-		sql = "SELECT locations.country, locations.address FROM locations WHERE locations_id = ?";
+		sql = "SELECT locations.country, locations.address FROM locations WHERE location_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, user_id);
@@ -361,16 +361,72 @@ public class ResumeDAO {
 	
 	public Bio retrieveBio(int user_id) {
 		Bio bio = new Bio();
-		sql = "SELECT bio.bio_description WHERE bio.bio_id = ?";
+		sql = "SELECT bio.bio_description FROM bio WHERE bio.bio_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, user_id);
 			rs = ps.executeQuery();
-			if(rs.next()) bio = new Bio(user_id,"bio_description");
+			if(rs.next()) bio = new Bio(user_id,rs.getString("bio_description"));
 		}catch(SQLException e) {
 			System.out.println("Error during retrievement of bio on Oracle\n" + e);
 		}
 		return bio;
+	}
+	
+	public Profession retrieveProfession(int user_id) {
+		Profession profession = new Profession();
+		sql = "SELECT profession.profession_name FROM profession WHERE profession_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) profession = new Profession(user_id, rs.getString("profession_name"));
+		}catch(SQLException e) {
+			System.out.println("Error during retrieve profession on Oracle\n" + e);
+		}
+		return profession;
+	}
+	
+	public boolean professionExists(int user_id) {
+		boolean exists = false;
+		sql = "SELECT * FROM profession WHERE profession_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) exists = true;
+		}catch(SQLException e) {
+			System.out.println("Error during verification if profession exists on Oracle\n" + e);
+		}
+		return exists;
+	}
+	
+	public boolean locationExists(int user_id) {
+		boolean exists = false;
+		sql = "SELECT * FROM locations WHERE location_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) exists = true;
+		}catch(SQLException e) {
+			System.out.println("Error during verification if location exists on Oracle\n" + e);
+		}
+		return exists;
+	}
+	
+	public boolean bioExists(int user_id) {
+		boolean exists = false;
+		sql = "SELECT * FROM bio WHERE bio_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) exists = true;
+		}catch(SQLException e) {
+			System.out.println("Error during verification if bio exists on Oracle\n" + e);
+		}
+		return exists;
 	}
 	
 	public Resume retrieveResume(Goal goal, List<AcademicTraining> academy_list, List<ProfessionalExperience> profession_list, List<Language> lang_list, List<ExtracurricularCourse> extracrcl_list, Location location, Bio bio, Profession profession) {

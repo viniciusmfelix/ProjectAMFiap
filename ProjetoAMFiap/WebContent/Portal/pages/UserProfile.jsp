@@ -1,13 +1,30 @@
 <%@page import="com.dao.UserDAO"%>
+<%@page import="com.model.Bio"%>
+<%@page import="com.model.Location"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.model.Profession"%>
+<%@page import="com.dao.ResumeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 session = request.getSession(true);
 String email = (String) session.getAttribute("email");
-String name,lastname;
+String name,lastname,born_date,phone;
+Profession profession;
 UserDAO userdao = new UserDAO(); 
+int user_id = userdao.returnUserId(email);
 name = userdao.retrieveName(email);
 lastname = userdao.retrieveLastName(email);
+ResumeDAO resumedao = new ResumeDAO();
+phone = userdao.retrievePhone(email);
+profession = resumedao.retrieveProfession(user_id);
+Location location;
+location = resumedao.retrieveLocation(user_id);
+born_date = userdao.retrieveBornDate(user_id);
+Bio bio;
+bio = resumedao.retrieveBio(user_id);
 %>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -173,7 +190,7 @@ lastname = userdao.retrieveLastName(email);
                                                     <h4 class="card-title mt-10"><%=name %> <%=lastname %></h4>
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="card-subtitle">Front End Developer</p>
+                                                    <p class="card-subtitle"><%=profession.getProfession() %></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -295,16 +312,16 @@ lastname = userdao.retrieveLastName(email);
                                                 <div class="col-12">
                                                     <small class="text-muted d-block">Full name</small>
                                                     <h6><%=name %> <%=lastname %></h6>
-                                                    <small class="text-muted d-block">Age</small>
-                                                    <h6>21 (20/02/1998)</h6>
+                                                    <small class="text-muted d-block">Born Date</small>
+                                                    <h6><%=born_date %></h6>
                                                     <small class="text-muted d-block">Email address </small>
                                                     <h6><%=email %></h6>
                                                     <small class="text-muted d-block pt-10">Phone</small>
                                                     <h6><%=userdao.retrievePhone(email) %></h6>
                                                     <small class="text-muted d-block pt-10">Location</small>
-                                                    <h6>London</h6>
+                                                    <h6><%=location.getCountry() %></h6>
                                                     <small class="text-muted d-block pt-10">Address</small>
-                                                    <h6>71 Pilgrim Avenue Chevy Chase, MD 20815</h6>
+                                                    <h6><%=location.getAddress() %></h6>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -313,12 +330,7 @@ lastname = userdao.retrieveLastName(email);
                                                     <hr class="mt-0 pt-0">
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="text-muted">Orientador orientado com mais de 10 anos de
-                                                        experiência no ensino e aconselhamento de estudantes do ensino
-                                                        médio. Fluente em espanhol; hábeis em comunicar e desenvolver
-                                                        relacionamentos com estudantes de ESL e suas famílias.
-                                                        Desenvolvimento do conhecimento da linguagem gestual americana.
-                                                        Excelentes habilidades de comunicação escrita e oral.</p>
+                                                    <p class="text-muted"><%=bio.getDescription() %></p>
                                                 </div>
                                             </div>
                                         </div>
