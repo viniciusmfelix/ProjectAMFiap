@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,8 +32,6 @@ public class UserLogin extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-		RequestDispatcher dispatcher;
-		
 		PrintWriter out = response.getWriter();
 		
 		ResultSet rs;
@@ -49,11 +46,9 @@ public class UserLogin extends HttpServlet {
 				if(rs.next()) {
 					HttpSession session = request.getSession(true);
 					session.setAttribute("email",email);
-					dispatcher = request.getRequestDispatcher("UserPage.jsp");
-					dispatcher.forward(request, response);
-					
+					response.sendRedirect("Portal/UserPage.jsp");
 				} else {
-					response.sendRedirect("UserLogin.jsp");
+					response.sendRedirect("HomenRegister/UserLoginFailed.jsp");
 					out.print("Email and/or password invalid.");
 				}
 			} catch (SQLException e) {

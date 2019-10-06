@@ -10,9 +10,12 @@ import java.util.List;
 
 import com.dbconnection.ConnectToOracle;
 import com.model.AcademicTraining;
+import com.model.Bio;
 import com.model.ExtracurricularCourse;
 import com.model.Goal;
 import com.model.Language;
+import com.model.Location;
+import com.model.Profession;
 import com.model.ProfessionalExperience;
 import com.model.Resume;
 
@@ -128,11 +131,12 @@ public class ResumeDAO {
 		Iterator<Language> iterator = lang.iterator();
 		while(iterator.hasNext()) {
 			Language at = iterator.next();
-			sql = "INSERT INTO languages VALUES(?,?)";
+			sql = "INSERT INTO languages VALUES(?,?,?)";
 			try {
 				ps = connection.prepareStatement(sql);
 				ps.setInt(1, at.getUser_id());
 				ps.setString(2, at.getLanguage());
+				ps.setString(3, at.getLevel());
 				ps.execute();
 			}catch(SQLException e) {
 				System.out.println("Error during inserting languages on Oracle\n" + e + "\nOn loop: " + at.toString());
@@ -141,12 +145,13 @@ public class ResumeDAO {
 	}
 	
 	public void updateLanguage(Language language, String old_lang) {
-		sql = "UPDATE languages SET lang = ? WHERE lang_id = ? AND lang = ?";
+		sql = "UPDATE languages SET lang = ?, lang_level = ? WHERE lang_id = ? AND lang = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, language.getLanguage());
-			ps.setInt(2, language.getUser_id());
-			ps.setString(3, old_lang);
+			ps.setString(2, language.getLevel());
+			ps.setInt(3, language.getUser_id());
+			ps.setString(4, old_lang);
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during update Languages on Oracle\n" + e);
@@ -157,11 +162,12 @@ public class ResumeDAO {
 		Iterator<ExtracurricularCourse> iterator = ext_crs.iterator();
 		while(iterator.hasNext()) {
 			ExtracurricularCourse at = iterator.next();
-			sql = "INSERT INTO extracurricularcourses VALUES(?,?)";
+			sql = "INSERT INTO extracurricularcourses VALUES(?,?,?)";
 			try {
 				ps = connection.prepareStatement(sql);
 				ps.setInt(1, at.getUser_id());
 				ps.setString(2, at.getCourse());
+				ps.setString(3, at.getLevel());
 				ps.execute();
 			}catch(SQLException e) {
 				System.out.println("Error during inserting extracurricular courses on Oracle\n" + e + "\nOn loop: " + at.toString());
@@ -170,15 +176,90 @@ public class ResumeDAO {
 	}
 	
 	public void updateExtracurricularCourse(ExtracurricularCourse course, String old_course) {
-		sql = "UPDATE extracurricularcourses SET extc_course = ? WHERE ec_id = ? AND extc_course = ?";
+		sql = "UPDATE extracurricularcourses SET extc_course = ?, course_level = ? WHERE ec_id = ? AND extc_course = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, course.getCourse());
-			ps.setInt(2, course.getUser_id());
-			ps.setString(3, old_course);
+			ps.setString(2, course.getLevel());
+			ps.setInt(3, course.getUser_id());
+			ps.setString(4, old_course);
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during update extracurricular courses on Oracle\n" + e);
+		}
+	}
+	
+	public void setLocation(Location location) {
+		sql = "INSERT INTO locations VALUES (?,?,?)";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, location.getUser_id());
+			ps.setString(2, location.getCountry());
+			ps.setString(3, location.getAddress());
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during insert location on Oracle\n" + e);
+		}
+	}
+	
+	public void updateLocation(Location location) {
+		sql = "UPDATE locations SET locations.country = ?, locations.address = ? WHERE locations.location_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, location.getCountry());
+			ps.setString(2, location.getAddress());
+			ps.setInt(3, location.getUser_id());
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update locations on Oracle\n" + e);
+		}
+	}
+	
+	public void setBio(Bio bio) {
+		sql = "INSERT INTO bio VALUES (?,?)";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, bio.getUser_id());
+			ps.setString(2, bio.getDescription());
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during insert bio on Oracle\n" + e);
+		}
+	}
+	
+	public void updateBio(Bio bio) {
+		sql = "UPDATE bio SET bio.bio_description = ? WHERE bio.bio_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, bio.getDescription());
+			ps.setInt(2, bio.getUser_id());
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update bio on Oracle\n" + e);
+		}
+	}
+	
+	public void setProfession(Profession profession) {
+		sql = "INSERT INTO profession VALUES (?,?)";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, profession.getUser_id());
+			ps.setString(2, profession.getProfession());
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during insert profession on Oracle\n" + e);
+		}
+	}
+	
+	public void updateProfession(Profession profession) {
+		sql = "UPDATE profession SET profession.profession_name = ? WHERE profession_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, profession.getProfession());
+			ps.setInt(2, profession.getUser_id());
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during update profession on Oracle\n" + e);
 		}
 	}
 	
@@ -232,38 +313,68 @@ public class ResumeDAO {
 	
 	public List<Language> retrieveLanguage(int user_id){
 		List<Language> lang_list = new ArrayList<>();
-		sql = "SELECT languages.lang FROM languages WHERE lang_id = ?";
+		sql = "SELECT languages.lang, languages.lang_level FROM languages WHERE lang_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, user_id);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				lang_list.add(new Language(user_id, rs.getString("lang")));
+				lang_list.add(new Language(user_id, rs.getString("lang"),rs.getString("lang_level")));
 				}
 		}catch(SQLException e) {
-			System.out.println("Error retrieving user resume on Oracle\n" + e);
+			System.out.println("Error retrieving user languages on Oracle\n" + e);
 		}
 		return lang_list;
 	}
 	
 	public List<ExtracurricularCourse> retrieveExtracurricularCourse(int user_id){
 		List<ExtracurricularCourse> extracrcl_list = new ArrayList<>();
-		sql = "SELECT extracurricularcourses.extc_course FROM extracurricularcourses WHERE ec_id = ?";
+		sql = "SELECT extracurricularcourses.extc_course, extracurricularcourses.course_level FROM extracurricularcourses WHERE ec_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, user_id);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				extracrcl_list.add(new ExtracurricularCourse(user_id, rs.getString("extc_course")));
+				extracrcl_list.add(new ExtracurricularCourse(user_id, rs.getString("extc_course"),rs.getString("couse_level")));
 				}
 		}catch(SQLException e) {
-			System.out.println("Error retrieving user resume on Oracle\n" + e);
+			System.out.println("Error retrieving user extracurricular courses on Oracle\n" + e);
 		}
 		return extracrcl_list;
 	}
 	
-	public Resume retrieveResume(Goal goal, List<AcademicTraining> academy_list, List<ProfessionalExperience> profession_list, List<Language> lang_list, List<ExtracurricularCourse> extracrcl_list ) {
-		return new Resume(goal,academy_list,profession_list,lang_list,extracrcl_list);
+	public Location retrieveLocation(int user_id) {
+		Location location = new Location();
+		sql = "SELECT locations.country, locations.address FROM locations WHERE locations_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+				if(rs.next()) {
+					location = new Location(user_id, rs.getString("country"), rs.getString("address"));
+					}
+			}catch(SQLException e) {
+				System.out.println("Error retrieving user location on Oracle\n" + e);
+			}
+		return location;
+	}
+	
+	public Bio retrieveBio(int user_id) {
+		Bio bio = new Bio();
+		sql = "SELECT bio.bio_description WHERE bio.bio_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) bio = new Bio(user_id,"bio_description");
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement of bio on Oracle\n" + e);
+		}
+		return bio;
+	}
+	
+	public Resume retrieveResume(Goal goal, List<AcademicTraining> academy_list, List<ProfessionalExperience> profession_list, List<Language> lang_list, List<ExtracurricularCourse> extracrcl_list, Location location, Bio bio, Profession profession) {
+		return new Resume(goal,academy_list,profession_list,lang_list,extracrcl_list,location,bio,profession);
 	}
 
 	public boolean resumeExists(int user_id) {

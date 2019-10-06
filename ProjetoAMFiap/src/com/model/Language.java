@@ -3,12 +3,13 @@ package com.model;
 public class Language {
 	private int user_id;
 	private String language;
-	
+	private String level;
 
-	public Language(int user_id, String language_1) {
+	public Language(int user_id, String language,String level) {
 		super();
 		this.user_id = user_id;
-		this.language = language_1;
+		this.language = language;
+		this.level = level;
 	}
 	
 	public Language() {
@@ -29,6 +30,14 @@ public class Language {
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+	
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 
 	@Override

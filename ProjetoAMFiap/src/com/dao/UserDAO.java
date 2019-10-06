@@ -83,6 +83,42 @@ public class UserDAO {
 		return aux;
 	}
 	
+	public String retrieveLastName(String email) {
+		String aux = null;
+		sql = "SELECT userform.lastname FROM userform WHERE userform.email = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				aux = rs.getString("lastname");
+			} else {
+				System.out.println("Email not associate with any register.");
+			}
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement name User on Oracle\n" + e);
+		} 
+		return aux;
+	}
+	
+	public String retrievePhone(String email) {
+		String aux = null;
+		sql = "SELECT userform.phone FROM userform WHERE userform.email = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				aux = rs.getString("phone");
+			} else {
+				System.out.println("Email not associate with any register.");
+			}
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement name User on Oracle\n" + e);
+		} 
+		return aux;
+	}
+	
 	public void userApply(int jo_code, int user_id) {
 		sql = "INSERT INTO user_jobopening VALUES (?,?)";
 		try {

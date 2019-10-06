@@ -2,5 +2,5 @@
 <%@page import="java.sql.Connection"%>
 <%
 session.invalidate();
-response.sendRedirect("Home.jsp");
+response.sendRedirect("HomenRegister/Home.jsp");
 %>

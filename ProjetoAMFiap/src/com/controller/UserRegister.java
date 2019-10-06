@@ -45,9 +45,9 @@ public class UserRegister extends HttpServlet {
 			User user = new User(firstname,lastname,email,date,phone,password);
 			UserDAO userdao = new UserDAO();
 			userdao.userRegister(user);
-			response.sendRedirect("UserLogin.jsp");
+			response.sendRedirect("HomenRegister/UserLogin.jsp");
 		} else {
-			response.sendRedirect("UserRegister.jsp");
+			response.sendRedirect("HomenRegister/UserRegisterFailed.jsp");
 			out.print("Passwords don't match.");
 		}
 	}

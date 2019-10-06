@@ -16,9 +16,12 @@ import javax.servlet.http.HttpSession;
 import com.dao.ResumeDAO;
 import com.dao.UserDAO;
 import com.model.AcademicTraining;
+import com.model.Bio;
 import com.model.ExtracurricularCourse;
 import com.model.Goal;
 import com.model.Language;
+import com.model.Location;
+import com.model.Profession;
 import com.model.ProfessionalExperience;
 import com.model.Resume;
 
@@ -84,15 +87,20 @@ public class ResumeRegister extends HttpServlet {
 		List<Language> lang_list = new ArrayList<>();
 		//Values of Languages if it's not empty
 		if(!request.getParameter("language").isEmpty()) {
-			lang_list.add(new Language(user_id,request.getParameter("language")));
+			lang_list.add(new Language(user_id,request.getParameter("language"),request.getParameter("level_language")));
 		} 
 		
 		List<ExtracurricularCourse> extracrcl_list = new ArrayList<>();
 		//Values of Extracurricular Courses if it's not empty
 		if(!request.getParameter("extracurricular").isEmpty()) {
-			extracrcl_list.add(new ExtracurricularCourse(user_id,request.getParameter("extracurricular")));
+			extracrcl_list.add(new ExtracurricularCourse(user_id,request.getParameter("extracurricular"),request.getParameter("level_course")));
 		} 
 		
+		Location location = new Location(user_id,request.getParameter("country"), request.getParameter("address"));
+		
+		Bio bio = new Bio(user_id, request.getParameter("bio"));
+		
+		Profession profession = new Profession(id_user)
 		boolean resume_exists;
 		
 		resume_exists = resumedao.resumeExists(user_id);
@@ -103,9 +111,9 @@ public class ResumeRegister extends HttpServlet {
 			resumedao.setProfessionalExperience(professional_list);
 			resumedao.setLanguages(lang_list);
 			resumedao.setExtracurricularCourses(extracrcl_list);
-			Resume resume = resumedao.retrieveResume(goal, academy_list, professional_list, lang_list, extracrcl_list);
+			Resume resume = resumedao.retrieveResume(goal, academy_list, professional_list, lang_list, extracrcl_list,location,bio);
 			request.setAttribute("resume", resume);
-			dispatcher = request.getRequestDispatcher("ResumeRegister.jsp");
+			dispatcher = request.getRequestDispatcher("Portal/pages/UserProfile.jsp");
 			dispatcher.forward(request, response);
 			response.sendRedirect("UserPage.jsp");
 		} else {

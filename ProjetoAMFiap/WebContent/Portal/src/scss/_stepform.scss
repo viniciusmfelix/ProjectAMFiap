@@ -1,0 +1,26 @@
+input.invalid {
+  border-color: $warning;
+}
+
+.tab {
+  display: none;
+}
+
+.step {
+  height: 20px;
+  width: 20px;
+  margin: 0 5px;
+  background-color: $default;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+
+  &.active {
+    opacity: 1;
+    background-color: $inverse;
+  }
+
+  &.finish {
+    background-color: rgb(2, 187, 11);
+  }
+}

@@ -8,42 +8,33 @@ public class Resume {
 	private List<ProfessionalExperience> professional_experience;
 	private List<Language> languages;
 	private List<ExtracurricularCourse> extracurricular_courses;
+	private Location location;
+	private Bio bio;
+	private Profession profession;
 	
 	public Resume() {
 		
 	}
 
 	public Resume(Goal goal, List<AcademicTraining> academic_training, List<ProfessionalExperience> professional_experience, List<Language> languages,
-			List<ExtracurricularCourse> extracurricular_courses) {
+			List<ExtracurricularCourse> extracurricular_courses, Location location, Bio bio, Profession profession) {
 		super();
 		this.goal = goal;
 		this.academic_training = academic_training;
 		this.professional_experience = professional_experience;
 		this.languages = languages;
 		this.extracurricular_courses = extracurricular_courses;
+		this.location = location;
+		this.bio = bio;
+		this.profession = profession;
 	}
 
-	public Resume(Goal goal, List<AcademicTraining> academic_training, List<ProfessionalExperience> professional_experience,
-			List<Language> languages) {
+	public Resume(Goal goal, List<AcademicTraining> academic_training , Location location, Profession profession) {
 		super();
 		this.goal = goal;
 		this.academic_training = academic_training;
-		this.professional_experience = professional_experience;
-		this.languages = languages;
-	}
-
-	
-	public Resume(Goal goal, List<AcademicTraining> academic_training, List<ProfessionalExperience> professional_experience) {
-		super();
-		this.goal = goal;
-		this.academic_training = academic_training;
-		this.professional_experience = professional_experience;
-	}
-
-	public Resume(Goal goal, List<AcademicTraining> academic_training) {
-		super();
-		this.goal = goal;
-		this.academic_training = academic_training;
+		this.location = location;
+		this.profession = profession;
 	}
 
 	public Goal getGoal() {
@@ -85,4 +76,29 @@ public class Resume {
 	public void setExtracurricular_courses(List<ExtracurricularCourse> extracurricular_courses) {
 		this.extracurricular_courses = extracurricular_courses;
 	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public Bio getBio() {
+		return bio;
+	}
+
+	public void setBio(Bio bio) {
+		this.bio = bio;
+	}
+
+	public Profession getProfession() {
+		return profession;
+	}
+
+	public void setProfession(Profession profession) {
+		this.profession = profession;
+	}
+	
 }
