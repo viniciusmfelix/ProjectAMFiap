@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.model.Language"%>
+<%@page import="java.util.List"%>
 <%@page import="com.model.Bio"%>
 <%@page import="com.model.Location"%>
 <%@page import="java.util.Date"%>
@@ -10,6 +13,7 @@
     pageEncoding="ISO-8859-1"%>
 <%
 int lang_repeat = 0;
+List<Language> lang_list = new ArrayList<>();
 session = request.getSession(true);
 String email = (String) session.getAttribute("email");
 String name,lastname,born_date,phone;
@@ -26,6 +30,7 @@ location = resumedao.retrieveLocation(user_id);
 born_date = userdao.retrieveBornDate(user_id);
 Bio bio;
 bio = resumedao.retrieveBio(user_id);
+lang_list = resumedao.retrieveLanguage(user_id);
 %>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -206,15 +211,15 @@ bio = resumedao.retrieveBio(user_id);
                                     <h5 class="text-muted d-block pt-5 mt-3 text-center">Skills</h5>
                                     <hr class="pb-0">
 
-                                    <form class="repeater" action="addcourses" method="post">
+                                    <form class="repeater" action="../../extracourses" method="post">
                                         <div data-repeater-list="group-skills">
                                             <div class="form-row" data-repeater-item>
                                                 <div class="form-group col-6">
-                                                    <input type="text" name="extracurricular" class="form-control" id="skill"
+                                                    <input type="text" name="skill" class="form-control" id="skill"
                                                         placeholder="Skill name">
                                                 </div>
                                                 <div class="form-group col-5">
-                                                    <select class="form-control select2-single" name="level_course"
+                                                    <select class="form-control select2-single" name="level_skill"
                                                         id="selectLevel">
                                                         <option></option>
                                                         <option value="beginner">beginner</option>
@@ -234,7 +239,9 @@ bio = resumedao.retrieveBio(user_id);
                                             class="btn btn-outline-secondary btn-block"><i class="fas fa-plus"></i>
                                             Add</button>
                                         <br>
-                                        <button type="submit" class="btn btn-success float-right">Save</button>
+                                        <button type="submit" name="skill_sub" class="btn btn-success float-right" value="Save">Save</button>
+                                         <button type="submit"  name="skill_sub" class="btn btn-success float-right" value="Update" style="margin-right:15px">Update</button>
+                                          <button type="submit" name="skill_sub" class="btn btn-success float-right" value="Delete" style="margin-right:15px">Delete</button>
                                     </form>
 
                                 </div>
@@ -246,13 +253,15 @@ bio = resumedao.retrieveBio(user_id);
                                     <form class="repeater" action="../../languages" method="post">
                                         <div data-repeater-list="group-languages">
                                             <div class="form-row" data-repeater-item>
-                                                <div class="form-group col-6">
-                                                    <input type="text" name="language" class="form-control" id="skill"
+                                           
+                                                <div class="form-group col-6">   
+                                                <input type="text" name="language" class="form-control" id="skill"
                                                         placeholder="Language" required>
                                                 </div>
+                                                
                                                 <div class="form-group col-5">
                                                     <select class="form-control select2-single" name="level_language"
-                                                        id="selectLevel" required>
+                                                        id="selectLevel" required> 
                                                         <option></option>
                                                         <option value="beginner">Beginner</option>
                                                         <option value="intermediate">Intermediate</option>
@@ -262,17 +271,18 @@ bio = resumedao.retrieveBio(user_id);
                                                 </div>
                                                 <div class="form-group col-1 d-flex justify-content-center">
                                                     <button data-repeater-delete class="btn btn-link btn-trash"
-                                                        type="button"><i class="ik ik-trash-2"></i></a>
+                                                        type="submit"><i class="ik ik-trash-2"></i></a>                
                                                 </div>
                                             </div>
                                         </div>
-
                                         <button data-repeater-create type="button"
                                             class="btn btn-outline-secondary btn-block" ><i class="fas fa-plus"></i>
                                             Add </button>
-                                            
+
                                         <br>
-                                        <button type="submit" class="btn btn-success float-right">Save</button>
+                                        <button type="submit" name="lang_sub" class="btn btn-success float-right" value="Save">Save</button>
+                                        <button type="submit" name="lang_sub" class="btn btn-success float-right" style="margin-right:15px;" value="Update">Update</button>
+                                         <button type="submit" name="lang_sub" class="btn btn-success float-right" style="margin-right:15px;" value="Delete">Delete</button>
                                     </form>
 
                                 </div>
@@ -448,7 +458,7 @@ bio = resumedao.retrieveBio(user_id);
                                                 </div>
 
                                                 <div class="col-12" id="PEs">
-                                                    <form class="repeater" name="formPE" id="formPE" action="#"
+                                                    <form class="repeater" name="formPE" id="formPE" action="../../professionalexperience"
                                                         method="post">
                                                         <div data-repeater-list="group-PEs">
                                                             <input type="number" name="countPEs" id="countPEs" hidden>
@@ -543,8 +553,12 @@ bio = resumedao.retrieveBio(user_id);
                                                                 aria-hidden="true"></i> add
                                                             More</button>
                                                         <br>
-                                                        <button type="button" class="btn btn-success float-right"
-                                                            id="savePEs">Save</button>
+                                                        <button type="submit" name="pe_sub" class="btn btn-success float-right"
+                                                            id="savePEs" value="Save">Save</button>
+                                                          <button type="submit" name="pe_sub" class="btn btn-success float-right"
+                                                            id="savePEs" value="Update" style="margin-right:15px">Update</button>
+                                                          <button type="submit" name="pe_sub" class="btn btn-success float-right"
+                                                            id="savePEs" value="Delete" style="margin-right:15px">Delete</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -563,7 +577,7 @@ bio = resumedao.retrieveBio(user_id);
                                                     <hr class="mt-0 pt-0">
                                                 </div>
                                                 <div class="col-12">
-                                                    <form class="repeater" name="formEducation" action="" method="post">
+                                                    <form class="repeater" name="formEducation" action="../../academictrainings" method="post">
                                                         <div data-repeater-list="group-educations">
                                                             <div id="accordion" data-repeater-item>
                                                                 <div class="card card-with-border mb-3">
@@ -655,7 +669,11 @@ bio = resumedao.retrieveBio(user_id);
                                                             More</button>
                                                         <br>
                                                         <button type="submit"
-                                                            class="btn btn-success float-right">Save</button>
+                                                            class="btn btn-success float-right" name = "at_sub" value="Save">Save</button>
+                                                        <button type="submit"
+                                                            class="btn btn-success float-right" name = "at_sub" value="Update" style="margin-right:15px">Update</button>
+                                                        <button type="submit"
+                                                            class="btn btn-success float-right"  name = "at_sub" value="Delete" style="margin-right:15px">Delete</button>
                                                     </form>
                                                 </div>
                                             </div>

@@ -1,9 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.dao.EmployeeDAO;
 import com.model.Employee;
 
-import static java.lang.Integer.parseInt;
 
 @WebServlet("/employeeregister")
 public class EmployeeRegister extends HttpServlet {
@@ -34,39 +31,32 @@ public class EmployeeRegister extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-		PrintWriter out = response.getWriter();
+		EmployeeDAO employeedao = new EmployeeDAO();
 		
-		ResultSet rs_adm;
-		
-		int employee_code = parseInt(request.getParameter("employee_code"));
-		String name = request.getParameter("name");
+		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		String email = request.getParameter("email");
+		Date date = Date.valueOf(request.getParameter("born_date"));
+		String phone = request.getParameter("phone");
 		String password = request.getParameter("password");
 		String password_confirm = request.getParameter("password_confirm");
-		String password_adm = request.getParameter("password_adm");
+		String adm_email = request.getParameter("email_adm");
+		String adm_password = request.getParameter("password_adm");
 		
 		if(password.equals(password_confirm)) {
+			boolean admin_auth = employeedao.adminAuthentication(adm_email, adm_password);
 			
-			Employee employee = new Employee(employee_code,name,lastname,email,password);
-			EmployeeDAO employeedao = new EmployeeDAO();
-			
-			rs_adm = employeedao.adminAuthentication(password_adm);
-			
-			try {
-				if(rs_adm.next()) {
-					employeedao.employeeRegister(employee);
-					response.sendRedirect("EmployeeLogin.jsp");
-				} else {
-					response.sendRedirect("EmployeeRegister.jsp");
-					out.print("Failure on ADM authentication");
-				}
-			} catch (SQLException e) {
-				System.out.println("Error during the retrievement of admin password in Oracle - Servlet Page Error\n"+e);
+			if(admin_auth == true) {
+				Employee employee = new Employee(firstname,lastname,email,date,phone,password);
+				employeedao.employeeRegister(employee);
+				response.sendRedirect("HomenRegister/RecruiterLogin.jsp");
+			} else {
+				response.sendRedirect("HomenRegister/EmployeeRegisterFailed.jsp");
+				System.out.println("Aqui");
 			}
 		} else {
-			response.sendRedirect("EmployeeRegister.jsp");
-			out.print("Passwords don't match.");
+			response.sendRedirect("HomenRegister/EmployeeRegisterFailed.jsp");
+			System.out.println("Ou aqui");
 		}
 	}
 

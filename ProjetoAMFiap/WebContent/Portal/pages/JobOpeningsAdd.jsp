@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>ThemeKit - Admin Template</title>
+    <title>Sniper Contractor - Add new Job Opening</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,7 +95,7 @@
                                     Profile</a>
                                 <a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i>
                                     Settings</a>
-                                <a class="dropdown-item" href="../login.html"><i class="ik ik-power dropdown-icon"></i>
+                                <a class="dropdown-item" href="../../HomenRegister/RecruiterLogin.jsp"><i class="ik ik-power dropdown-icon"></i>
                                     Logout</a>
                             </div>
                         </div>
@@ -107,11 +107,11 @@
         <div class="page-wrap">
             <div class="app-sidebar colored">
                 <div class="sidebar-header">
-                    <a class="header-brand" href="../candidato.html">
+                    <a class="header-brand" href="../RecruiterPage.jsp">
                         <div class="logo-img">
-                            <img src="../src/img/brand-white.svg" class="header-brand-img" alt="lavalite">
+                            <i class="fas fa-crosshairs"></i>
                         </div>
-                        <span class="text">ThemeKit</span>
+                        <span class="text">Sniper Contractor</span>
                     </a>
                     <button type="button" class="nav-toggle"><i data-toggle="expanded"
                             class="ik ik-toggle-right toggle-icon"></i></button>
@@ -121,28 +121,28 @@
                 <div class="sidebar-content">
                     <div class="nav-container">
                         <nav id="main-menu-navigation" class="navigation-main">
-                            <div class="nav-lavel">Geral</div>
+                            <div class="nav-lavel">General</div>
                             <div class="nav-item">
-                                <a href="../recrutador.html"><i class="ik ik-bar-chart-2"></i><span>Início</span></a>
+                                <a href="../RecruiterPage.jsp"><i class="ik ik-bar-chart-2"></i><span>Start</span></a>
                             </div>
-                            <div class="nav-lavel">Candidatos</div>
+                            <div class="nav-lavel">Users Applied</div>
                             <div class="nav-item">
-                                <a href="pages/"><i class="ik ik-users"></i><span>Perfis</span></a>
+                                <a href="UsersApplied.jsp"><i class="ik ik-users"></i><span>Profiles</span></a>
                             </div>
                             <div class="nav-item">
-                                <a href="pages/"><i class="ik ik-award"></i><span>Análise</span></a>
+                                <a href="pages/"><i class="ik ik-award"></i><span>Analytics</span></a>
                             </div>
                             <div class="nav-lavel">Vagas</div>
                             <div class="nav-item">
-                                <a href="vagas-recrutador.html"><i class="ik ik-book-open"></i><span>Todas</span></a>
+                                <a href="JobOpeningPortalRecruiter.jsp"><i class="ik ik-book-open"></i><span>All Job Openings</span></a>
                             </div>
                             <div class="nav-item active">
-                                <a href="pages/"><i class="ik ik-file-plus"></i><span>Adicionar</span></a>
+                                <a href="JobOpeningsAdd.jsp"><i class="ik ik-file-plus"></i><span>Add+</span></a>
                             </div>
-                            <div class="nav-lavel">Triagem</div>
+                            <div class="nav-lavel">Sorting</div>
                             <div class="nav-item">
-                                <a href="javascript:void(0)"><i
-                                        class="ik ik-arrow-right-circle"></i><span>Seleções</span></a>
+                                <a href="Picks.jsp"><i
+                                        class="ik ik-arrow-right-circle"></i><span>Picks</span></a>
                             </div>
                         </nav>
                     </div>

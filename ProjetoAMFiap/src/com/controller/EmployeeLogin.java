@@ -1,11 +1,9 @@
 package com.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.dao.EmployeeDAO;
-
-import static java.lang.Integer.parseInt;
 
 @WebServlet("/employeelogin")
 public class EmployeeLogin extends HttpServlet {
@@ -35,30 +31,20 @@ public class EmployeeLogin extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-		RequestDispatcher dispatcher;
-		
-		PrintWriter out = response.getWriter();
-		
-		int employee_code = parseInt(request.getParameter("employee_code"));
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String name;
 		
-			
-			ResultSet rs;
-			EmployeeDAO employeedao = new EmployeeDAO();
-			rs = employeedao.employeeLogin(employee_code, password);
-			name = employeedao.retrieveName(employee_code);
+		ResultSet rs;
+		EmployeeDAO employeedao = new EmployeeDAO();
+		rs = employeedao.employeeLogin(email, password);
 			
 			try {
 				if(rs.next()) {
-					HttpSession session = request.getSession();
-					session.setAttribute("name", name);
-					dispatcher = request.getRequestDispatcher("EmployeePage.jsp");
-					dispatcher.forward(request, response);
-					
+					HttpSession session = request.getSession(true);
+					session.setAttribute("email", email);
+					response.sendRedirect("Portal/RecruiterPage.jsp");
 				} else {
-					response.sendRedirect("EmployeeLogin.jsp");
-					out.print("Code and/or password invalid.");
+					response.sendRedirect("EmployeeLoginFailed.jsp");
 				}
 			} catch (SQLException e) {
 				System.out.println("Error during the retrievement of employee in Oracle - Servlet Page Error\n" + e);

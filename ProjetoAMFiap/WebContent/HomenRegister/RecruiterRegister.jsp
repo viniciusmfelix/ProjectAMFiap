@@ -11,7 +11,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Sniper Contractor - Register</title>
+  <title>Sniper Contractor - Recruiter Register</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -74,9 +74,9 @@
           <div class="col-12 col-sm-10 col-md-8 col-lg-8 col-xl-8">
                 <div class="card w-100 mx-auto">
                     <div class="col-10 card-body align-self-center">
-                        <form action="../userregister" method="POST" id="regForm">
+                        <form action="../employeeregister" method="POST" id="regForm">
 
-                            <h1 class="text-center mt-0">Register</h1>
+                            <h1 class="text-center mt-0">Recruiter Register</h1>
                             <!-- Circles which indicates the steps of the form: -->
                             <hr>
                             <div class="text-center">
@@ -127,7 +127,7 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <h5 class="pt-2 mb-0"><label for="validationServer07">Phone</label></h5>
-                                        <input type="tel" name="telephone" class="form-control form-control-lg" id="validationServer07" placeholder="Only numbers"
+                                        <input type="tel" name="phone" class="form-control form-control-lg" id="validationServer07" placeholder="Only numbers"
                                             oninput="validateInput(this)" required>
                                     </div>
                                 </div>
@@ -145,9 +145,20 @@
                                         <input type="password" name="password_confirm" class="form-control form-control-lg" id="validationServer07" placeholder="Confirm Password"
                                             oninput="validateInput(this)" required>
                                     </div>
+                                    <div class="col-12 mb-3">
+                                        <h5 class="pt-2 mb-0"><label for="validationServer06">Admin User</label></h5>
+                                        <input  type="email" name="email_adm" class="form-control form-control-lg" id="validationServer06" placeholder="admin.user"
+                                            oninput="validateInput(this)" required>
+                              </div>
+                              <div class="col-12 mb-3">
+                                        <h5 class="pt-2 mb-0"><label for="validationServer06">Admin Password</label></h5>
+                                        <input type="password" name="password_adm" class="form-control form-control-lg" id="validationServer06" placeholder="Admin Password"
+                                            oninput="validateInput(this)" required>
+                                    </div>
+	
                                 </div>
                             </div>
-                            <a href="RecruiterRegister.jsp">Recruiter Register</a>
+
                             <div class="row pt-3">
                                 <div class="col-6 float-left">
                                     <button type="button" class="btn btn-secondary btn-lg" id="prevBtn"
@@ -159,6 +170,8 @@
                                 </div>
                                 
                             </div>
+
+
                         </form>
                     </div>
                 </div>

@@ -1,5 +1,40 @@
 "use strict";
 $(document).ready(function () {
+  function reIndex() {
+    var countPEs = 0;
+    var countEDs = 0;
+
+    $(".item-PE").each(function () {
+      countPEs++;
+
+      $(this).find('.btn-CPE').each(function () {
+        $(this).attr('data-target', `#collapsePE${countPEs}`);
+        $(this).attr('aria-controls', `collapsePE${countPEs}`);
+      });
+
+      $(this).find('div[id^="collapsePE"]').each(function () {
+        $(this).attr('id', `collapsePE${countPEs}`);
+        $(this).attr('aria-labelledby', `headingPE${countPEs}`);
+      });
+    });
+
+    $(".item-ED").each(function () {
+      countEDs++;
+
+      $(this).find('.btn-CED').each(function () {
+        $(this).attr('data-target', `#collapseED${countEDs}`);
+        $(this).attr('aria-controls', `collapseED${countEDs}`);
+      });
+
+      $(this).find('div[id^="collapseED"]').each(function () {
+        $(this).attr('id', `collapseED${countEDs}`);
+        $(this).attr('aria-labelledby', `headingED${countEDs}`);
+      });
+    });
+
+    $("#countPEs").attr("value",countPEs);
+    $("#countEDs").attr("value",countEDs);
+  }
   $('.repeater').repeater({
     // (Optional)
     // "defaultValues" sets the values of added items.  The keys of
@@ -14,7 +49,6 @@ $(document).ready(function () {
     // at this point.  If a show callback is not given the item will
     // have $(this).show() called on it.
     show: function () {
-
       $(this).slideDown();
       $(function () {
         $('select').each(function () {
@@ -26,28 +60,7 @@ $(document).ready(function () {
           });
         });
       });
-
-      var index = 0;
-
-      $(".item-PE").each(function () {
-
-        //console.log($(this).find('#collapsePE1') + index);
-
-        $(this).find('.btn-CPE').each(function () {
-          $(this).attr('data-target', `#collapsePE${index}`);
-          $(this).attr('aria-controls', `collapsePE${index}`);
-        });
-
-        $(this).find('#collapsePE1').each(function () {
-          $(this).attr('id', `collapsePE${index}`);
-          $(this).attr('aria-labelledby', `headingPE${index}`);
-        });
-
-        index++;
-      });
-
-      $("#countPEs").val(index);
-
+      reIndex();
     },
     // (Optional)
     // "hide" is called when a user clicks on a data-repeater-delete
@@ -59,6 +72,9 @@ $(document).ready(function () {
     hide: function (deleteElement) {
       if (confirm('Are you sure you want to delete this element?')) {
         $(this).slideUp(deleteElement);
+        $(this).remove();
+
+        reIndex();
       }
     },
     // (Optional)

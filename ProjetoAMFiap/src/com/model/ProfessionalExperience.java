@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class ProfessionalExperience {
 	private int user_id;
+	private int professional_id;
 	private String jobtitle;
 	private String employer;
 	private Date start_date;
@@ -14,9 +15,21 @@ public class ProfessionalExperience {
 		
 	}
 	
-	public ProfessionalExperience(int user_id, String jobtitle, String employer, Date start_date,Date end_date, String jobdescription) {
+	public ProfessionalExperience(int user_id, String jobtitle, String employer, Date startdate, Date enddate, String description) {
+        super();
+        // TODO Auto-generated constructor stub
+        this.user_id = user_id;
+		this.jobtitle = jobtitle;
+		this.employer = employer;	
+		this.start_date = startdate;
+		this.end_date = enddate;
+		this.jobdescription = description;
+    }
+	
+	public ProfessionalExperience(int user_id, int professional_id, String jobtitle, String employer, Date start_date,Date end_date, String jobdescription) {
 		super();
 		this.user_id = user_id;
+		this.professional_id = professional_id;
 		this.jobtitle = jobtitle;
 		this.employer = employer;
 		this.jobdescription = jobdescription;
@@ -30,6 +43,14 @@ public class ProfessionalExperience {
 
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
+	}
+
+	public int getProfessional_id() {
+		return professional_id;
+	}
+
+	public void setProfessional_id(int professional_id) {
+		this.professional_id = professional_id;
 	}
 
 	public String getJobtitle() {

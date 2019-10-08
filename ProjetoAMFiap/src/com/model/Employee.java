@@ -1,10 +1,13 @@
 package com.model;
 
+import java.sql.Date;
+
 public class Employee {
 	private int employee_code;
 	private String firstname;
 	private String lastname;
 	private String email;
+	private Date date;
 	private String phone;
 	private String password;
 	
@@ -12,12 +15,23 @@ public class Employee {
 		
 	}
 	
-	public Employee(int employee_code, String firstname, String lastname, String email, String phone, String password) {
+	public Employee(int employee_code, String firstname, String lastname, String email, Date date,String phone, String password) {
 		super();
 		this.employee_code = employee_code;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
+		this.date = date;
+		this.phone = phone;
+		this.password = password;
+	}
+	
+	public Employee(String firstname, String lastname, String email, Date date,String phone, String password) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.date = date;
 		this.phone = phone;
 		this.password = password;
 	}
@@ -48,6 +62,14 @@ public class Employee {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public void setEmail(String email) {

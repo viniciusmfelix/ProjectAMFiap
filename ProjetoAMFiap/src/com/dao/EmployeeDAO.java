@@ -23,25 +23,26 @@ public class EmployeeDAO {
 	}
 	
 	public void employeeRegister(Employee employee) {
-		sql = "INSERT INTO employeeform VALUES (employee_id.nextval,?,?,?,?)";
+		sql = "INSERT INTO employeeform VALUES (employee_id.nextval,?,?,?,?,?,?)";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1,employee.getFirstname());
 			ps.setString(2, employee.getLastname());
 			ps.setString(3, employee.getEmail());
-			ps.setString(4, employee.getPhone());
-			ps.setString(5, employee.getPassword());
+			ps.setDate(4, employee.getDate());
+			ps.setString(5, employee.getPhone());
+			ps.setString(6, employee.getPassword());
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during insert Employee on Oracle\n" + e);
 		}
 	}
 	
-	public ResultSet employeeLogin(int employee_code, String password) {
-		sql = "SELECT employee_code, accesspassword FROM employeeform WHERE employee_code = ? AND accesspassword = ?";
+	public ResultSet employeeLogin(String email, String password) {
+		sql = "SELECT email, accesspassword FROM employeeform WHERE email = ? AND accesspassword = ?";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setInt(1, employee_code);
+			ps.setString(1, email);
 			ps.setString(2, password);
 			rs = ps.executeQuery();
 		}catch(SQLException e) {
@@ -50,24 +51,27 @@ public class EmployeeDAO {
 		return rs;
 	}
 	
-	public ResultSet adminAuthentication(String adm_password) {
-		sql = "SELECT employee_code, accesspassword FROM employeeform WHERE employee_code = 1 AND accesspassword = ?";
+	public boolean adminAuthentication(String adm_email,String adm_password) {
+		boolean access_authorized = false;
+		sql = "SELECT email, accesspassword FROM employeeform WHERE email = ? AND accesspassword = ?";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setString(1, adm_password);
+			ps.setString(1, adm_email);
+			ps.setString(2, adm_password);
 			rs = ps.executeQuery();
+			if(rs.next()) access_authorized = true;
 		}catch(SQLException e) {
 			System.out.println("Error during ADM password authentication on Oracle\n" + e);
 		}
-		return rs;
+		return access_authorized;
 	}
 	
-	public String retrieveName(int employee_code) {
+	public String retrieveName(String employee_email) {
 		String aux = null;
-		sql = "SELECT employeeform.firstname FROM employeeform WHERE employeeform.employee_code = ?";
+		sql = "SELECT employeeform.firstname FROM employeeform WHERE employeeform.email = ?";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setInt(1, employee_code);
+			ps.setString(1, employee_email);
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				aux = rs.getString("firstname");

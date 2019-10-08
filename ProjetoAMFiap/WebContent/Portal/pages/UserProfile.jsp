@@ -1,3 +1,6 @@
+<%@page import="com.model.AcademicTraining"%>
+<%@page import="com.model.ProfessionalExperience"%>
+<%@page import="com.model.ExtracurricularCourse"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.model.Language"%>
 <%@page import="java.util.List"%>
@@ -12,6 +15,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+List<AcademicTraining> academy_list = new ArrayList<>();
+List<ProfessionalExperience> professional_list = new ArrayList<>();
+List<ExtracurricularCourse> course_list = new ArrayList<>();
 List<Language> lang_list = new ArrayList<>();
 session = request.getSession(true);
 String email = (String) session.getAttribute("email");
@@ -30,6 +36,9 @@ born_date = userdao.retrieveBornDate(user_id);
 Bio bio;
 bio = resumedao.retrieveBio(user_id);
 lang_list = resumedao.retrieveLanguage(user_id);
+course_list = resumedao.retrieveExtracurricularCourse(user_id);
+professional_list = resumedao.retrieveProfessionalExperience(user_id);
+academy_list = resumedao.retrieveAcademicTraining(user_id);
 %>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -200,41 +209,36 @@ lang_list = resumedao.retrieveLanguage(user_id);
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="card-body pt-0 sale-card">
                                     <h5 class="text-muted d-block pt-5 mt-3 text-center">Skills</h5>
                                     <hr class="pb-0">
-                                    <p class="mb-10 text-left"><span class="badge badge-success">HTML</span><span
-                                            class="float-right">Very good</span></p>
+                                     <%for(ExtracurricularCourse course : course_list){ %>
+                                    <%if(course.getLevel().equals("expert")){ %>
+                                    <p class="mb-10 text-left"><span class="badge badge-success"><%=course.getCourse() %></span><span
+                                            class="float-right"><%=course.getLevel() %></span></p>
                                     <div class="progress mb-20">
-                                        <div class="progress-bar bg-success" style="width:90%"></div>
+                                        <div class="progress-bar bg-success" style="width:94%;background-color:aqua"></div>
                                     </div>
-                                    <p class="mb-10 text-left"><span class="badge badge-yellow">Java</span><span
-                                            class="float-right">Basic</span></p>
+                                    <%}else if(course.getLevel().equals("advanced")) {%>
+                                    <p class="mb-10 text-left"><span class="badge badge-blue" style="color:white"><%=course.getCourse() %></span><span
+                                            class="float-right"><%=course.getLevel() %></span></p>
                                     <div class="progress mb-20">
-                                        <div class="progress-bar bg-yellow" style="width:40%"></div>
+                                        <div class="progress-bar bg-primary" style="width:73%;background-color:blue"></div>
                                     </div>
-                                    <p class="mb-10 text-left"><span class="badge badge-primary">Ruby</span><span
-                                            class="float-right">Good</span></p>
+                                    <%}else if(course.getLevel().equals("intermediate")){ %>
+                                    <p class="mb-10 text-left"><span class="badge badge-yellow" style="color:white"><%=course.getCourse() %></span><span
+                                            class="float-right"><%=course.getLevel() %></span></p>
                                     <div class="progress mb-20">
-                                        <div class="progress-bar bg-primary" style="width:60%"></div>
+                                        <div class="progress-bar bg-yellow" style="width:45%; background-color:green"></div>
                                     </div>
-
-
-                                    <div class="collapse" id="collapseSkills">
-                                            <p class="mb-10 text-left"><span class="badge badge-yellow">Java</span><span
-                                                    class="float-right">Basic</span></p>
-                                            <div class="progress mb-20">
-                                                <div class="progress-bar bg-yellow" style="width:40%"></div>
-                                            </div>
-                                            <p class="mb-10 text-left"><span class="badge badge-primary">Ruby</span><span
-                                                    class="float-right">Good</span></p>
-                                            <div class="progress mb-20">
-                                                <div class="progress-bar bg-primary" style="width:60%"></div>
-                                            </div>
-                                        </div>
-    
+                                    <%} else {%>
+                                    <p class="mb-10 text-left"><span class="badge badge-red" style="color:white"><%=course.getCourse() %></span><span
+                                            class="float-right"><%=course.getLevel() %></span></p>
+                                     <div class="progress mb-20">
+                                        <div class="progress-bar bg-red" style="width:20%;background-color:yellow"></div>
+                                    </div>
+                                        <%}} %>
                                         <h6 class="viewmoreSkills">
                                             <a data-toggle="collapse" href="#collapseSkills" role="button"
                                                 aria-expanded="false" aria-controls="collapseSkills">
@@ -247,7 +251,7 @@ lang_list = resumedao.retrieveLanguage(user_id);
                                     <hr class="pb-0">
                                     <%for(Language lang : lang_list){ %>
                                     <h6 class="mb-1"><%=lang.getLanguage() %><span class="badge badge-secondary ml-2"><%=lang.getLevel() %></span></h6>
-	                                 <%} %>   
+	                                 <%session.setAttribute("lang", lang.getLanguage()); }%>   
 
                                     <h6 class="seemore languages" style="display:none"><a href="#!"><small
                                                 class="text-primary d-block pt-10"><i class="fas fa-bars mr-10"></i> See
@@ -348,68 +352,20 @@ lang_list = resumedao.retrieveLanguage(user_id);
                                                     <hr class="mt-0 pt-0">
                                                 </div>
                                             </div>
+                                            <%for(ProfessionalExperience prof_exp : professional_list){ %>
                                             <div class="row">
                                                 <div class="col-2 pr-1">
-                                                    <p>2006-12-present</p>
+                                                    <p><%=prof_exp.getStart_date()%> - <%=prof_exp.getEnd_date() %></p>
                                                 </div>
                                                 <div class="col-10 pl-0">
-                                                    <h6>Senior Project Manager</h6>
-                                                    <h6 class="text-muted">Setion Hospital, ME</h6>
+                                                    <h6><%=prof_exp.getJobtitle() %></h6>
+                                                    <h6 class="text-muted"><%=prof_exp.getEmployer() %></h6>
                                                     <ul class="pl-4">
-                                                        <li><span><i class="mdi mdi-lightbulb-outline"></i></span>An
-                                                            electric light with a wire filament heated to such a
-                                                            high
-                                                            temperature that it glows with visible light</li>
-                                                        <li><span><i
-                                                                    class="mdi mdi-clipboard-check-outline"></i></span>A
-                                                            thin, rigid board with a clip at the top for holding
-                                                            paper
-                                                            in place.</li>
-                                                        <li><span><i class="mdi mdi-finance"></i></span>A graphical
-                                                            representation of data, in which the data is represented
-                                                            by
-                                                            symbols, such as bars in a bar chart, lines in a line
-                                                            chart,
-                                                            or slices in a pie chart.</li>
-                                                        <li><span><i class="mdi mdi-server"></i></span>A system that
-                                                            responds to requests across a computer network worldwide
-                                                            to
-                                                            provide, or help to provide, a network or data service.
-                                                        </li>
+                                                        <li><span><i class="mdi mdi-lightbulb-outline"></i></span><%=prof_exp.getJobdescription() %></li>
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-2 pr-1">
-                                                    <p>2006-12-present</p>
-                                                </div>
-                                                <div class="col-10 pl-0">
-                                                    <h6>Senior Project Manager</h6>
-                                                    <h6 class="text-muted">Setion Hospital, ME</h6>
-                                                    <ul class="pl-4">
-                                                        <li><span><i class="mdi mdi-lightbulb-outline"></i></span>An
-                                                            electric light with a wire filament heated to such a
-                                                            high
-                                                            temperature that it glows with visible light</li>
-                                                        <li><span><i
-                                                                    class="mdi mdi-clipboard-check-outline"></i></span>A
-                                                            thin, rigid board with a clip at the top for holding
-                                                            paper
-                                                            in place.</li>
-                                                        <li><span><i class="mdi mdi-finance"></i></span>A graphical
-                                                            representation of data, in which the data is represented
-                                                            by
-                                                            symbols, such as bars in a bar chart, lines in a line
-                                                            chart,
-                                                            or slices in a pie chart.</li>
-                                                        <li><span><i class="mdi mdi-server"></i></span>A system that
-                                                            responds to requests across a computer network worldwide
-                                                            to
-                                                            provide, or help to provide, a network or data service.
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            <%} %>
                                         </div>
                                     </div>
 
@@ -423,37 +379,21 @@ lang_list = resumedao.retrieveLanguage(user_id);
                                                     <hr class="mt-0 pt-0">
                                                 </div>
                                             </div>
+                                            <%for(AcademicTraining academy : academy_list){ %>
                                             <div class="row">
                                                 <div class="col-2 pr-0">
-                                                    <p>2006-12-present</p>
+                                                    <p><%=academy.getStart_date() %> - <%=academy.getEnd_date() %></p>
                                                 </div>
                                                 <div class="col-10 pl-0">
-                                                    <h6>Senior Project Manager</h6>
-                                                    <h6 class="text-muted">Setion Hospital, ME</h6>
+                                                    <h6><%=academy.getCourse() %></h6>
+                                                    <h6 class="text-muted"><%=academy.getInstitution() %></h6>
                                                     <ul class="pl-4">
-                                                        <li><span><i class="mdi mdi-lightbulb-outline"></i></span>An
-                                                            electric light with a wire filament heated to such a
-                                                            high
-                                                            temperature that it glows with visible light</li>
-                                                        <li><span><i
-                                                                    class="mdi mdi-clipboard-check-outline"></i></span>A
-                                                            thin, rigid board with a clip at the top for holding
-                                                            paper
-                                                            in place.</li>
-                                                        <li><span><i class="mdi mdi-finance"></i></span>A graphical
-                                                            representation of data, in which the data is represented
-                                                            by
-                                                            symbols, such as bars in a bar chart, lines in a line
-                                                            chart,
-                                                            or slices in a pie chart.</li>
-                                                        <li><span><i class="mdi mdi-server"></i></span>A system that
-                                                            responds to requests across a computer network worldwide
-                                                            to
-                                                            provide, or help to provide, a network or data service.
+                                                        <li><span><i class="mdi mdi-lightbulb-outline"></i></span><%=academy.getDescription() %></li>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
+                                            <%} %>
                                         </div>
                                     </div>
 

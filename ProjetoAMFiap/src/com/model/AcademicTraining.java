@@ -5,11 +5,23 @@ import java.sql.Date;
 
 public class AcademicTraining {
 	private int user_id;
+	private int at_id;
 	private Date start_date;
 	private Date end_date;
 	private String institution;
 	private String course;
 	private String description;
+	
+	public AcademicTraining(int user_id, int at_id, Date start_date, Date end_date, String institution, String course, String description) {
+		super();
+		this.user_id = user_id;
+		this.at_id = at_id;
+		this.institution = institution;
+		this.course = course;
+		this.start_date = start_date;
+		this.end_date = end_date;
+		this.description = description;
+	}
 	
 	public AcademicTraining(int user_id, Date start_date, Date end_date, String institution, String course, String description) {
 		super();
@@ -27,6 +39,14 @@ public class AcademicTraining {
 
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
+	}
+
+	public int getAt_id() {
+		return at_id;
+	}
+
+	public void setAt_id(int at_id) {
+		this.at_id = at_id;
 	}
 
 	public String getInstitution() {
