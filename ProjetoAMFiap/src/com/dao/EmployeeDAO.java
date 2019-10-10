@@ -4,12 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.dbconnection.ConnectToOracle;
 import com.model.Employee;
-import com.model.User;
 
 public class EmployeeDAO {
 	
@@ -84,19 +81,4 @@ public class EmployeeDAO {
 		return aux;
 	}
 	
-	public List<User> retrieveUsersApplied(int jo_code) {
-		List<User> users_applied = new ArrayList<>();
-		sql = "SELECT * FROM user_jobopening JOIN resumeform ON resumeform.email_user = user_jobopening.email JOIN userform ON userform.email = user_jobopening.email WHERE user_jobopening.jo_code = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setInt(1, jo_code);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				//users_applied.add(new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("email"),rs.getString("phone")));
-			}
-		}catch(SQLException e) {
-			System.out.println("Error during retrievement of applied users on Oracle\n"+e);
-		} 
-		return users_applied;
-	}
 }

@@ -6,15 +6,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dao.JobOpeningDAO;
 import com.model.JobOpening;
 
-@WebServlet("/jobopeningregister")
-public class JobOpeningRegister extends HttpServlet {
+@WebServlet("/jobopeningupdate")
+public class JobOpeningUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public JobOpeningRegister() {
+    public JobOpeningUpdate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,6 +29,10 @@ public class JobOpeningRegister extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
+		HttpSession session = request.getSession();
+		
+		int job_id = (int) session.getAttribute("jobid");
+		
 		String name = request.getParameter("title");
 		String overview = request.getParameter("overview");
 		String country = request.getParameter("country");
@@ -35,10 +40,11 @@ public class JobOpeningRegister extends HttpServlet {
 		String address = request.getParameter("location");
 		String description = request.getParameter("jobDescription");
 		
-		JobOpening jobopening = new JobOpening(name,overview,country,city,address,description);
+		JobOpening jobopening = new JobOpening(job_id,name,overview,country,city,address,description);
 		JobOpeningDAO jobopeningdao = new JobOpeningDAO();
 		
-		jobopeningdao.createNewJobOpening(jobopening);
+		jobopeningdao.updateJobOpening(jobopening);
+		
 		response.sendRedirect("Portal/pages/JobOpeningPortalRecruiter.jsp");
 	}
 

@@ -44,16 +44,16 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav text-uppercase ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">Serviços</a>
+              <a class="nav-link js-scroll-trigger" href="#services">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#jobs">Vagas</a>
+              <a class="nav-link js-scroll-trigger" href="#jobs">Job Openings</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">Sobre</a>
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contato</a>
+              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
             </li>
             <li class="nav-item">
               <a name="" id="" class="nav-button btn btn-primary" href="UserLogin.jsp" role="button">Login</a>
@@ -95,6 +95,7 @@
                 </div> <!-- form-group// -->
                 <p class="text-center"><a href="#" class="btn">Forgot your password?</a></p>
                 <div class="form-group">
+                 <a href="RecruiterRegister.jsp">Recruiter's Register</a>
                   <button type="submit" class="btn btn-theme btn-lg float-right mt-2">Submit</button>
                 </div>
               </form>

@@ -25,5 +25,10 @@ public class Feedback {
 	public void setFeedback_message(String feedback_message) {
 		this.feedback_message = feedback_message;
 	}
+
+	@Override
+	public String toString() {
+		return "Feedback [jo_code=" + jo_code + ", feedback_message=" + feedback_message + "]";
+	}
 	
 }

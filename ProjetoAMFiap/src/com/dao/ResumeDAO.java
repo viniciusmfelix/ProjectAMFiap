@@ -13,12 +13,10 @@ import com.dbconnection.ConnectToOracle;
 import com.model.AcademicTraining;
 import com.model.Bio;
 import com.model.ExtracurricularCourse;
-import com.model.Goal;
 import com.model.Language;
 import com.model.Location;
 import com.model.Profession;
 import com.model.ProfessionalExperience;
-import com.model.Resume;
 
 public class ResumeDAO {
 	private Connection connection;
@@ -30,28 +28,21 @@ public class ResumeDAO {
 		this.connection = new ConnectToOracle().connect();
 	}
 	
-	public void setGoals(Goal goals) {
-		sql = "INSERT INTO goals VALUES (?,?)";
+	public int retrieveAcademicTrainingId(String institution, String course, int user_id) {
+		int academic_id = 0;
+		sql = "SELECT at_id FROM academictraining WHERE course = ? AND institution = ? AND user_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setInt(1, goals.getUser_id());
-			ps.setString(2, goals.getGoals());
-			ps.execute();
+			ps.setString(1, course);
+			ps.setString(2, institution);
+			ps.setInt(3, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) academic_id = rs.getInt("at_id");
+			System.out.println(academic_id);
 		}catch(SQLException e) {
-			System.out.println("Error during insert goals on Oracle\n" + e);
+			System.out.println("Error during retrieving academic training id on Oracle\n" + e);
 		}
-	}
-	
-	public void updateGoals(Goal goals) {
-		sql = "UPDATE goals SET goals.goal = ? WHERE goals.goal_id = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setString(1, goals.getGoals());
-			ps.setInt(2, goals.getUser_id());
-			ps.execute();
-		}catch(SQLException e) {
-			System.out.println("Error during update Goals on Oracle\n" + e);
-		}
+		return academic_id;
 	}
 	
 	public void setAcademicTraining(List<AcademicTraining> acad_train) {
@@ -74,23 +65,6 @@ public class ResumeDAO {
 		}
 	}
 	
-	public int retrieveAcademicTrainingId(String institution, String course, int user_id) {
-		int academic_id = 0;
-		sql = "SELECT at_id FROM academictraining WHERE course = ? AND institution = ? AND user_id = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setString(1, course);
-			ps.setString(2, institution);
-			ps.setInt(3, user_id);
-			rs = ps.executeQuery();
-			if(rs.next()) academic_id = rs.getInt("at_id");
-			System.out.println(academic_id);
-		}catch(SQLException e) {
-			System.out.println("Error during retrieving academic training id on Oracle\n" + e);
-		}
-		return academic_id;
-	}
-	
 	public void updateAcademicTraining(AcademicTraining acad_train,String old_course) {
 		sql = "UPDATE academictraining SET start_date = ?, end_date = ?,institution = ?, course = ?, at_description = ? WHERE at_id = ? AND course = ?";
 		try {
@@ -105,6 +79,22 @@ public class ResumeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error during update Academic Training on Oracle\n" + e);
 		}
+	}
+	
+	public List<AcademicTraining> retrieveAcademicTraining(int user_id){
+		List<AcademicTraining> academy_list = new ArrayList<>();
+		sql = "SELECT academictraining.start_date, academictraining.end_date, academictraining.institution, academictraining.course, academictraining.at_description FROM academictraining WHERE user_id = ?";
+			try {
+				ps = connection.prepareStatement(sql);
+				ps.setInt(1, user_id);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					academy_list.add(new AcademicTraining(user_id, rs.getDate("start_date"), rs.getDate("end_date"),rs.getString("institution"), rs.getString("course"),rs.getString("at_description")));
+					}
+			}catch(SQLException e) {
+				System.out.println("Error retrieving user academic training on Oracle\n" + e);
+			}
+		return academy_list;
 	}
 	
 	public void deleteAcademicTraining(List<AcademicTraining> acad_train) {
@@ -182,6 +172,22 @@ public class ResumeDAO {
 		}
 	}
 	
+	public List<ProfessionalExperience> retrieveProfessionalExperience(int user_id){
+		List<ProfessionalExperience> profession_list = new ArrayList<>();
+		sql = "SELECT professionalexperience.pe_id, professionalexperience.jobtitle, professionalexperience.employer, professionalexperience.start_date, professionalexperience.end_date, professionalexperience.job_description FROM professionalexperience WHERE user_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				profession_list.add(new ProfessionalExperience(user_id, rs.getInt("pe_id"),rs.getString("jobtitle"), rs.getString("employer"),rs.getDate("start_date"), rs.getDate("end_date"),rs.getString("job_description")));
+				}
+		}catch(SQLException e) {
+			System.out.println("Error retrieving user professional experiences on Oracle\n" + e);
+		}
+		return profession_list;
+	}
+	
 	public void deleteProfessionalExperience(List<ProfessionalExperience> prof_exp) {
 		Iterator<ProfessionalExperience> at = prof_exp.iterator();
 		while(at.hasNext()) {
@@ -195,6 +201,22 @@ public class ResumeDAO {
 				System.out.println("Error during delete professional experience on Oracle\n" + e);
 			}
 		}
+	}
+	
+	public int returnLangId(String lang, String level, int user_id) {
+		int lang_id = 0;
+		sql = "SELECT lang_id FROM languages WHERE lang = ? AND lang_level = ? AND user_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, lang);
+			ps.setString(2, level);
+			ps.setInt(3, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) lang_id = rs.getInt("lang_id");
+		}catch(SQLException e) {
+			System.out.println("Error during retrieve lang id on Oracle\n" + e);
+		}
+		return lang_id;
 	}
 	
 	public void setLanguages(List<Language> lang) {
@@ -217,20 +239,20 @@ public class ResumeDAO {
 		}
 	}
 	
-	public int returnLangId(String lang, String level, int user_id) {
-		int lang_id = 0;
-		sql = "SELECT lang_id FROM languages WHERE lang = ? AND lang_level = ? AND user_id = ?";
+	public List<Language> retrieveLanguage(int user_id){
+		List<Language> lang_list = new ArrayList<>();
+		sql = "SELECT languages.lang_id, languages.lang, languages.lang_level FROM languages WHERE user_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setString(1, lang);
-			ps.setString(2, level);
-			ps.setInt(3, user_id);
+			ps.setInt(1, user_id);
 			rs = ps.executeQuery();
-			if(rs.next()) lang_id = rs.getInt("lang_id");
+			while(rs.next()) {
+				lang_list.add(new Language(user_id, rs.getInt("lang_id"),rs.getString("lang"),rs.getString("lang_level")));
+				}
 		}catch(SQLException e) {
-			System.out.println("Error during retrieve lang id on Oracle\n" + e);
+			System.out.println("Error retrieving user languages on Oracle\n" + e);
 		}
-		return lang_id;
+		return lang_list;
 	}
 	
 	public void updateLanguage(List<Language> language) {
@@ -306,6 +328,22 @@ public class ResumeDAO {
 		}
 	}
 	
+	public List<ExtracurricularCourse> retrieveExtracurricularCourse(int user_id){
+		List<ExtracurricularCourse> extracrcl_list = new ArrayList<>();
+		sql = "SELECT extc_course, course_level, ec_id FROM extracurricularcourses WHERE user_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				extracrcl_list.add(new ExtracurricularCourse(user_id, rs.getInt("ec_id"),rs.getString("extc_course"),rs.getString("course_level")));
+				}
+		}catch(SQLException e) {
+			System.out.println("Error retrieving user extracurricular courses on Oracle\n" + e);
+		}
+		return extracrcl_list;
+	}
+	
 	public void updateExtracurricularCourses(List<ExtracurricularCourse> courses) {
 		Iterator<ExtracurricularCourse> at = courses.iterator();
 		while(at.hasNext()) {
@@ -368,6 +406,22 @@ public class ResumeDAO {
 		}
 	}
 	
+	public Location retrieveLocation(int user_id) {
+		Location location = new Location();
+		sql = "SELECT locations.country, locations.address FROM locations WHERE location_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+				if(rs.next()) {
+					location = new Location(user_id, rs.getString("country"), rs.getString("address"));
+					}
+			}catch(SQLException e) {
+				System.out.println("Error retrieving user location on Oracle\n" + e);
+			}
+		return location;
+	}
+	
 	public void setBio(Bio bio) {
 		sql = "INSERT INTO bio VALUES (?,?)";
 		try {
@@ -378,6 +432,20 @@ public class ResumeDAO {
 		}catch(SQLException e) {
 			System.out.println("Error during insert bio on Oracle\n" + e);
 		}
+	}
+	
+	public Bio retrieveBio(int user_id) {
+		Bio bio = new Bio();
+		sql = "SELECT bio.bio_description FROM bio WHERE bio.bio_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) bio = new Bio(user_id,rs.getString("bio_description"));
+		}catch(SQLException e) {
+			System.out.println("Error during retrievement of bio on Oracle\n" + e);
+		}
+		return bio;
 	}
 	
 	public void updateBio(Bio bio) {
@@ -416,117 +484,6 @@ public class ResumeDAO {
 		}
 	}
 	
-	public Goal retrieveGoal(int user_id) {
-		Goal goal = new Goal();
-		sql = "SELECT goals.goal FROM goals WHERE goal_id = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setInt(1, user_id);
-			rs = ps.executeQuery();
-				if(rs.next()) {
-					goal = new Goal(user_id, rs.getString("goal"));
-					}
-			}catch(SQLException e) {
-				System.out.println("Error retrieving user academic training on Oracle\n" + e);
-			}
-		return goal;
-	}
-	
-	public List<AcademicTraining> retrieveAcademicTraining(int user_id){
-		List<AcademicTraining> academy_list = new ArrayList<>();
-		sql = "SELECT academictraining.start_date, academictraining.end_date, academictraining.institution, academictraining.course, academictraining.at_description FROM academictraining WHERE user_id = ?";
-			try {
-				ps = connection.prepareStatement(sql);
-				ps.setInt(1, user_id);
-				rs = ps.executeQuery();
-				while(rs.next()) {
-					academy_list.add(new AcademicTraining(user_id, rs.getDate("start_date"), rs.getDate("end_date"),rs.getString("institution"), rs.getString("course"),rs.getString("at_description")));
-					}
-			}catch(SQLException e) {
-				System.out.println("Error retrieving user academic training on Oracle\n" + e);
-			}
-		return academy_list;
-	}
-	
-	public List<ProfessionalExperience> retrieveProfessionalExperience(int user_id){
-		List<ProfessionalExperience> profession_list = new ArrayList<>();
-		sql = "SELECT professionalexperience.pe_id, professionalexperience.jobtitle, professionalexperience.employer, professionalexperience.start_date, professionalexperience.end_date, professionalexperience.job_description FROM professionalexperience WHERE user_id = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setInt(1, user_id);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				profession_list.add(new ProfessionalExperience(user_id, rs.getInt("pe_id"),rs.getString("jobtitle"), rs.getString("employer"),rs.getDate("start_date"), rs.getDate("end_date"),rs.getString("job_description")));
-				}
-		}catch(SQLException e) {
-			System.out.println("Error retrieving user professional experiences on Oracle\n" + e);
-		}
-		System.out.println(profession_list.toString());
-		return profession_list;
-	}
-	
-	public List<Language> retrieveLanguage(int user_id){
-		List<Language> lang_list = new ArrayList<>();
-		sql = "SELECT languages.lang_id, languages.lang, languages.lang_level FROM languages WHERE user_id = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setInt(1, user_id);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				lang_list.add(new Language(user_id, rs.getInt("lang_id"),rs.getString("lang"),rs.getString("lang_level")));
-				}
-		}catch(SQLException e) {
-			System.out.println("Error retrieving user languages on Oracle\n" + e);
-		}
-		return lang_list;
-	}
-	
-	public List<ExtracurricularCourse> retrieveExtracurricularCourse(int user_id){
-		List<ExtracurricularCourse> extracrcl_list = new ArrayList<>();
-		sql = "SELECT extc_course, course_level, ec_id FROM extracurricularcourses WHERE user_id = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setInt(1, user_id);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				extracrcl_list.add(new ExtracurricularCourse(user_id, rs.getInt("ec_id"),rs.getString("extc_course"),rs.getString("course_level")));
-				}
-		}catch(SQLException e) {
-			System.out.println("Error retrieving user extracurricular courses on Oracle\n" + e);
-		}
-		return extracrcl_list;
-	}
-	
-	public Location retrieveLocation(int user_id) {
-		Location location = new Location();
-		sql = "SELECT locations.country, locations.address FROM locations WHERE location_id = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setInt(1, user_id);
-			rs = ps.executeQuery();
-				if(rs.next()) {
-					location = new Location(user_id, rs.getString("country"), rs.getString("address"));
-					}
-			}catch(SQLException e) {
-				System.out.println("Error retrieving user location on Oracle\n" + e);
-			}
-		return location;
-	}
-	
-	public Bio retrieveBio(int user_id) {
-		Bio bio = new Bio();
-		sql = "SELECT bio.bio_description FROM bio WHERE bio.bio_id = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setInt(1, user_id);
-			rs = ps.executeQuery();
-			if(rs.next()) bio = new Bio(user_id,rs.getString("bio_description"));
-		}catch(SQLException e) {
-			System.out.println("Error during retrievement of bio on Oracle\n" + e);
-		}
-		return bio;
-	}
-	
 	public Profession retrieveProfession(int user_id) {
 		Profession profession = new Profession();
 		sql = "SELECT profession.profession_name FROM profession WHERE profession_id = ?";
@@ -540,7 +497,7 @@ public class ResumeDAO {
 		}
 		return profession;
 	}
-	
+
 	public boolean professionExists(int user_id) {
 		boolean exists = false;
 		sql = "SELECT * FROM profession WHERE profession_id = ?";
@@ -583,7 +540,7 @@ public class ResumeDAO {
 		return exists;
 	}
 	
-	public boolean LanguageExists(List<Language> lang, int user_id) {
+	public boolean languageExists(List<Language> lang, int user_id) {
 		boolean exists = false;
 		Iterator<Language> at = lang.iterator();
 		while(at.hasNext()) {
@@ -602,24 +559,5 @@ public class ResumeDAO {
 		}
 		return exists;
 	}
-	
-	public Resume retrieveResume(Goal goal, List<AcademicTraining> academy_list, List<ProfessionalExperience> profession_list, List<Language> lang_list, List<ExtracurricularCourse> extracrcl_list, Location location, Bio bio, Profession profession) {
-		return new Resume(goal,academy_list,profession_list,lang_list,extracrcl_list,location,bio,profession);
-	}
 
-	public boolean resumeExists(int user_id) {
-		boolean exists = false;
-		sql = "SELECT userform.firstname, userform.lastname, userform.email, userform.born_date, userform.phone, academictraining.start_date \"academy_start_date\", academictraining.end_date \"academy_end_date\", academictraining.institution, academictraining.course, academictraining.at_description, professionalexperience.jobtitle, professionalexperience.employer, professionalexperience.start_date \"job_start_date\", professionalexperience.end_date \"job_end_date\", professionalexperience.job_description,languages.lang, extracurricularcourses.extc_course FROM userform INNER JOIN academictraining ON academictraining.at_id = userform.user_id INNER JOIN professionalexperience ON professionalexperience.pe_id = userform.user_id INNER JOIN languages ON lang_id = userform.user_id INNER JOIN extracurricularcourses ON extracurricularcourses.ec_id = userform.user_id WHERE userform.user_id = ?";
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setInt(1, user_id);
-			rs = ps.executeQuery();
-			if(rs.next()) {
-				exists = true;
-			}
-		}catch(SQLException e) {
-			System.out.println("Error during check if resumeform exists on Oracle\n" + e);
-		}
-		return exists;
-	}
 }

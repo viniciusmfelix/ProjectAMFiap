@@ -29,6 +29,10 @@ public class Bio {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Bio [user_id=" + user_id + ", description=" + description + "]";
+	}
 	
 }

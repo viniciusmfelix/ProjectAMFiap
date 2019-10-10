@@ -22,12 +22,15 @@ public class JobOpeningDAO {
 	}
 	
 	public void createNewJobOpening(JobOpening jobopening) {
-		sql = "INSERT INTO jobopeningform VALUES (?,?,?)";
+		sql = "INSERT INTO jobopening VALUES (job_id.nextval,?,?,?,?,?,?)";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setInt(1, jobopening.getJo_code());
-			ps.setString(2, jobopening.getName());
-			ps.setString(3, jobopening.getDescription());
+			ps.setString(1, jobopening.getTitle());
+			ps.setString(2, jobopening.getOverview());
+			ps.setString(3, jobopening.getCountry());
+			ps.setString(4, jobopening.getCity());
+			ps.setString(5, jobopening.getAddress());
+			ps.setString(6, jobopening.getDescription());
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during insert Job Opening on Oracle\n" + e);
@@ -36,27 +39,44 @@ public class JobOpeningDAO {
 	
 	public List<JobOpening> retrieveJobOpening(){
 		List<JobOpening> jobs = new ArrayList<>();
-		sql = "SELECT * FROM jobopeningform";
+		sql = "SELECT * FROM jobopening";
 		try {
 			ps = connection.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				jobs.add(new JobOpening(rs.getInt("jo_code"),rs.getString("jobname"),rs.getString("jobdescription")));
+				jobs.add(new JobOpening(rs.getInt("job_id"),rs.getString("jobname"),rs.getString("overview"),rs.getString("country"),rs.getString("city"),rs.getString("address"),rs.getString("jobdescription")));
 			}
-			
 		} catch (SQLException e) {
 			System.out.println("Error during retrievement of Job Openings on Oracle\n" + e);
 		} 
 		return jobs;
 	}
 	
-	public void updateJobOpening(JobOpening jobopening) {
-		sql = "UPDATE jobopeningform SET jobopeningform.jo_code = ?, jobopeningform.jobname = ?, jobopeningform.jobdescription = ?";
+	public JobOpening retrieveJobToUpdate(int job_id) {
+		JobOpening job = new JobOpening();
+		sql="SELECT job_id, jobname, overview, country, city , address, jobdescription FROM jobopening WHERE job_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setInt(1, jobopening.getJo_code());
-			ps.setString(2, jobopening.getName());
-			ps.setString(3, jobopening.getDescription());
+			ps.setInt(1, job_id);
+			rs = ps.executeQuery();
+			if(rs.next()) job = new JobOpening(rs.getInt("job_id"),rs.getString("jobname"),rs.getString("overview"),rs.getString("country"),rs.getString("city"),rs.getString("address"),rs.getString("jobdescription"));
+		}catch(SQLException e) {
+			System.out.println("Error during retrieving job opening on Oracle on line 61\n" + e);
+		}
+		return job;
+	}
+	
+	public void updateJobOpening(JobOpening jobopening) {
+		sql = "UPDATE jobopening SET jobname = ?, overview = ?, country = ?, city = ?, address = ? ,jobdescription = ? WHERE job_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1,jobopening.getTitle());
+			ps.setString(2, jobopening.getOverview());
+			ps.setString(3, jobopening.getCountry());
+			ps.setString(4, jobopening.getCity());
+			ps.setString(5, jobopening.getAddress());
+			ps.setString(6, jobopening.getDescription());
+			ps.setInt(7, jobopening.getJo_code());
 			ps.execute();
 		}catch(SQLException e) {
 			System.out.println("Error during update of Job Openings on Oracle\n" + e);
@@ -64,7 +84,7 @@ public class JobOpeningDAO {
 	}
 	
 	public void deleteJobOpening(int jo_code) {
-		sql = "DELETE FROM jobopeningform WHERE jo_code = ?";
+		sql = "DELETE FROM jobopening WHERE job_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, jo_code);
@@ -105,7 +125,7 @@ public class JobOpeningDAO {
 	
 	public String retrieveNameJobOpening(int jo_code) {
 		String jobname = null;
-		sql = "SELECT jobopeningform.jobname FROM jobopeningform WHERE jobopeningform.jo_code = ?";
+		sql = "SELECT jobopening.jobname FROM jobopening WHERE jobopening.job_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, jo_code);
@@ -117,12 +137,12 @@ public class JobOpeningDAO {
 		return jobname;
 	}
 	
-	public void applyFeedback(int jo_code, String email, String message_feedback) {
-		sql = "INSERT INTO user_jobopening_feedback VALUES((SELECT user_jobopening.jo_code FROM user_jobopening WHERE user_jobopening.jo_code = ?),(SELECT user_jobopening.email FROM user_jobopening WHERE user_jobopening.email = ?),?)";
+	public void applyFeedback(int jo_code, int user_id, String message_feedback) {
+		sql = "INSERT INTO user_jobopening_feedback VALUES((SELECT user_jobopening.job_id FROM user_jobopening WHERE user_jobopening.job_id = ?),(SELECT user_jobopening.user_id FROM user_jobopening WHERE user_jobopening.user_id = ?),?)";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, jo_code);
-			ps.setString(2, email);
+			ps.setInt(2, user_id);
 			ps.setString(3, message_feedback);
 			ps.execute();
 		}catch(SQLException e) {
@@ -145,6 +165,20 @@ public class JobOpeningDAO {
 		return already_applied;
 	}
 	
+	public List<User> usersApplied(int jo_code){
+		List<User> usersapplied = new ArrayList<>();
+		sql = "SELECT userform.user_id,userform.firstname, userform.lastname, userform.email, userform.born_date, userform.phone, userform.accesspassword FROM user_jobopening INNER JOIN userform ON userform.user_id = user_jobopening.user_id WHERE job_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, jo_code);
+			rs = ps.executeQuery();
+			while(rs.next()) {usersapplied.add((new User(rs.getInt("user_id"),rs.getString("firstname"),rs.getString("lastname"),rs.getString("email"),rs.getDate("born_date"),rs.getString("phone"),rs.getString("accesspassword"))));}
+		}catch(SQLException e) {
+			System.out.println("Error during retrieve users applied on job on job method on Oracle\n" + e);
+		}
+		return usersapplied;
+	}
+	
 	public void setFeedbacktoRefusedUsers(int jo_code, User user) {
 		sql = "INSERT INTO user_jobopening_feedback VALUES((SELECT user_jobopening.jo_code FROM user_jobopening WHERE user_jobopening.jo_code = ? AND user_jobopening.email = ?),(SELECT user_jobopening.email FROM user_jobopening WHERE user_jobopening.email = ? AND user_jobopening.jo_code = ?),?)";
 			try {
@@ -158,5 +192,28 @@ public class JobOpeningDAO {
 			}catch(SQLException e) {
 				System.out.println("Error during insert feedback to refused users on Oracle\n" + e);
 			}
+	}
+	
+	public void userApply(int jo_code, int user_id) {
+		sql = "INSERT INTO user_jobopening VALUES (?,?)";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			ps.setInt(2, jo_code);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during register user into a job opening on Oracle\n" + e);
+		}  
+	}
+	
+	public void userDeleteFeedbacks(int user_id) {
+		sql = "DELETE FROM user_jobopening_feedback WHERE user_id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, user_id);
+			ps.execute();
+		}catch(SQLException e) {
+			System.out.println("Error during delete feedbacks on Oracle\n");
+		}
 	}
 }

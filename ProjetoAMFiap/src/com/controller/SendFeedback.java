@@ -1,24 +1,22 @@
 package com.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.dao.JobOpeningDAO;
 import com.dao.UserDAO;
-import com.model.Feedback;
+import com.email.JavaMail;
 
-@WebServlet("/retrievefeedbacks")
-public class RetrieveFeedbacks extends HttpServlet {
+@WebServlet("/sendfeedback")
+public class SendFeedback extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public RetrieveFeedbacks() {
+    public SendFeedback() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,17 +30,21 @@ public class RetrieveFeedbacks extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-		RequestDispatcher dispatcher;
+		String feedback = request.getParameter("feedback");
 		
-		String email = request.getParameter("email");
+		HttpSession session = request.getSession();
+		JobOpeningDAO jobopeningdao = new JobOpeningDAO();
 		UserDAO userdao = new UserDAO();
+		String email = (String) session.getAttribute("usermail");
+		String name = userdao.retrieveName(email);
+				JavaMail mail = new JavaMail();
+		int user_id = userdao.returnUserId(email);
+		int job_id = (int) session.getAttribute("jobid");
+		String jobtitle = jobopeningdao.retrieveNameJobOpening(job_id);
+		jobopeningdao.applyFeedback(job_id, user_id, feedback);
 		
-		List<Feedback> feedbacks = new ArrayList<>();
-		
-		feedbacks = userdao.retrieveFeedbacks(email);
-		request.setAttribute("feedbacks", feedbacks);
-		dispatcher = request.getRequestDispatcher("UserFeedbacksPage.jsp");
-		dispatcher.forward(request, response);
+		mail.sendMailtoUser(email, name, job_id, jobtitle);
+		response.sendRedirect("Portal/pages/UsersApplied.jsp");
 	}
 
 }

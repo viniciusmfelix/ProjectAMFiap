@@ -1,12 +1,19 @@
+<%@page import="com.model.JobOpening"%>
+<%@page import="com.dao.JobOpeningDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%
+int job_id = (int) session.getAttribute("jobid");
+JobOpeningDAO jobopeningdao = new JobOpeningDAO();
+JobOpening job = jobopeningdao.retrieveJobToUpdate(job_id);
+%>
 <!doctype html>
 <html class="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Sniper Contractor - Add new Job Opening</title>
+    <title>Sniper Contractor - Update Job Opening</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -154,35 +161,35 @@
             <div class="main-content">
                 <div class="card">
                     <div class="card-header">
-                        <h3>New Job Opening</h3>
+                        <h3>Update Job Opening - <%=job.getTitle() %> n° <%=job.getJo_code() %></h3>
                     </div>
                     <div class="card-body">
-                        <form class="sample-form" method="post" action="../../jobopeningregister">
+                        <form class="sample-form" method="post" action="../../jobopeningupdate">
                             <div class="form-row">
                                 <div class="form-group col-12">
                                     <label for="title">Job Title</label>
-                                    <input name="title" type="text" id="keywords" class="form-control">
+                                    <input name="title" type="text" id="keywords" class="form-control" value="<%=job.getTitle() %>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-12">
                                     <label for="overview">Job Overview</label>
                                     <textarea class="form-control" name="overview" id="jobDescription"
-                                        rows="3"></textarea>
+                                        rows="3"><%=job.getOverview() %></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
                                     <label for="select2-single-input-sm" class="control-label">Country</label>
                                     <select id="select2-single-input-sm" class="form-control input-sm select2-single" name="country">
-                                        <option hidden></option>
+                                        <option hidden><%=job.getCountry() %></option>
                                         <option value="Brasil">Brasil</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="city" class="control-label">City</label>
                                     <select class="form-control select2-single" id="city" name="city">
-                                    	<option hidden></option>
+                                    	<option hidden><%=job.getCity() %></option>
                                         <option value="São Paulo">São Paulo</option>
                                     </select>
                                 </div>
@@ -190,17 +197,17 @@
                             <div class="form-row">
                                 <div class="form-group col-12">
                                     <label for="location">Address</label>
-                                    <input type="local" name="location" class="form-control" id="location">
+                                    <input type="local" name="location" class="form-control" id="location" value="<%=job.getAddress() %>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-12">
                                     <label for="jobDescription">Description</label>
                                     <textarea class="form-control" name="jobDescription" id="jobDescription"
-                                        rows="3"></textarea>
+                                        rows="3"><%=job.getDescription() %></textarea>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success float-right">Save</button>
+                            <button type="submit" class="btn btn-success float-right">Update</button>
                         </form>
                     </div>
                 </div>

@@ -1,12 +1,12 @@
 <%@page import="com.dao.UserDAO"%>
+<%@page import="com.model.User"%>
+<%@page import="com.datareference.WekaAnalysis"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
-session = request.getSession(true);
-String email = (String) session.getAttribute("email");
-String name;
-UserDAO userdao = new UserDAO(); 
-name = userdao.retrieveName(email);
+UserDAO userdao = new UserDAO();
+int job_id = (int) session.getAttribute("jobid");
+String email = (String) session.getAttribute("usermail");
 %>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -14,28 +14,25 @@ name = userdao.retrieveName(email);
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Sniper Contractor - User Page</title>
+    <title>Sniper Contractor - Add new Job Opening</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" href="favicon.ico"  type="image/x-icon" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
 
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
 
-    <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="plugins/icon-kit/dist/css/iconkit.min.css">
-    <link rel="stylesheet" href="plugins/ionicons/dist/css/ionicons.min.css">
-    <link rel="stylesheet" href="plugins/perfect-scrollbar/css/perfect-scrollbar.css">
-    <link rel="stylesheet" href="plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css">
-    <link rel="stylesheet" href="plugins/weather-icons/css/weather-icons.min.css">
-    <link rel="stylesheet" href="plugins/c3/c3.min.css">
-    <link rel="stylesheet" href="plugins/owl.carousel/dist/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="plugins/owl.carousel/dist/assets/owl.theme.default.min.css">
-    <link rel="stylesheet" href="dist/css/theme.min.css">
-    <script src="src/js/vendor/modernizr-2.8.3.min.js"></script>
+    <link rel="stylesheet" href="../plugins/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/ionicons/dist/css/ionicons.min.css">
+    <link rel="stylesheet" href="../plugins/icon-kit/dist/css/iconkit.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet">
+    <link href="https://raw.githack.com/ttskch/select2-bootstrap4-theme/master/dist/select2-bootstrap4.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="../dist/css/theme.min.css">
+    <script src="../src/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
 <body>
@@ -79,7 +76,7 @@ name = userdao.retrieveName(email);
                                     </a>
                                     <a href="#" class="media">
                                         <span class="d-flex">
-                                            <img src="img/users/1.jpg" class="rounded-circle" alt="">
+                                            <img src="../img/users/1.jpg" class="rounded-circle" alt="">
                                         </span>
                                         <span class="media-body">
                                             <span class="heading-font-family media-heading">Steve Smith</span>
@@ -101,14 +98,14 @@ name = userdao.retrieveName(email);
                         </div>
                         <div class="dropdown">
                             <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"><img class="avatar" src="img/user.jpg"
+                                aria-haspopup="true" aria-expanded="false"><img class="avatar" src="../img/user.jpg"
                                     alt=""></a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="pages/UserProfile.jsp"><i class="ik ik-user dropdown-icon"></i>
+                                <a class="dropdown-item" href="profile.html"><i class="ik ik-user dropdown-icon"></i>
                                     Profile</a>
-                                <a class="dropdown-item" href="pages/UserSettings.jsp"><i class="ik ik-settings dropdown-icon"></i>
+                                <a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i>
                                     Settings</a>
-                                <a class="dropdown-item" href="../Logout.jsp"><i class="ik ik-power dropdown-icon"></i>
+                                <a class="dropdown-item" href="../../HomenRegister/RecruiterLogin.jsp"><i class="ik ik-power dropdown-icon"></i>
                                     Logout</a>
                             </div>
                         </div>
@@ -120,9 +117,9 @@ name = userdao.retrieveName(email);
         <div class="page-wrap">
             <div class="app-sidebar colored">
                 <div class="sidebar-header">
-                    <a class="header-brand" href="UserPage.jsp">
+                    <a class="header-brand" href="../RecruiterPage.jsp">
                         <div class="logo-img">
-                           <i class="fas fa-crosshairs"></i>
+                            <i class="fas fa-crosshairs"></i>
                         </div>
                         <span class="text">Sniper Contractor</span>
                     </a>
@@ -135,37 +132,57 @@ name = userdao.retrieveName(email);
                     <div class="nav-container">
                         <nav id="main-menu-navigation" class="navigation-main">
                             <div class="nav-lavel">General</div>
+                            <div class="nav-item">
+                                <a href="../RecruiterPage.jsp"><i class="ik ik-bar-chart-2"></i><span>Start</span></a>
+                            </div>
+                            <div class="nav-lavel">Users Applied</div>
+                            <div class="nav-item">
+                                <a href="UsersApplied.jsp"><i class="ik ik-users"></i><span>Profiles</span></a>
+                            </div>
+                            <div class="nav-item">
+                                <a href="pages/"><i class="ik ik-award"></i><span>Analytics</span></a>
+                            </div>
+                            <div class="nav-lavel">Vagas</div>
+                            <div class="nav-item">
+                                <a href="JobOpeningPortalRecruiter.jsp"><i class="ik ik-book-open"></i><span>All Job Openings</span></a>
+                            </div>
                             <div class="nav-item active">
-                                <a href="UserPage.jsp"><i class="ik ik-bar-chart-2"></i><span>Start</span></a>
+                                <a href="JobOpeningsAdd.jsp"><i class="ik ik-file-plus"></i><span>Add+</span></a>
                             </div>
-                            <div class="nav-lavel">Job Openings</div>
+                            <div class="nav-lavel">Sorting</div>
                             <div class="nav-item">
-                                <a href="pages/JobOpeningPortalUser.jsp"><i class="ik ik-book-open"></i><span>My Job Openings</span></a>
-                            </div>
-                            <div class="nav-item">
-                                <a href="pages/UserJobOpeningApplied.jsp"><i class="ik ik-book"></i><span>Applies</span></a>
-                            </div>
-                            <div class="nav-lavel">Resume</div>
-                            <div class="nav-item">
-                                <a href="pages/UserProfile.jsp"><i class="ik ik-user"></i><span>Profile</span></a>
-                            </div>
-                            <div class="nav-item">
-                                <a href="pages/UserFeedbacks.jsp"><i class="ik ik-award"></i><span>Feedbacks</span></a>
-                            </div>
-                            <div class="nav-lavel">Support</div>
-                            <div class="nav-item">
-                                <a href="javascript:void(0)"><i class="ik ik-help-circle"></i><span>Remove Doubts</span></a>
+                                <a href="Picks.jsp"><i
+                                        class="ik ik-arrow-right-circle"></i><span>Picks</span></a>
                             </div>
                         </nav>
                     </div>
                 </div>
             </div>
 
-            <div class="main-content"></div>
+            <div class="main-content">
+                <div class="card">
+                    <div class="card-header">
+                    <%String name = userdao.retrieveName(email); %>
+                        <h3>Set feedback to <%=name %> </h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="sample-form" method="post" action="../../sendfeedback">
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <label for="feedback">Feedback</label>
+                                    <textarea class="form-control" name="feedback" id="jobDescription"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success float-right">Send Feedback <3</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <footer class="footer">
                 <div class="w-100 clearfix">
-                    <span class="text-center text-sm-left d-md-inline-block">Copyright © 2018 ThemeKit v2.0. All Rights
+                    <span class="text-center text-sm-left d-md-inline-block">Copyright Â© 2018 ThemeKit v2.0. All Rights
                         Reserved.</span>
                     <span class="float-none float-sm-right mt-1 mt-sm-0 text-center">Crafted with <i
                             class="fa fa-heart text-danger"></i> by <a href="http://lavalite.org/" class="text-dark"
@@ -177,33 +194,14 @@ name = userdao.retrieveName(email);
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>window.jQuery || document.write('<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
-    <script src="plugins/popper.js/dist/umd/popper.min.js"></script>
-    <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
-    <script src="plugins/screenfull/dist/screenfull.js"></script>
-    <script src="plugins/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-    <script src="plugins/moment/moment.js"></script>
-    <script src="plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="plugins/d3/dist/d3.min.js"></script>
-    <script src="plugins/c3/c3.min.js"></script>
-    <script src="js/tables.js"></script>
-    <script src="js/widgets.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="dist/js/theme.js"></script>
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-            (function (b, o, i, l, e, r) {
-            b.GoogleAnalyticsObject = l; b[l] || (b[l] =
-                function () { (b[l].q = b[l].q || []).push(arguments) }); b[l].l = +new Date;
-                e = o.createElement(i); r = o.getElementsByTagName(i)[0];
-                e.src = 'https://www.google-analytics.com/analytics.js';
-                r.parentNode.insertBefore(e, r)
-            }(window, document, 'script', 'ga'));
-        ga('create', 'UA-XXXXX-X', 'auto'); ga('send', 'pageview');
-    </script>
+    <script>window.jQuery || document.write('<script src="../src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+    <script src="../plugins/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="../js/select.js"></script>
+    <script src="../plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="../js/input-tag.js"></script>
+    <script src="../dist/js/theme.js"></script>
 </body>
+
 </html>

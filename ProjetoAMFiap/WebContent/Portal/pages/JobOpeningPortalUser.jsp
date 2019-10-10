@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="com.dao.JobOpeningDAO"%>
+<%@page import="com.model.JobOpening"%>
 <%@page import="com.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -8,6 +11,8 @@ String email = (String) session.getAttribute("email");
 String name;
 UserDAO userdao = new UserDAO(); 
 name = userdao.retrieveName(email);
+JobOpeningDAO jobopeningdao = new JobOpeningDAO();
+List<JobOpening> job_list = jobopeningdao.retrieveJobOpening();
 %>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -144,7 +149,7 @@ name = userdao.retrieveName(email);
                                 <a href="UserProfile.jsp"><i class="ik ik-user"></i><span>Profile</span></a>
                             </div>
                             <div class="nav-item">
-                                <a href="pages/"><i class="ik ik-award"></i><span>Analytics</span></a>
+                                <a href="UserFeedbacks.jsp"><i class="ik ik-award"></i><span>Feedbacks</span></a>
                             </div>
                             <div class="nav-lavel">Support</div>
                             <div class="nav-item">
@@ -229,6 +234,7 @@ name = userdao.retrieveName(email);
                             <div class="separator mb-20"></div>
 
                             <div class="row layout-wrap" id="layout-wrap">
+                            <%for(JobOpening job : job_list){ %>
                                 <div class="col-12 list-item list-item-thumb">
                                     <div class="card d-flex flex-row mb-3">
                                         <a class="d-flex card-img" href="#editLayoutItem" data-toggle="modal"
@@ -245,8 +251,7 @@ name = userdao.retrieveName(email);
                                                 <a class="list-item-heading mb-1 truncate w-40 w-xs-100"
                                                     href="#editLayoutItem" data-toggle="modal"
                                                     data-target="#editLayoutItem">
-                                                    Donec felis urna, commodo eget velit interdum, malesuada lacinia
-                                                    eros.
+                                                    <%=job.getTitle()%> - n° <%=job.getJo_code() %>
                                                 </a>
                                                 <p class="mb-1 text-muted text-small category w-15 w-xs-100">Art</p>
                                                 <p class="mb-1 text-muted text-small date w-15 w-xs-100">02.04.2018</p>
@@ -257,92 +262,7 @@ name = userdao.retrieveName(email);
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 list-item list-item-thumb">
-                                    <div class="card d-flex flex-row mb-3">
-                                        <a class="d-flex card-img" href="#editLayoutItem" data-toggle="modal"
-                                            data-target="#editLayoutItem">
-                                            <img src="../img/portfolio-2.jpg"
-                                                alt="Nullam porttitor elit rhoncus luctus volutpat."
-                                                class="list-thumbnail responsive border-0">
-                                        </a>
-                                        <div class="d-flex flex-grow-1 min-width-zero card-content">
-                                            <div
-                                                class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                                                <a href="#editLayoutItem" data-toggle="modal"
-                                                    data-target="#editLayoutItem" class="w-40 w-sm-100">
-                                                    <p class="list-item-heading mb-1 truncate">Proin sit amet augue
-                                                        lorem. Interdum et malesuada fames.</p>
-                                                </a>
-                                                <p class="mb-1 text-muted text-small category w-15 w-sm-100">Travel</p>
-                                                <p class="mb-1 text-muted text-small date  w-15 w-sm-100">21.03.2018</p>
-                                                <div class="w-15 w-sm-100">
-                                                    <span class="badge badge-pill badge-primary">Processed</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 list-item list-item-thumb">
-                                    <div class="card d-flex flex-row mb-3">
-                                        <a class="d-flex card-img" href="#editLayoutItem" data-toggle="modal"
-                                            data-target="#editLayoutItem">
-                                            <img src="../img/portfolio-7.jpg"
-                                                alt="Nullam porttitor elit rhoncus luctus volutpat."
-                                                class="list-thumbnail responsive border-0">
-                                            <span
-                                                class="badge badge-pill badge-primary position-absolute badge-top-left">New</span>
-                                            <span
-                                                class="badge badge-pill badge-secondary position-absolute badge-top-left-2">Trending</span>
-                                        </a>
-                                        <div class="d-flex flex-grow-1 min-width-zero card-content">
-                                            <div
-                                                class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                                                <a href="#editLayoutItem" data-toggle="modal"
-                                                    data-target="#editLayoutItem" class="w-40 w-sm-100">
-                                                    <p class="list-item-heading mb-1 truncate">Class aptent taciti
-                                                        sociosqu ad litora torquent per conubia nostra.</p>
-                                                </a>
-                                                <p class="mb-1 text-muted text-small category w-15 w-sm-100">Design</p>
-                                                <p class="mb-1 text-muted text-small date  w-15 w-sm-100">19.02.2018</p>
-                                                <div class="w-15 w-sm-100">
-                                                    <span class="badge badge-pill badge-secondary">On Hold</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 list-item list-item-thumb">
-                                    <div class="card d-flex flex-row mb-3">
-                                        <a class="d-flex card-img" href="#editLayoutItem" data-toggle="modal"
-                                            data-target="#editLayoutItem">
-                                            <img src="../img/portfolio-8.jpg"
-                                                alt="Nullam porttitor elit rhoncus luctus volutpat."
-                                                class="list-thumbnail responsive border-0">
-                                            <span
-                                                class="badge badge-pill badge-primary position-absolute badge-top-left">New</span>
-                                            <span
-                                                class="badge badge-pill badge-secondary position-absolute badge-top-left-2">Trending</span>
-                                        </a>
-                                        <div class="d-flex flex-grow-1 min-width-zero card-content">
-                                            <div
-                                                class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                                                <a href="#editLayoutItem" data-toggle="modal"
-                                                    data-target="#editLayoutItem" class="w-40 w-sm-100">
-                                                    <p class="list-item-heading mb-1 truncate">Maecenas ut felis
-                                                        iaculis, dapibus mi quis, cursus mi.</p>
-                                                </a>
-                                                <p class="mb-1 text-muted text-small category w-15 w-sm-100">Travel</p>
-                                                <p class="mb-1 text-muted text-small date  w-15 w-sm-100">14.02.2018</p>
-                                                <div class="w-15 w-sm-100">
-                                                    <span class="badge badge-pill badge-primary">Processed</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -353,38 +273,31 @@ name = userdao.retrieveName(email);
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editLayoutItemLabel">Sed id mi non quam iaculis pulvinar.</h5>
+                            <h5 class="modal-title" id="editLayoutItemLabel">Job Opening n°: <%=job.getJo_code() %> - <%=job.getTitle() %></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
-                            <p class="lead">Nullam elementum aliquam porta.</p>
-                            <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus fermentum
-                                imperdiet ligula, et mollis quam sagittis ac. In quis interdum sem. Vivamus blandit
-                                fringilla hendrerit. Suspendisse vulputate sapien vitae mi convallis dictum. Sed blandit
-                                felis ut quam accumsan, at condimentum nibh varius. Mauris ornare ultricies ipsum.</p>
+                            <p class="lead"><%=job.getOverview() %></p>
                             <div class="row">
                                 <div class="col-md-6"><img src="../img/portfolio-1.jpg" class="img-fluid" alt=""></div>
                                 <div class="col-md-6"><img src="../img/portfolio-8.jpg" class="img-fluid" alt=""></div>
                             </div>
                             <div class="jumbotron pt-30 pb-30 mt-30">
-                                <h2 class="mt-0">Hello, world!</h2>
-                                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for
-                                    calling extra attention to featured content or information.</p>
+                                <h2 class="mt-0">Location: <%=job.getCity() %> - <%=job.getCountry() %></h2>
+                                <p class="lead"><%=job.getAddress() %></p>
                             </div>
-                            <p>Praesent eleifend ac felis dignissim mattis. Suspendisse eget congue enim, ac fermentum
-                                risus. Donec eget risus lacus. Nullam nec lectus quis tortor ultrices consectetur. Etiam
-                                dui erat, tristique vel quam a, maximus porttitor enim. Ut molestie turpis in est
-                                iaculis, ut congue massa porta.</p>
+                            <p><%=job.getDescription() %></p>
                         </div>
                         <div class="modal-footer">
+                        <%session.setAttribute("jobid", job.getJo_code()); %>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success">Candidatar-se</button>
+                            <a href="ApplyToJob.jsp" class="btn btn-success">Candidatar-se</a>
                         </div>
                     </div>
                 </div>
             </div>
-
+<%} %>
             <footer class="footer">
                 <div class="w-100 clearfix">
                     <span class="text-center text-sm-left d-md-inline-block">Copyright © 2018 ThemeKit v2.0. All Rights

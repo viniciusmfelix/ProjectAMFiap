@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.dbconnection.ConnectToOracle;
 import com.model.Feedback;
+import com.model.JobOpening;
 import com.model.User;
 
 public class UserDAO {
@@ -170,17 +171,19 @@ public class UserDAO {
 		} 
 		return date;
 	}
-	
-	public void userApply(int jo_code, int user_id) {
-		sql = "INSERT INTO user_jobopening VALUES (?,?)";
+
+	public List<JobOpening> retrieveAppliedJobs(int user_id){
+		List<JobOpening> applied_jobs = new ArrayList<>();
+		sql = "SELECT jobopening.job_id,jobopening.jobname,jobopening.overview,jobopening.country,jobopening.city,jobopening.address,jobopening.jobdescription FROM user_jobopening JOIN jobopening ON jobopening.job_id = user_jobopening.job_id WHERE user_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setInt(1, jo_code);
-			ps.setInt(2, user_id);
-			ps.execute();
+			ps.setInt(1, user_id);
+			rs = ps.executeQuery();
+			while(rs.next()) {applied_jobs.add(new JobOpening(rs.getInt("job_id"),rs.getString("jobname"),rs.getString("overview"),rs.getString("country"),rs.getString("city"),rs.getString("address"),rs.getString("jobdescription")));}
 		}catch(SQLException e) {
-			System.out.println("Error during register user into a job opening on Oracle\n" + e);
-		}  
+			System.out.println("Error during retrieve user applied jobs on Oracle\nhere on this method " + e);
+		}
+		return applied_jobs;
 	}
 	
 	public boolean userExists(String email) {
@@ -199,20 +202,19 @@ public class UserDAO {
 		return exists;
 	}
 	
-	public List<Feedback> retrieveFeedbacks(String email){
+	public List<Feedback> retrieveFeedbacks(int user_id){
 		List<Feedback> feedbacks = new ArrayList<>();
-		sql = "SELECT user_jobopening_feedback.jo_code, user_jobopening_feedback.feedback_message FROM user_jobopening_feedback WHERE user_jobopening_feedback.email = ?";
+		sql = "SELECT user_jobopening_feedback.job_id, user_jobopening_feedback.feedback_message FROM user_jobopening_feedback WHERE user_jobopening_feedback.user_id = ?";
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setString(1, email);
+			ps.setInt(1, user_id);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				feedbacks.add(new Feedback(rs.getInt("jo_code"),rs.getString("feedback_message")));
+				feedbacks.add(new Feedback(rs.getInt("job_id"),rs.getString("feedback_message")));
 			}
 		}catch(SQLException e) {
 			System.out.println("Error during retrieving feedbacks on Oracle\n" + e);
 		}  
-		System.out.println(feedbacks.toString());
 		return feedbacks;
 	}
 }

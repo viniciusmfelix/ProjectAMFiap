@@ -30,4 +30,11 @@ public class Profession {
 		this.profession = profession;
 	}
 
+	@Override
+	public String toString() {
+		return "Profession [user_id=" + user_id + ", profession=" + profession + "]";
+	}
+
+	
+	
 }

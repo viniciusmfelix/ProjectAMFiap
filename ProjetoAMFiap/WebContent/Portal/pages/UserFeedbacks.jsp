@@ -1,27 +1,15 @@
-<%@page import="com.model.AcademicTraining"%>
-<%@page import="com.model.ProfessionalExperience"%>
-<%@page import="com.model.Language"%>
-<%@page import="com.model.ExtracurricularCourse"%>
-<%@page import="com.model.Location"%>
-<%@page import="com.dao.ResumeDAO"%>
-<%@page import="com.model.Profession"%>
 <%@page import="com.dao.JobOpeningDAO"%>
-<%@page import="com.dao.UserDAO"%>
-<%@page import="com.model.User"%>
+<%@page import="com.model.Feedback"%>
 <%@page import="java.util.List"%>
+<%@page import="com.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
-ResumeDAO resumedao = new ResumeDAO();
-int job_id = (int) session.getAttribute("jobid");
+UserDAO userdao = new UserDAO();
+String email = (String) session.getAttribute("usermail");
+int user_id = userdao.returnUserId(email);
+List<Feedback> feedbacks = userdao.retrieveFeedbacks(user_id);
 JobOpeningDAO jobopeningdao = new JobOpeningDAO();
-List<User> user_list = jobopeningdao.usersApplied(job_id);
-Profession profession = new Profession();
-Location location = new Location();
-List<ExtracurricularCourse> skills;
-List<Language> languages;
-List<ProfessionalExperience> pe_list;
-List<AcademicTraining> ac_list;
 %>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -129,9 +117,9 @@ List<AcademicTraining> ac_list;
         <div class="page-wrap">
             <div class="app-sidebar colored">
                 <div class="sidebar-header">
-                    <a class="header-brand" href="../RecruiterPage.jsp">
+                    <a class="header-brand" href="UserPage.jsp">
                         <div class="logo-img">
-                            <i class="fas fa-crosshairs"></i>
+                           <i class="fas fa-crosshairs"></i>
                         </div>
                         <span class="text">Sniper Contractor</span>
                     </a>
@@ -144,26 +132,26 @@ List<AcademicTraining> ac_list;
                     <div class="nav-container">
                         <nav id="main-menu-navigation" class="navigation-main">
                             <div class="nav-lavel">General</div>
-                            <div class="nav-item">
-                                <a href="../RecruiterPage.jsp"><i class="ik ik-bar-chart-2"></i><span>Start</span></a>
-                            </div>
-                            <div class="nav-lavel">Users Applied</div>
-                            <div class="nav-item  active">
-                                <a href="UsersApplied.jsp"><i class="ik ik-users"></i><span>Profiles</span></a>
-                            </div>
-                            <div class="nav-item">
-                                <a href="pages/"><i class="ik ik-award"></i><span>Analytics</span></a>
+                            <div class="nav-item active">
+                                <a href="../UserPage.jsp"><i class="ik ik-bar-chart-2"></i><span>Start</span></a>
                             </div>
                             <div class="nav-lavel">Job Openings</div>
                             <div class="nav-item">
-                                <a href="JobOpeningPortalRecruiter.jsp"><i class="ik ik-book-open"></i><span>All Job Openings</span></a>
+                                <a href="JobOpeningPortalUser.jsp"><i class="ik ik-book-open"></i><span>My Job Openings</span></a>
                             </div>
                             <div class="nav-item">
-                                <a href="JobOpeningsAdd.jsp"><i class="ik ik-file-plus"></i><span>Add+</span></a>
+                                <a href="UserJobOpeningApplied.jsp"><i class="ik ik-book"></i><span>Applies</span></a>
                             </div>
-                            <div class="nav-lavel"></div>
+                            <div class="nav-lavel">Resume</div>
                             <div class="nav-item">
-                               
+                                <a href="UserProfile.jsp"><i class="ik ik-user"></i><span>Profile</span></a>
+                            </div>
+                            <div class="nav-item">
+                                <a href="UserFeedbacks.jsp"><i class="ik ik-award"></i><span>Feedbacks</span></a>
+                            </div>
+                            <div class="nav-lavel">Support</div>
+                            <div class="nav-item">
+                                <a href="javascript:void(0)"><i class="ik ik-help-circle"></i><span>Remove Doubts</span></a>
                             </div>
                         </nav>
                     </div>
@@ -178,55 +166,41 @@ List<AcademicTraining> ac_list;
                           
                             <div class="card">
                                 <div class="card-header">
-                                    <h3>Users Applied</h3>
-                                    <a href="SelectBestUser.jsp" style="position:absolute;margin-left:1300px">Select Best User Applied</a>
+                                    <h3>Feedbacks</h3>
+                                    <a href="CleanFeedbackArea.jsp" style="position:absolute;margin-left:1300px">Clean Feedback Area</a>
                                 </div>
                                 
                                 <div class="card-body">
                                     <table id="data_table" class="table">
                                         <thead>
                                             <tr>
-                                                <th>Resume</th>
-                                                <th>Skills</th>
-                                                <th>Languages</th>
-                                                <th>Email</th>
-                                                <th class="nosort">&nbsp;</th>
+                                                <th>Job n°</th>
+                                                <th>Title</th>
+                                                <th>Feedback</th>
                                             </tr>
                                         </thead>
-                                        <%for(User user : user_list){ %>
-                    					<%location = resumedao.retrieveLocation(user.getUser_id()); %>
-                    					<%ac_list = resumedao.retrieveAcademicTraining(user.getUser_id()); %>
+                                        <%for(Feedback feedback : feedbacks){ %>
+                                        <%String jobtitle = jobopeningdao.retrieveNameJobOpening(feedback.getJo_code()); %>
                                         <tbody>
                                             <tr>
                                                 <td>
                                                 
                                                     <div class="d-inline-block align-middle">
-                                                    
-                                                        
                                                         <div class="d-inline-block">
-                                                            <h6><%=user.getFirstname() %> <%=user.getLastname() %></h6>
-                                                            <p class="text-muted mb-0"><%profession = resumedao.retrieveProfession(user.getUser_id()); %><%=profession.getProfession() %></p>
+                                                            <h6><%=feedback.getJo_code() %></h6>
+                                                            <p class="text-muted mb-0"><%%></p>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <label class="badge badge-primary"><%skills = resumedao.retrieveExtracurricularCourse(user.getUser_id()); for(ExtracurricularCourse skill: skills){%>
-                                                    <br/><%=skill.getCourse() %><br/>
-                                                    <%} %>
+                                                    <label class="badge badge-primary">
+                                                    <%=jobtitle %>
                                                     </label>
                                                 </td>
                                                 <td>
-                                                    <label class="badge badge-primary"><%languages = resumedao.retrieveLanguage(user.getUser_id()); for(Language lang : languages){ %>
-                                                    <br/><%=lang.getLanguage() %><br/>
-                                                    <%} %>
+                                                    <label class="badge badge-primary">
+                                                    <%=feedback.getFeedback_message() %>
                                                     </label>
-                                                </td>
-                                                <td><%=user.getEmail() %></td>
-                                                <td>
-                                                    <div class="table-actions text-center">
-                                                        <a href="#editLayoutItem" data-toggle="modal"
-                                                        data-target="#editLayoutItem" ><i class="ik ik-eye"></i></a>
-                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -238,71 +212,6 @@ List<AcademicTraining> ac_list;
                     </div> 
                 </div>     
             </div>
-
-			
-			<div class="modal fade edit-layout-modal" id="editLayoutItem" tabindex="-1" role="dialog"
-                aria-labelledby="editLayoutItemLabel" aria-hidden="true">
-                
-                <div class="modal-dialog" role="document">
-                <%for(User user : user_list){ %>
-				<%skills = resumedao.retrieveExtracurricularCourse(user.getUser_id()); %>
-				<%ac_list = resumedao.retrieveAcademicTraining(user.getUser_id()); %>
-				<%profession = resumedao.retrieveProfession(user.getUser_id()); %>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="d-inline-block align-middle">
-                                
-                                <div class="d-inline-block"><%%>
-                                    <h6><%=user.getFirstname()%> <%=user.getLastname() %></h6>
-                                    <p class="text-muted mb-0"><%=profession.getProfession() %>, <%=location.getCountry() %></p>
-                                </div>
-                            </div>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <p class="lead"><h6>Professional Experience</h6><%pe_list = resumedao.retrieveProfessionalExperience(user.getUser_id()); %>
- 							<%for(ProfessionalExperience pe : pe_list){ %>                           
-                            <strong>Title: </strong><%=pe.getJobtitle() %>, <strong>Employer: </strong><%=pe.getEmployer() %><br/>
-                            <strong>Start:</strong> <%=pe.getStart_date() %>, <strong>End:</strong> <%=pe.getEnd_date() %><br/>
-                            <strong>Description: </strong><%=pe.getJobdescription() %>
-                            <%} %>
-                            </p>
-                            <div class="row">
-                                <div class="col-md-6"><img src="../img/portfolio-1.jpg" class="img-fluid" alt=""></div>
-                                <div class="col-md-6"><img src="../img/portfolio-8.jpg" class="img-fluid" alt=""></div>
-                            </div>
-                            <div class="jumbotron pt-30 pb-30 mt-30">
-                                <h2 class="mt-0">Skills for Job: <%for(ExtracurricularCourse skill : skills){%></h2>
-                                <p class="lead">
-                                <strong>Skill: </strong> <%=skill.getCourse() %> - <strong>Level: </strong><%=skill.getLevel() %>
-                                
-                                <%} %>
-                                </p>
-                            </div>
-                            <p>
-                             <h6>Academic Training</h6>
-                            <%for(AcademicTraining ac: ac_list){ %>
-                            <%if(ac.getCourse() != ""){ %>
-                            <strong>Course: </strong><%=ac.getCourse() %>, <strong>Institution: </strong><%=ac.getInstitution() %><br/>
-                            <strong>Start: </strong><%=ac.getStart_date() %>, <strong>End: </strong><%=ac.getEnd_date() %><br/>
-                            <strong>Description: </strong><%=ac.getDescription() %>
-                            <%}else{%>
-                            <strong>Don't have any.</strong>
-                            <%}} %>
-                            </p>
-                        </div>
-                  		
-                  		
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
-                            <%session.setAttribute("usermail", user.getEmail()); %>
-                            <a href="SelectBestUser.jsp"><button type="button" class="btn btn-success"><i class="fa fa-comments"></i> Set Feedback</button></a>
-                        	
-                        </div>
-                     
-                    </div>
-                       <%} %> 
                 </div>
                             
             </div>

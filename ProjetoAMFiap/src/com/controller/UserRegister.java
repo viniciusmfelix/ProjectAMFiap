@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 
 import javax.servlet.ServletException;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dao.UserDAO;
+import com.email.JavaMail;
 import com.model.User;
 
 @WebServlet("/userregister")
@@ -31,8 +31,6 @@ public class UserRegister extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-		PrintWriter out = response.getWriter();
-		
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		String email = request.getParameter("email");
@@ -45,10 +43,11 @@ public class UserRegister extends HttpServlet {
 			User user = new User(firstname,lastname,email,date,phone,password);
 			UserDAO userdao = new UserDAO();
 			userdao.userRegister(user);
+			JavaMail mail = new JavaMail();
 			response.sendRedirect("HomenRegister/UserLogin.jsp");
+			mail.sendWelcomeMail(email, firstname);
 		} else {
 			response.sendRedirect("HomenRegister/UserRegisterFailed.jsp");
-			out.print("Passwords don't match.");
 		}
 	}
 

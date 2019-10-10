@@ -154,10 +154,11 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3>Data Table</h3>
+                                    <h3>User Applied Selection</h3>
                                 </div>
                                 <div class="card-body">
                                     <table id="data_table" class="table">
+                                    
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
@@ -182,61 +183,11 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>#EX001</td>
-                                                <td>erich@example.com</td>
-                                                <td>05</td>
-                                                <td>32</td>
-                                                <td></td>
-                                                <td>
-                                                    <div class="table-actions text-center">
-                                                        <a href="#editLayoutItem" data-toggle="modal"
-                                                            data-target="#editLayoutItem"><i class="ik ik-eye"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>#EX001</td>
-                                                <td>erich@example.com</td>
-                                                <td>3</td>
-                                                <td>21</td>
-                                                <td></td>
-                                                <td>
-                                                    <div class="table-actions text-center">
-                                                        <a href="#editLayoutItem" data-toggle="modal"
-                                                            data-target="#editLayoutItem"><i class="ik ik-eye"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>#EX001</td>
-                                                <td>erich@example.com</td>
-                                                <td>01</td>
-                                                <td>76</td>
-                                                <td></td>
-                                                <td>
-                                                    <div class="table-actions text-center">
-                                                        <a href="#editLayoutItem" data-toggle="modal"
-                                                            data-target="#editLayoutItem"><i class="ik ik-eye"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>005</td>
-                                                <td>erich@example.com</td>
-                                                <td>01</td>
-                                                <td>18</td>
-                                                <td></td>
-                                                <td>
-                                                    <div class="table-actions text-center">
-                                                        <a href="#editLayoutItem" data-toggle="modal"
-                                                            data-target="#editLayoutItem"><i class="ik ik-eye"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                       
                                         </tbody>
                                     </table>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

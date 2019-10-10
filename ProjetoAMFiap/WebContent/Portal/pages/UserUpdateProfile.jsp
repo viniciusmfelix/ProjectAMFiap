@@ -171,7 +171,7 @@ lang_list = resumedao.retrieveLanguage(user_id);
                                 <a href="UserProfile.jsp"><i class="ik ik-user"></i><span>Profile</span></a>
                             </div>
                             <div class="nav-item">
-                                <a href="pages/"><i class="ik ik-award"></i><span>Analytics</span></a>
+                                <a href="UserFeedbacks.jsp"><i class="ik ik-award"></i><span>Feedbacks</span></a>
                             </div>
                             <div class="nav-lavel">Support</div>
                             <div class="nav-item">

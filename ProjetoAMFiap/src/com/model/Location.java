@@ -39,5 +39,10 @@ public class Location {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	@Override
+	public String toString() {
+		return "Location [user_id=" + user_id + ", country=" + country + ", address=" + address + "]";
+	}
 	
 }

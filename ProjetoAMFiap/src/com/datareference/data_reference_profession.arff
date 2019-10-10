@@ -1,0 +1,20 @@
+@relation data_reference_profession
+
+@attribute profession {BackEndDeveloper}
+@attribute course {SistemasdeInformação}
+@attribute jobtitle {AnalistadeSistemasPL}
+@attribute lang {Ingles}
+@attribute langlevel {advanced}
+@attribute skill {Java}
+@attribute skilllevel {advanced}
+@attribute appropriate {Sim,Nao}
+
+@data
+BackEndDeveloper,SistemasdeInformação,AnalistadeSistemasPL,Ingles,advanced,Java,advanced,Sim
+
+
+
+
+
+
+
