@@ -221,9 +221,11 @@ List<AcademicTraining> ac_list;
                                                     <%} %>
                                                     </label>
                                                 </td>
+                                                
                                                 <td><%=user.getEmail() %></td>
                                                 <td>
                                                     <div class="table-actions text-center">
+                                                    
                                                         <a href="#editLayoutItem" data-toggle="modal"
                                                         data-target="#editLayoutItem" ><i class="ik ik-eye"></i></a>
                                                     </div>
@@ -296,7 +298,7 @@ List<AcademicTraining> ac_list;
                   		
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
-                            <%session.setAttribute("usermail", user.getEmail()); %>
+                            <%session.setAttribute("usermail",user.getEmail()); %>
                             <a href="SelectBestUser.jsp"><button type="button" class="btn btn-success"><i class="fa fa-comments"></i> Set Feedback</button></a>
                         	
                         </div>
